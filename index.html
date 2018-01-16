@@ -9,11 +9,67 @@
 				margin: 0;
 				padding: 0;
 			}
+			html,
+			body{
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			.rule,.prize{
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 100%;
+				height: 100%;
+				line-height: 50px;
+				font-size: 30px;
+				text-align: center;
+			}
 		</style>
 		<script src="js/phaser.min.js"></script>
+		<script src="js/jquery-3.0.0.min.js"></script>
 	</head>
 	<body>
+		<div id="rule" class="rule">
+			<h1>活动规则</h1>
+			<ul>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+			</ul>
+			
+			<div id="close_rule" class="close">关闭</div>
+		</div>
+		<div id="prize" class="prize">
+			<h1>我的奖品</h1>
+			<ul>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+				<li>lallal </li>
+			</ul>
+			
+			<div id="close_prize" class="close">关闭</div>
+		</div>
 		<div id="game_div"></div>
+		<script>
+			$('#rule').hide();
+			$("#close_rule").click(function(){
+				$('#rule').hide();
+			})
+			$('#prize').hide();
+			$("#close_prize").click(function(){
+				$('#prize').hide();
+			})
+		</script>
 		<script src="js/main1.js?version=1.2"></script>
+		
 	</body>
 </html>
