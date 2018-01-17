@@ -105,15 +105,16 @@ var states = {
     },
     // 游戏场景
     play: function() {
-    	var 
+    	var grassBeltWidth = 50,
     		scoreMusic,
         	bombMusic,
         	bgMusic;
+       
     	// 障碍物和奖励的速度
 		var obstacle_velocity = 300;
 		var	star_velocity = 300;
 		// x滑动的最小触发距离
-		var minTouchDis = width / 6;
+		var minTouchDis = width / 8;
     	
     	this.create = function(){
     		// 添加背景音乐
@@ -158,7 +159,7 @@ var states = {
 	        // 创建一个group，包含20个障碍物
 	        this.obstacles = game.add.group();
 	        this.obstacles.enableBody = true;
-	        this.obstacles.createMultiple(20, 'obstacle');
+	        this.obstacles.createMultiple(15, 'obstacle');
 	        
 	        // 创建一个group，包含10个奖励星星
 	        this.stars = game.add.group();
@@ -191,9 +192,8 @@ var states = {
 				//console.log('addMoveCallback--',3);
 			},this);
 			
-			
 	        // 定时器，创建障碍物和奖励
-	        this.timer = this.game.time.events.loop(1000, this.add_move_sprite, this); 
+	        this.timer = this.game.time.events.loop(200, this.add_move_sprite, this); 
 	        // 定时器，减少时间
 	        this.reduceTimer = this.game.time.events.loop(1000, this.reduceTime, this); 
     	},
@@ -206,20 +206,23 @@ var states = {
     	this.moveCar = function(moveType){
 	    	// 获取小车的当前x位置
 	    	var curCarX = this.car.world.x;
+    		var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
+        	var lRoadCenter =  grassBeltWidth+ halfRoadWidth*1-this.car.width/2;//左车道中心
+        	var cRoadCenter =  grassBeltWidth+ halfRoadWidth*3-this.car.width/2;//中车道中心
+        	var rRoadCenter =  grassBeltWidth+ halfRoadWidth*5-this.car.width/2;//右车道中心
 	    	if(moveType == "left"){
-	    		console.log("左滑");
-	    		if(curCarX === game.world.width*(1-(5-(1*2))/6)-this.car.width/2){
-		    		this.car.x = game.world.width*(1-(5-(0*2))/6)-this.car.width/2;
-		    	}else if(curCarX === game.world.width*(1-(5-(2*2))/6)-this.car.width/2){
-		    		this.car.x = game.world.width*(1-(5-(1*2))/6)-this.car.width/2;
+	    		//console.log("左滑");
+	    		if(curCarX === cRoadCenter){
+		    		this.car.x = lRoadCenter;
+		    	}else if(curCarX === rRoadCenter){
+		    		this.car.x = cRoadCenter;
 		    	}
 	    	}else if(moveType == "right"){
-	    		console.log("右滑");
-	    		var curCarX = this.car.world.x;
-	    		if(curCarX === game.world.width*(1-(5-(0*2))/6)-this.car.width/2){
-		    		this.car.x = game.world.width*(1-(5-(1*2))/6)-this.car.width/2;
-		    	}else if(curCarX === game.world.width*(1-(5-(1*2))/6)-this.car.width/2){
-		    		this.car.x = game.world.width*(1-(5-(2*2))/6)-this.car.width/2;
+	    		//console.log("右滑");
+	    		if(curCarX === lRoadCenter){
+		    		this.car.x = cRoadCenter;
+		    	}else if(curCarX === cRoadCenter){
+		    		this.car.x = rRoadCenter;
 		    	}
 	    	}
 	    },
@@ -230,7 +233,8 @@ var states = {
 	        	// 障碍物从跑道的3个位置掉落
 	        	// 随机[0,2]的整数,确定下落的跑道
 	    		var num = Math.floor(Math.random()*3);
-	        	var x = game.world.width*(1-(5-(num*2))/6)-obstacle.width/2;
+	        	var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
+	        	var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-obstacle.width/2;
 		  		var y = -obstacle.height;
 	        	// 重新设置位置
 		        obstacle.reset(x, y);
@@ -248,7 +252,8 @@ var states = {
 	        	// 障碍物从跑道的3个位置掉落
 	        	// 随机[0,2]的整数,确定下落的跑道
 	    		var num = Math.floor(Math.random()*3);
-	        	var x = game.world.width*(1-(5-(num*2))/6)-star.width/2;
+	    		var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
+	    		var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-star.width/2;
 		  		var y = -star.height;
 	        	// 重新设置位置
 		        star.reset(x, y);
@@ -261,16 +266,23 @@ var states = {
 	    },
 	    this.add_move_sprite = function(){
 	    	// 随机[0,1]的整数，确定是创建障碍物还是星星
-	    	var starNum = Math.floor(Math.random()*3);
+	    	var starNum = Math.floor(Math.random()*400);
 	    	console.log("starNum====",starNum)
-	    	if(starNum !== 0){
+	    	
+	    	if(starNum <= 30){
 	    		this.add_one_star();
-	    	}else if(starNum === 1){
+	    	}else if(starNum>30 && starNum <= 50){
 	    		this.add_one_star();
+	    		this.add_one_star();
+	    	}else if(starNum>50 && starNum <= 100){
+	    		this.add_one_star();
+	    		this.add_one_star();
+	    		this.add_one_star();
+	    		this.add_one_star();
+	    	}else if(starNum>100 && starNum <= 120){
 	    		this.add_one_obstacle();
-	    		this.add_one_star();
 	    	}else{
-	    		this.add_one_obstacle();
+	    		
 	    	}
 	    },
 	    this.reduceTime = function(){
@@ -285,7 +297,6 @@ var states = {
 				game.state.start('over', true, false, this.score); 
 	        }
 	    },
-	    
 	    this.crashCarFunc = function(car, obstacle){
 	    	//console.log("碰到了障碍物-翻车");
 	    	// 播放音效
