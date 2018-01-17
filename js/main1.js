@@ -162,7 +162,7 @@ var states = {
 	        // 创建一个group，包含10个奖励星星
 	        this.stars = game.add.group();
 	        this.stars.enableBody = true;
-	        this.stars.createMultiple(12, 'star');
+	        this.stars.createMultiple(20, 'star');
 	       
 	        // 触摸按下的开始x坐标
 	        this.startX = 0;
@@ -202,7 +202,7 @@ var states = {
 			game.paused = true;
 			
 	        // 定时器，创建障碍物和奖励
-	        this.timer = this.game.time.events.loop(200, this.add_move_sprite, this); 
+	        this.timer = this.game.time.events.loop(400, this.add_move_sprite, this); 
 	        // 定时器，减少时间
 	        this.reduceTimer = this.game.time.events.loop(1000, this.reduceTime, this); 
     	},
@@ -273,25 +273,44 @@ var states = {
 		        star.outOfBoundsKill = true;
 	        }
 	    },
+	     this.add_n_star = function(n){
+	     	// 障碍物从跑道的3个位置掉落
+        	// 随机[0,2]的整数,确定下落的跑道
+    		var num = Math.floor(Math.random()*3);
+	     	for(var i=0;i<n;i++){
+	     		// 从group中获取第一个死亡的对象
+		        var star = this.stars.getFirstDead();
+		        if(star){
+		        	
+		    		var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
+		    		var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-star.width/2;
+			  		var y = (star.height+10)*(n-i-1);;
+		        	// 重新设置位置
+			        star.reset(x, y);
+			        // 添加障碍物的速度，从上往下移动
+			        star.body.velocity.y = star_velocity; 
+			        // kill超出边界的障碍物
+			        star.checkWorldBounds = true;
+			        star.outOfBoundsKill = true;
+		        }
+	     	}
+	    	
+	    },
 	    this.add_move_sprite = function(){
 	    	// 随机[0,1]的整数，确定是创建障碍物还是星星
 	    	var starNum = Math.floor(Math.random()*400);
 	    	console.log("starNum====",starNum)
 	    	
-	    	if(starNum <= 30){
-	    		this.add_one_star();
-	    	}else if(starNum>30 && starNum <= 50){
-	    		this.add_one_star();
-	    		this.add_one_star();
-	    	}else if(starNum>50 && starNum <= 100){
-	    		this.add_one_star();
-	    		this.add_one_star();
-	    		this.add_one_star();
-	    		this.add_one_star();
-	    	}else if(starNum>100 && starNum <= 120){
+	    	if(starNum <= 10){
+	    		this.add_n_star(2);
+	    	}else if(starNum>10 && starNum <= 15){
+	    		this.add_n_star(5);
+	    	}else if(starNum>15 && starNum <= 20){
+	    		this.add_n_star(3);
+	    	}else if(starNum>20 && starNum <= 200){
 	    		this.add_one_obstacle();
 	    	}else{
-	    		
+	    		this.add_one_star();
 	    	}
 	    },
 	    this.reduceTime = function(){
