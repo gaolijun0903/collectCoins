@@ -148,6 +148,10 @@ var states = {
 	        this.obstacles = game.add.group();
 	        this.obstacles.enableBody = true;
 	        this.obstacles.createMultiple(15, 'bomb');
+	        this.obstacles.forEach(function(item){
+	        	item.width = 50;
+	        	item.height= 50;
+	        })
 	        
 	        // 创建一个group，包含10个奖励星星
 	        this.stars = game.add.group();
@@ -170,7 +174,6 @@ var states = {
 	        this.scoreText = this.game.add.text(20, 20, "分数: "+this.score, style);
 	        this.scoreText.x = game.world.width - this.scoreText.width - this.scoreText.width;
 	        
-	       
 	        // 触摸按下的开始x坐标
 	        this.startX = 0;
 	        // 监听按下事件
@@ -204,14 +207,14 @@ var states = {
 				firstplay = window.localStorage.setItem("firstplay",true);
 			}else {
 				// 定时器，创建障碍物和奖励
-	        	that.timer = game.time.events.loop(400, that.add_move_sprite, that); 
+	        	that.timer = game.time.events.loop(500, that.add_move_sprite, that); 
 	        	// 定时器，减少时间
 	        	that.reduceTimer = game.time.events.loop(1000, that.reduceTime, that); 
 			}
 			$("#close_leadPage").click(function(){
 				$('#leadPage').hide();
 				 // 定时器，创建障碍物和奖励
-	        	that.timer = game.time.events.loop(400, that.add_move_sprite, that); 
+	        	that.timer = game.time.events.loop(600, that.add_move_sprite, that); 
 	        	// 定时器，减少时间
 	        	that.reduceTimer = game.time.events.loop(1000, that.reduceTime, that); 
 			})
