@@ -17,6 +17,7 @@ var states = {
 	        // 加载游戏资源
 	        game.load.crossOrigin = 'anonymous'; // 设置跨域
 	        game.load.image('bg', 'images/bg.png');//游戏页面的背景
+	        game.load.image('header', 'images/header.png');//游戏页面的背景
 	        game.load.image('bg1', 'images/bg1.png');//开始页面的背景
 	        game.load.image('dude1', 'images/dude1.png');  //开始页面的人物
             game.load.spritesheet('dude', 'images/dude.png', 32, 48); //游戏页面移动的人物
@@ -143,6 +144,21 @@ var states = {
 	  		this.car.animations.add('right', [5, 6, 7, 8], 10, true);
 	  		this.car.animations.play('left');
 	  		
+	  		// 创建一个group，包含20个障碍物
+	        this.obstacles = game.add.group();
+	        this.obstacles.enableBody = true;
+	        this.obstacles.createMultiple(15, 'bomb');
+	        
+	        // 创建一个group，包含10个奖励星星
+	        this.stars = game.add.group();
+	        this.stars.enableBody = true;
+	        this.stars.createMultiple(20, 'star');
+	       
+	       	// 添加头部背景
+	        var bg = game.add.image(0, 0, 'header');
+	        bg.width = game.world.width;
+	        bg.height = 90;
+	        
 	        // 添加时间
 			this.remainTime = 30;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
@@ -154,15 +170,6 @@ var states = {
 	        this.scoreText = this.game.add.text(20, 20, "分数: "+this.score, style);
 	        this.scoreText.x = game.world.width - this.scoreText.width - this.scoreText.width;
 	        
-	        // 创建一个group，包含20个障碍物
-	        this.obstacles = game.add.group();
-	        this.obstacles.enableBody = true;
-	        this.obstacles.createMultiple(15, 'obstacle');
-	        
-	        // 创建一个group，包含10个奖励星星
-	        this.stars = game.add.group();
-	        this.stars.enableBody = true;
-	        this.stars.createMultiple(20, 'star');
 	       
 	        // 触摸按下的开始x坐标
 	        this.startX = 0;
@@ -190,21 +197,24 @@ var states = {
 				//console.log('addMoveCallback--',3);
 			},this);
 			
-			
-			game.onPause.add(function(){
-	    		//alert('暂停');
-	    		$('#leadPage').show();
-	    	})
+			var that = this;
+			var firstplay = window.localStorage.getItem("firstplay");
+			if(!firstplay){
+				$('#leadPage').show();
+				firstplay = window.localStorage.setItem("firstplay",true);
+			}else {
+				// 定时器，创建障碍物和奖励
+	        	that.timer = game.time.events.loop(400, that.add_move_sprite, that); 
+	        	// 定时器，减少时间
+	        	that.reduceTimer = game.time.events.loop(1000, that.reduceTime, that); 
+			}
 			$("#close_leadPage").click(function(){
 				$('#leadPage').hide();
-				game.paused = false;
+				 // 定时器，创建障碍物和奖励
+	        	that.timer = game.time.events.loop(400, that.add_move_sprite, that); 
+	        	// 定时器，减少时间
+	        	that.reduceTimer = game.time.events.loop(1000, that.reduceTime, that); 
 			})
-			game.paused = true;
-			
-	        // 定时器，创建障碍物和奖励
-	        this.timer = this.game.time.events.loop(400, this.add_move_sprite, this); 
-	        // 定时器，减少时间
-	        this.reduceTimer = this.game.time.events.loop(1000, this.reduceTime, this); 
     	},
     	this.update = function(){
     		// 小车和障碍物的碰撞监听
@@ -325,28 +335,45 @@ var states = {
 	        }
 	    },
 	    this.crashCarFunc = function(car, obstacle){
-	    	//console.log("碰到了障碍物-翻车");
-	    	// 播放音效
-    		bombMusic.play();
-	    	car.animations.play('right');
-	    	//让星星和障碍停止运动
+	    	obstacle.kill();
+	    	// 移除定时器
+        	this.game.time.events.remove(this.timer);
+        	this.game.time.events.remove(this.reduceTimer);
+        	//让星星和障碍停止运动
 	    	this.obstacles.forEach(function(item){
 	    		item.body.velocity.y = 0;
 	    	})
 	    	this.stars.forEach(function(item){
 	    		item.body.velocity.y = 0;
 	    	})
-	    	//是否可以改成让游戏暂停？效果不好
-	    	/*game.paused = true;//暂停
-	    	game.onPause.add(function(){
-	    		//alert('暂停')
-	    	})*/
-	    	// 移除定时器
-        	this.game.time.events.remove(this.timer);
-        	this.game.time.events.remove(this.reduceTimer);
-        	this.game.time.events.add(1000, function(){
-        		game.state.start('over', true, false, this.score);
-        	}, this);
+	    	
+	    	// 播放音效
+    		bombMusic.play();
+	    	car.animations.play('right');
+	    	
+	    	// 添加爆炸图片
+		    var goal = game.add.image(obstacle.x, obstacle.y, 'five');
+		    var goalImg = game.cache.getImage('five');
+		    goal.width = obstacle.width;
+		    goal.height = goal.width / (goalImg.width / goalImg.height);
+		    goal.alpha = 0;
+		    // 添加过渡效果
+		    var showTween = game.add.tween(goal).to({
+		        alpha: 1,
+		        y: goal.y - 20
+		    }, 100, Phaser.Easing.Linear.None, true, 0, 0, false);
+		    var that = this;
+		    showTween.onComplete.add(function() {
+		        var hideTween = game.add.tween(goal).to({
+		            alpha: 0,
+		            y: goal.y - 20
+		        }, 100, Phaser.Easing.Linear.None, true, 200, 0, false);
+		        hideTween.onComplete.add(function() {
+		            goal.kill();
+		            game.state.start('over', true, false, that.score); 
+		        });
+		    });
+		    
 	    },
 	    this.eatStarFunc = function(car, star){
 	    	//console.log("吃到奖励+加分");
