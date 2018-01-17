@@ -8,6 +8,7 @@
 			* {
 				margin: 0;
 				padding: 0;
+				box-sizing: border-box;
 			}
 			html,
 			body{
@@ -15,7 +16,7 @@
 				height: 100%;
 				position: relative;
 			}
-			.rule,.prize{
+			.mask{
 				position: absolute;
 				top: 0;
 				right: 0;
@@ -24,39 +25,63 @@
 				line-height: 50px;
 				font-size: 30px;
 				text-align: center;
+				background:rgba(0,0,0,0.4);
+				display: none;
+			}
+			.mask .container{
+				width: 80%;
+				height: 70%;
+				background: #fff;
+				margin: 15% auto;
+			}
+			.lead{
+				margin-bottom: 10px;
+				font-size: 12px;
+				background: #fff;
 			}
 		</style>
 		<script src="js/phaser.min.js"></script>
 		<script src="js/jquery-3.0.0.min.js"></script>
 	</head>
 	<body>
-		<div id="rule" class="rule">
-			<h1>活动规则</h1>
-			<ul>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-			</ul>
-			
+		<div id="rule" class="mask rule">
+			<div class="container">
+				<h2>活动规则</h2>
+				<ul>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+				</ul>
+			</div>
 			<div id="close_rule" class="close">关闭</div>
 		</div>
-		<div id="prize" class="prize">
-			<h1>我的奖品</h1>
-			<ul>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-				<li>lallal </li>
-			</ul>
-			
+		<div id="prize" class="mask prize">
+			<div class="container">
+				<h2>我的奖品</h2>
+				<ul>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+				</ul>
+			</div>
 			<div id="close_prize" class="close">关闭</div>
+		</div>
+		<div id="leadPage" class="mask leadPage">
+			<h2>引导页</h2>
+			<ul>
+				<li class="lead">左右滑动，更换跑道</li>
+				<li class="lead">吃到金币越多越好</li>
+				<li class="lead">碰到炸弹，直接结束游戏 </li>
+			</ul>
+			<div id="close_leadPage" class="close">知道啦</div>
 		</div>
 		<div id="game_div"></div>
 		<script>
@@ -68,6 +93,7 @@
 			$("#close_prize").click(function(){
 				$('#prize').hide();
 			})
+			$('#leadPage').hide();
 		</script>
 		<script src="js/main1.js?version=1.2"></script>
 		

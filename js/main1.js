@@ -109,13 +109,11 @@ var states = {
     		scoreMusic,
         	bombMusic,
         	bgMusic;
-       
     	// 障碍物和奖励的速度
 		var obstacle_velocity = 300;
 		var	star_velocity = 300;
 		// x滑动的最小触发距离
 		var minTouchDis = width / 8;
-    	
     	this.create = function(){
     		// 添加背景音乐
             if (!bgMusic) {
@@ -191,6 +189,17 @@ var states = {
 			this.game.input.addMoveCallback(function(pointer, x, y, isTap) {
 				//console.log('addMoveCallback--',3);
 			},this);
+			
+			
+			game.onPause.add(function(){
+	    		//alert('暂停');
+	    		$('#leadPage').show();
+	    	})
+			$("#close_leadPage").click(function(){
+				$('#leadPage').hide();
+				game.paused = false;
+			})
+			game.paused = true;
 			
 	        // 定时器，创建障碍物和奖励
 	        this.timer = this.game.time.events.loop(200, this.add_move_sprite, this); 
@@ -293,7 +302,6 @@ var states = {
 	        	// 移除定时器
 	        	this.game.time.events.remove(this.timer);
 	        	this.game.time.events.remove(this.reduceTimer);
-	        	//this.game.time.events.remove(this.increaseScoreTimer);
 				game.state.start('over', true, false, this.score); 
 	        }
 	    },
