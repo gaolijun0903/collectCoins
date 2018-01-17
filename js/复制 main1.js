@@ -108,7 +108,7 @@ var states = {
     play: function() {
     	var man, // 主角
         	apples, // 苹果
-        	core = 0, // 得分
+        	score = 0, // 得分
         	title, // 分数
         	scoreMusic,
         	bombMusic,
