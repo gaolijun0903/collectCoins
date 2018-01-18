@@ -29,15 +29,33 @@
 				display: none;
 			}
 			.mask .container{
+				margin: 15% auto 0;
 				width: 80%;
 				height: 70%;
 				background: #fff;
-				margin: 15% auto;
+				border-radius:10px;
 			}
 			.lead{
 				margin-bottom: 10px;
-				font-size: 12px;
-				background: #fff;
+				font-size: 18px;
+				color: #fff;
+			}
+			.close_btn{
+				margin: 0 auto;
+				width: 40px;
+				height:40px;
+				background: url(images/closebtn.png);
+				background-size: 100%;
+			}
+			.leadPage{
+				padding-top: 120px;
+			}
+			.ok_btn{
+				margin: 0 auto;
+				width: 40px;
+				height:40px;
+				background: url(images/ok.jpg);
+				background-size: 100%;
 			}
 		</style>
 		<script src="js/phaser.min.js"></script>
@@ -46,7 +64,7 @@
 	<body>
 		<div id="rule" class="mask rule">
 			<div class="container">
-				<h2>活动规则</h2>
+				<h3>活动规则</h3>
 				<ul>
 					<li>lallal </li>
 					<li>lallal </li>
@@ -57,11 +75,11 @@
 					<li>lallal </li>
 				</ul>
 			</div>
-			<div id="close_rule" class="close">关闭</div>
+			<div id="close_rule" class="close_btn"></div>
 		</div>
 		<div id="prize" class="mask prize">
 			<div class="container">
-				<h2>我的奖品</h2>
+				<h3>我的奖品</h3>
 				<ul>
 					<li>lallal </li>
 					<li>lallal </li>
@@ -72,28 +90,27 @@
 					<li>lallal </li>
 				</ul>
 			</div>
-			<div id="close_prize" class="close">关闭</div>
+			<div id="close_prize" class="close_btn"></div>
 		</div>
 		<div id="leadPage" class="mask leadPage">
-			<h2>引导页</h2>
+			
 			<ul>
 				<li class="lead">左右滑动，更换跑道</li>
 				<li class="lead">吃到金币越多越好</li>
 				<li class="lead">碰到炸弹，直接结束游戏 </li>
 			</ul>
-			<div id="close_leadPage" class="close">知道啦</div>
+			<div id="close_leadPage" class="ok_btn"></div>
 		</div>
 		<div id="game_div"></div>
+		
+		
 		<script>
-			$('#rule').hide();
 			$("#close_rule").click(function(){
-				$('#rule').hide();
+				$('#rule').fadeOut(300);
 			})
-			$('#prize').hide();
 			$("#close_prize").click(function(){
-				$('#prize').hide();
+				$('#prize').fadeOut(300);
 			})
-			$('#leadPage').hide();
 		</script>
 		<script src="js/main1.js?version=1.2"></script>
 		

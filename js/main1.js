@@ -24,20 +24,18 @@ var states = {
 	        game.load.image('startbtn', 'images/startbtn.png'); //开始游戏按钮
 	        game.load.image('rulebtn', 'images/rulesbtn.png'); //活动规则按钮
 	        game.load.image('myprizebtn', 'images/myprizebtn.png'); //我的奖品按钮
-	        game.load.image('sharebtn', 'images/sharebtn.png'); //我的奖品按钮
-	       
-	        game.load.image('bomb', 'images/bomb.png');
-	        game.load.image('five', 'images/five.png');
+	        game.load.image('sharebtn', 'images/sharebtn.png'); //分享按钮
+	        game.load.image('replaybtn', 'images/replaybtn.png'); //再玩一次
+	        
+	        game.load.image('bomb', 'images/bomb.png'); //炸弹
+	        game.load.image('five', 'images/five.png'); //加分图片
 	        game.load.image('three', 'images/three.png');
 	        game.load.image('one', 'images/one.png');
-	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');
-	        game.load.audio('scoreMusic', 'audio/addscore.mp3');
-            game.load.audio('bombMusic', 'audio/boom.mp3');
-            
-            
-	        game.load.image('obstacle', 'assets/pipe.png');
-	        game.load.image('star', 'assets/star.png');
-	        
+	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //背景音乐
+	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //加分音乐
+            game.load.audio('bombMusic', 'audio/boom.mp3');  //爆炸音乐
+	        game.load.image('obstacle', 'assets/pipe.png'); //障碍物
+	        game.load.image('star', 'assets/star.png'); //星星
             // 添加进度文字
             var progressText = game.add.text(game.world.centerX, game.world.centerY, '0%', {
                 fontSize: '60px',
@@ -86,7 +84,7 @@ var states = {
 	        // 添加"活动规则"按钮
 	        ruleButton = game.add.button(0, 0, 'rulebtn', showRules, this, 2, 1, 0);
 	        function showRules(){
-	        	$('#rule').show();
+	        	$('#rule').fadeIn(100);
 	        }
 	        // 添加"我的奖品"按钮
 	        prizeButton = game.add.button(0, 0, 'myprizebtn', showPrizes, this, 2, 1, 0);
@@ -94,7 +92,7 @@ var states = {
 	        var prizeButtony = prizeButton.height / 2;
 	        prizeButton.reset(prizeButtonx, prizeButtony);
 	        function showPrizes(){
-	        	$('#prize').show();
+	        	$('#prize').fadeIn(100);
 	        }
 	        // 添加"分享 "按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height, 'sharebtn', onShare, this, 2, 1, 0);
@@ -115,6 +113,7 @@ var states = {
 		var	star_velocity = 300;
 		// x滑动的最小触发距离
 		var minTouchDis = width / 8;
+		//var	halfRoadWidth = (this.game.world.width-grassBeltWidth*2)/6;
     	this.create = function(){
     		// 添加背景音乐
             if (!bgMusic) {
@@ -148,10 +147,11 @@ var states = {
 	        this.obstacles = game.add.group();
 	        this.obstacles.enableBody = true;
 	        this.obstacles.createMultiple(15, 'bomb');
-	        this.obstacles.forEach(function(item){
+	        /*this.obstacles.forEach(function(item){
 	        	item.width = 50;
 	        	item.height= 50;
-	        })
+	        	//item.body.setSize(50,50,50,50);
+	        })*/
 	        
 	        // 创建一个group，包含10个奖励星星
 	        this.stars = game.add.group();
@@ -203,7 +203,7 @@ var states = {
 			var that = this;
 			var firstplay = window.localStorage.getItem("firstplay");
 			if(!firstplay){
-				$('#leadPage').show();
+				$('#leadPage').fadeIn(100);
 				firstplay = window.localStorage.setItem("firstplay",true);
 			}else {
 				// 定时器，创建障碍物和奖励
@@ -212,7 +212,7 @@ var states = {
 	        	that.reduceTimer = game.time.events.loop(1000, that.reduceTime, that); 
 			}
 			$("#close_leadPage").click(function(){
-				$('#leadPage').hide();
+				$('#leadPage').fadeOut(100);
 				 // 定时器，创建障碍物和奖励
 	        	that.timer = game.time.events.loop(600, that.add_move_sprite, that); 
 	        	// 定时器，减少时间
@@ -248,6 +248,22 @@ var states = {
 		    	}
 	    	}
 	    },
+	    this.add_move_sprite = function(){
+	    	// 随机[0,1]的整数，确定是创建障碍物还是星星
+	    	var starNum = Math.floor(Math.random()*400);
+	    	console.log("starNum====",starNum)
+	    	if(starNum <= 10){
+	    		this.add_n_star(2);
+	    	}else if(starNum>10 && starNum <= 15){
+	    		this.add_n_star(5);
+	    	}else if(starNum>15 && starNum <= 20){
+	    		this.add_n_star(3);
+	    	}else if(starNum>20 && starNum <= 200){
+	    		this.add_one_obstacle();
+	    	}else{
+	    		this.add_n_star(1);
+	    	}
+	    },
 	    this.add_one_obstacle = function(){
 	    	// 从group中获取第一个死亡的对象
 	        var obstacle = this.obstacles.getFirstDead();
@@ -267,26 +283,7 @@ var states = {
 		        obstacle.outOfBoundsKill = true;
 	        }
 	    },
-	    this.add_one_star = function(){
-	    	// 从group中获取第一个死亡的对象
-	        var star = this.stars.getFirstDead();
-	        if(star){
-	        	// 障碍物从跑道的3个位置掉落
-	        	// 随机[0,2]的整数,确定下落的跑道
-	    		var num = Math.floor(Math.random()*3);
-	    		var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
-	    		var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-star.width/2;
-		  		var y = -star.height;
-	        	// 重新设置位置
-		        star.reset(x, y);
-		        // 添加障碍物的速度，从上往下移动
-		        star.body.velocity.y = star_velocity; 
-		        // kill超出边界的障碍物
-		        star.checkWorldBounds = true;
-		        star.outOfBoundsKill = true;
-	        }
-	    },
-	     this.add_n_star = function(n){
+	    this.add_n_star = function(n){
 	     	// 障碍物从跑道的3个位置掉落
         	// 随机[0,2]的整数,确定下落的跑道
     		var num = Math.floor(Math.random()*3);
@@ -294,7 +291,6 @@ var states = {
 	     		// 从group中获取第一个死亡的对象
 		        var star = this.stars.getFirstDead();
 		        if(star){
-		        	
 		    		var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
 		    		var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-star.width/2;
 			  		var y = (star.height+10)*(n-i-1);;
@@ -307,24 +303,6 @@ var states = {
 			        star.outOfBoundsKill = true;
 		        }
 	     	}
-	    	
-	    },
-	    this.add_move_sprite = function(){
-	    	// 随机[0,1]的整数，确定是创建障碍物还是星星
-	    	var starNum = Math.floor(Math.random()*400);
-	    	console.log("starNum====",starNum)
-	    	
-	    	if(starNum <= 10){
-	    		this.add_n_star(2);
-	    	}else if(starNum>10 && starNum <= 15){
-	    		this.add_n_star(5);
-	    	}else if(starNum>15 && starNum <= 20){
-	    		this.add_n_star(3);
-	    	}else if(starNum>20 && starNum <= 200){
-	    		this.add_one_obstacle();
-	    	}else{
-	    		this.add_one_star();
-	    	}
 	    },
 	    this.reduceTime = function(){
 	    	--this.remainTime;
@@ -349,11 +327,9 @@ var states = {
 	    	this.stars.forEach(function(item){
 	    		item.body.velocity.y = 0;
 	    	})
-	    	
 	    	// 播放音效
     		bombMusic.play();
 	    	car.animations.play('right');
-	    	
 	    	// 添加爆炸图片
 		    var goal = game.add.image(obstacle.x, obstacle.y, 'five');
 		    var goalImg = game.cache.getImage('five');
@@ -376,7 +352,7 @@ var states = {
 		            game.state.start('over', true, false, that.score); 
 		        });
 		    });
-		    
+		    //在此把分数发送给后台
 	    },
 	    this.eatStarFunc = function(car, star){
 	    	//console.log("吃到奖励+加分");
@@ -434,16 +410,29 @@ var states = {
 	            fill: '#f2bb15'
 	        });
 	        scoreText.anchor.setTo(0.5, 0.5);
-	        var remind = game.add.text(game.world.centerX, game.world.height * 0.6, '点击任意位置再玩一次', {
-			    fontSize: '20px',
-			    fontWeight: 'bold',
-			    fill: '#f2bb15'
-			});
-			remind.anchor.setTo(0.5, 0.5);
-			// 添加点击事件
-			game.input.onTap.add(function() {
-			    game.state.start('play');
-			});
+	        //超过98%用户
+	        title.anchor.setTo(0.5, 0.5);
+	        var scoreStr = '超过98%用户';
+	        var scoreText = game.add.text(game.world.centerX, game.world.height * 0.5, scoreStr, {
+	            fontSize: '30px',
+	            fontWeight: 'bold',
+	            fill: '#f2bb15'
+	        });
+	        scoreText.anchor.setTo(0.5, 0.5);
+	        
+	         // 添加"再玩一次 "按钮
+	        replayButton = game.add.button(game.world.centerX, game.world.height * 0.6, 'replaybtn', onReplay, this, 2, 1, 0);
+	        replayButton.anchor.setTo(0.5, 0.5);
+	        function onReplay(){
+	        	game.state.start('play');
+	        }
+			
+			 // 添加"分享 "按钮
+	        startButton2 = game.add.button(game.world.centerX, game.world.height, 'sharebtn', onShare2, this, 2, 1, 0);
+	        startButton2.anchor.setTo(0.5, 1.5);
+	        function onShare2(){
+	        	alert('分享')
+	        }
 	    }
     }
 };
