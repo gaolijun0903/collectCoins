@@ -1,5 +1,4 @@
-// 实际应用场景改为window.innerWidth和window.innerHeight。
-// 这里是为了方便查看示例。
+// v2.0
 var width = window.innerWidth;  
 var height = window.innerHeight; 
 
@@ -20,6 +19,8 @@ var states = {
 	        game.load.image('header', 'images/header.png');//游戏页面的背景
 	        game.load.image('bg1', 'images/bg1.png');//开始页面的背景
 	        game.load.image('dude1', 'images/dude1.png');  //开始页面的人物
+	        game.load.image('title', 'images/title.png');  //开始页面的人物
+	        
             game.load.spritesheet('dude', 'images/dude.png', 32, 48); //游戏页面移动的人物
 	        game.load.image('startbtn', 'images/startbtn.png'); //开始游戏按钮
 	        game.load.image('rulebtn', 'images/rulesbtn.png'); //活动规则按钮
@@ -69,18 +70,41 @@ var states = {
 	            fill: '#f2bb15'
 	        });
 	        title.anchor.setTo(0.5, 0.5);
+	        
+	       
 	        // 添加主角
-	        var man = game.add.sprite(game.world.centerX, game.world.height * 0.75, 'dude1');
-	        var manImage = game.cache.getImage('dude1');
+	        var man = game.add.sprite(game.world.centerX, game.world.height * 0.75, 'dude');
+	        var manImage = game.cache.getImage('dude');
 	        man.width = game.world.width * 0.2;
-	        man.height = man.width / manImage.width * manImage.height;
+	        man.height = game.world.width * 0.2;
 	        man.anchor.setTo(0.5, 0.5);
+	        man.animations.add('left', [0, 1, 2, 3], 10, true);
+	  		man.animations.add('right', [5, 6, 7, 8], 10, true);
+	  		man.animations.play('right');
+	       
+	        /*var titleGroup = game.add.group(); //创建存放标题的组
+	        titleGroup.create(0,0,'startbtn'); //通过组的create方法创建标题图片并添加到组里
+	        var bird = titleGroup.create(50, 50, 'dude'); //创建bird对象并添加到组里
+	        
+	        // 创建动画
+	    	bird.animations.add('left', [0, 1, 2, 3], 10, true);
+	  		bird.animations.add('right', [5, 6, 7, 8], 10, true);
+	  		bird.animations.play('right');
+	        //bird.animations.add('fly'); //给鸟添加动画
+	        //bird.animations.play('fly',12,true); //播放动画
+	        titleGroup.x = 125; //调整组的水平位置
+	        titleGroup.y = 300; //调整组的垂直位置
+	        game.add.tween(titleGroup).to({ y:320 },1000,null,true,0,Number.MAX_VALUE,true); //对这个组添加一个tween动画，让它不停的上下移动
+	        */
+	       
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.centerY, 'startbtn', onStart, this, 2, 1, 0);
 	        startButton.anchor.setTo(0.5, 0.5);
 	        function onStart(){
 	        	game.state.start('play');
 	        }
+	        
+	        
 	        // 添加"活动规则"按钮
 	        ruleButton = game.add.button(0, 0, 'rulebtn', showRules, this, 2, 1, 0);
 	        function showRules(){
@@ -109,8 +133,8 @@ var states = {
         	bombMusic,
         	bgMusic;
     	// 障碍物和奖励的速度
-		var obstacle_velocity = 300;
-		var	star_velocity = 300;
+		var obstacle_velocity = 200;
+		var	star_velocity = 200;
 		// x滑动的最小触发距离
 		var minTouchDis = width / 8;
 		//var	halfRoadWidth = (this.game.world.width-grassBeltWidth*2)/6;
@@ -147,11 +171,11 @@ var states = {
 	        this.obstacles = game.add.group();
 	        this.obstacles.enableBody = true;
 	        this.obstacles.createMultiple(15, 'bomb');
-	        /*this.obstacles.forEach(function(item){
+	        this.obstacles.forEach(function(item){
 	        	item.width = 50;
 	        	item.height= 50;
-	        	//item.body.setSize(50,50,50,50);
-	        })*/
+	        	item.body.setSize(50,50,0,0);
+	        })
 	        
 	        // 创建一个group，包含10个奖励星星
 	        this.stars = game.add.group();
@@ -164,7 +188,7 @@ var states = {
 	        bg.height = 90;
 	        
 	        // 添加时间
-			this.remainTime = 30;
+			this.remainTime = 60;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
 	        this.remainTimeText = this.game.add.text(20, 20, "时间: "+this.remainTime, style);
 			
@@ -174,7 +198,8 @@ var states = {
 	        this.scoreText = this.game.add.text(20, 20, "分数: "+this.score, style);
 	        this.scoreText.x = game.world.width - this.scoreText.width - this.scoreText.width;
 	        
-	        // 触摸按下的开始x坐标
+	        
+	       /* // 触摸按下的开始x坐标
 	        this.startX = 0;
 	        // 监听按下事件
 			this.game.input.onDown.add(function(pointer) {
@@ -195,9 +220,14 @@ var states = {
 				}
 				this.startX = 0;
 			},this);
+			
+			*/
+			
 			// 监听滑动事件
 			this.game.input.addMoveCallback(function(pointer, x, y, isTap) {
-				//console.log('addMoveCallback--',3);
+				console.log('addMoveCallback--',3);
+				
+				this.car.x = x;
 			},this);
 			
 			var that = this;
@@ -220,6 +250,9 @@ var states = {
 			})
     	},
     	this.update = function(){
+    		
+    		
+    		
     		// 小车和障碍物的碰撞监听
     		game.physics.arcade.overlap(this.car, this.obstacles, this.crashCarFunc, null, this);
     		// 小车和奖励的碰撞监听
@@ -255,7 +288,7 @@ var states = {
 	    	if(starNum <= 10){
 	    		this.add_n_star(2);
 	    	}else if(starNum>10 && starNum <= 15){
-	    		this.add_n_star(5);
+	    		this.add_n_star(1);
 	    	}else if(starNum>15 && starNum <= 20){
 	    		this.add_n_star(3);
 	    	}else if(starNum>20 && starNum <= 200){
@@ -277,7 +310,7 @@ var states = {
 	        	// 重新设置位置
 		        obstacle.reset(x, y);
 		        // 添加障碍物的速度，从上往下移动
-		        obstacle.body.velocity.y = obstacle_velocity; 
+		        obstacle.body.velocity.y = obstacle_velocity + (60-this.remainTime)*20; 
 		        // kill超出边界的障碍物
 		        obstacle.checkWorldBounds = true;
 		        obstacle.outOfBoundsKill = true;
@@ -297,7 +330,7 @@ var states = {
 		        	// 重新设置位置
 			        star.reset(x, y);
 			        // 添加障碍物的速度，从上往下移动
-			        star.body.velocity.y = star_velocity; 
+			        star.body.velocity.y = star_velocity +  (60-this.remainTime)*20; 
 			        // kill超出边界的障碍物
 			        star.checkWorldBounds = true;
 			        star.outOfBoundsKill = true;
@@ -307,12 +340,35 @@ var states = {
 	    this.reduceTime = function(){
 	    	--this.remainTime;
 	        this.remainTimeText.text = "时间: "+this.remainTime;
+	        
+	       /* console.log(this.obstacles);
+    		this.obstacles.forEach(function(item){
+	    		item.body.velocity.y = obstacle_velocity + (60-this.remainTime)*10;
+	    	})
+	    	this.stars.forEach(function(item){
+	    		item.body.velocity.y = obstacle_velocity + (60-this.remainTime)*10;
+	    	})*/
+	    	/*
+	    	this.obstacles.velocity.y = obstacle_velocity + (60-this.remainTime)*10;
+	    	this.stars.velocity.y = obstacle_velocity + (60-this.remainTime)*10;
+	    	*/
 	        // 结束场景
 	        if(this.remainTime <= 0){ 
 	        	// 移除定时器
 	        	this.game.time.events.remove(this.timer);
 	        	this.game.time.events.remove(this.reduceTimer);
-				game.state.start('over', true, false, this.score); 
+	        	//让星星和障碍停止运动
+		    	this.obstacles.forEach(function(item){
+		    		item.body.velocity.y = 0;
+		    	})
+		    	this.stars.forEach(function(item){
+		    		item.body.velocity.y = 0;
+		    	})
+		    	//添加时间到的闹铃声音
+	        	game.time.events.add(1000, function(){
+	        	 	game.state.start('over', true, false, this.score); 
+	        	}, this);
+				
 	        }
 	    },
 	    this.crashCarFunc = function(car, obstacle){
