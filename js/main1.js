@@ -140,18 +140,23 @@ var states = {
 	    	//game.physics.startSystem(Phaser.Physics.ARCADE);
 	    	//添加主角
 	        this.car = this.game.add.sprite(32, game.world.height - 150, 'dude');
+	        this.car.width = 80;
+        	this.car.height= 80;
+        	//this.car.body.setSize(250,250,0,0); //报错
 	        var carWidth = this.car.width;
 	        var carHeight = this.car.height;
 	        var posX = game.world.width * (1-(5-(1*2))/6) - carWidth / 2;
 		  	var posY = game.world.height - carHeight - carHeight / 3;
 	        this.car.x = posX;
 	        this.car.y = posY;
+	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
+	        
+	        
 	        // 创建动画
 	    	this.car.animations.add('left', [0, 1, 2, 3], 10, true);
-	    	this.car.animations.add('center', [4], 10, true);
+	    	this.car.animations.add('center', [4], 1, true);
 	  		this.car.animations.add('right', [5, 6, 7, 8], 10, true);
-	  		//this.car.animations.play('left');
 	  		
 	  		// 创建一个group，包含20个障碍物
 	        this.obstacles = game.add.group();
@@ -184,8 +189,11 @@ var states = {
 	        this.scoreText = this.game.add.text(20, 20, "分数: "+this.score, style);
 	        this.scoreText.x = game.world.width - this.scoreText.width - this.scoreText.width;
 	        
+	        // 是否正在触摸
+			var touching = false;
 	        var preX = game.world.centerX;
 			this.moveCallback = function(pointer, x, y, isTap) {
+				if (isTap || !touching) return
 				if(preX<x){//右划
 					this.car.animations.play('right');
 				}else if(preX==x){
@@ -194,10 +202,10 @@ var states = {
 					this.car.animations.play('left');
 				}
 				preX = x;
-				if( x <= grassBeltWidth){
-					this.car.x =  grassBeltWidth;
-				}else if(x >= (game.world.width -grassBeltWidth-this.car.width)){
-					this.car.x = game.world.width -grassBeltWidth-this.car.width;
+				if( x <= grassBeltWidth + this.car.width/2){
+					this.car.x =  grassBeltWidth + this.car.width/2;
+				}else if(x >= (game.world.width - grassBeltWidth - this.car.width/2)){
+					this.car.x = game.world.width - grassBeltWidth - this.car.width/2;
 				}else{
 					this.car.x = x;
 				}
@@ -205,13 +213,27 @@ var states = {
 			// 监听滑动事件
 			this.game.input.addMoveCallback(this.moveCallback,this);
 			// 监听按下事件
-			/*this.game.input.onDown.add(function(pointer,x) {
-				//
-			},this);*/
+			game.input.onDown.add(function(pointer) {
+			    // 要判断是否点住主角，避免瞬移
+    			if (Math.abs(pointer.x - this.car.x) < this.car.width / 2 && Math.abs(pointer.y - this.car.y) < this.car.height / 2){
+    				 touching = true;
+    			}
+			},this);
 			// 监听离开事件
 			this.game.input.onUp.add(function(pointer) {
+				touching = false;
 				this.car.animations.play('center');
 			},this);
+			
+			// 定时器，创建障碍物和奖励   //TODO
+        	
+        	this.myTimeInterval();
+        	
+        	
+        	// 定时器，倒计时
+        	this.reduceTimer = game.time.events.loop(1000, this.reduceTime, this); 
+			// 先不启动时钟
+        	game.time.events.stop(false);
 			//第一次游戏展示引导页
 			var that = this;
 			var firstplay = window.localStorage.getItem("firstplay");
@@ -219,18 +241,17 @@ var states = {
 				$('#leadPage').fadeIn(100);
 				firstplay = window.localStorage.setItem("firstplay",true);
 			}else {
-				// 定时器，创建障碍物和奖励
-	        	that.timer = game.time.events.loop(500, that.add_move_sprite, that); 
-	        	// 定时器，减少时间
-	        	that.reduceTimer = game.time.events.loop(1000, that.reduceTime, that); 
+				// 启动时钟
+				game.time.events.start();
 			}
 			$("#close_leadPage").click(function(){
 				$('#leadPage').fadeOut(100);
-				 // 定时器，创建障碍物和奖励
-	        	that.timer = game.time.events.loop(600, that.add_move_sprite, that); 
-	        	// 定时器，减少时间
-	        	that.reduceTimer = game.time.events.loop(1000, that.reduceTime, that); 
+				// 启动时钟
+				game.time.events.start();
 			})
+			
+			//添加开始倒计时
+			
     	},
     	this.update = function(){
     		// 小车和障碍物的碰撞监听
@@ -238,7 +259,18 @@ var states = {
     		// 小车和奖励的碰撞监听
     		game.physics.arcade.overlap(this.car, this.stars, this.eatStarFunc, null, this);
     	},
-	    this.add_move_sprite = function(){
+    	this.myTimeInterval = function(){
+    		var that = this;
+    		var delaytime = 500;
+        	var timeri=0;
+        	count();
+			function count(){
+				timeri++;
+				that.timer = game.time.events.add(delaytime, that.add_move_sprite(count), that);
+				delaytime-=timeri*10/2;
+			}
+    	},
+	    this.add_move_sprite = function(count){
 	    	// 随机[0,1]的整数，确定是创建障碍物还是星星
 	    	var starNum = Math.floor(Math.random()*400);
 	    	console.log("starNum====",starNum)
@@ -251,6 +283,8 @@ var states = {
 	    	}else {
 	    		this.add_n_star(1);
 	    	}
+	    	console.log("生成间隔-->"+(1000+(60-this.remainTime)*(-10)));
+	    	//count()  //TODO
 	    },
 	    this.add_one_obstacle = function(){
 	    	// 从group中获取第一个死亡的对象
@@ -293,7 +327,6 @@ var states = {
 	    this.reduceTime = function(){
 	    	--this.remainTime;
 	        this.remainTimeText.text = "时间: "+this.remainTime;
-	        
 	        var v = obstacle_velocity + (60-this.remainTime)*10;
 	        this.obstacles.forEachAlive(function(item){
 	    		item.body.velocity.y = v;
@@ -303,16 +336,7 @@ var states = {
 	    	});
 	        // 结束场景
 	        if(this.remainTime <= 0){ 
-	        	// 移除定时器
-	        	this.game.time.events.remove(this.timer);
-	        	this.game.time.events.remove(this.reduceTimer);
-	        	//让星星和障碍停止运动
-		    	this.obstacles.forEach(function(item){
-		    		item.body.velocity.y = 0;
-		    	})
-		    	this.stars.forEach(function(item){
-		    		item.body.velocity.y = 0;
-		    	})
+	        	this.allStopMove();
 		    	//添加时间到的闹铃声音
 	        	game.time.events.add(1000, function(){
 	        	 	game.state.start('over', true, false, this.score); 
@@ -320,8 +344,7 @@ var states = {
 				
 	        }
 	    },
-	    this.crashCarFunc = function(car, obstacle){
-	    	obstacle.kill();
+	    this.allStopMove = function(){
 	    	// 移除定时器
         	this.game.time.events.remove(this.timer);
         	this.game.time.events.remove(this.reduceTimer);
@@ -332,10 +355,16 @@ var states = {
 	    	this.stars.forEach(function(item){
 	    		item.body.velocity.y = 0;
 	    	})
+	    	//取消滑动监听
+	    	this.game.input.deleteMoveCallback(this.moveCallback,this);
+	    },
+	    this.crashCarFunc = function(car, obstacle){
+	    	obstacle.kill();
+	    	this.allStopMove();
 	    	// 播放音效
     		bombMusic.play();
 	    	car.animations.play('right');
-	    	this.game.input.deleteMoveCallback(this.moveCallback,this);
+	    	
 	    	// 添加爆炸图片
 		    var goal = game.add.image(obstacle.x, obstacle.y, 'five');
 		    var goalImg = game.cache.getImage('five');
