@@ -1,5 +1,4 @@
-// v4.0
-// 时间增长，提高生成星星的概率
+// current
 var width = window.innerWidth;  
 var height = window.innerHeight; 
 
@@ -138,9 +137,6 @@ var states = {
 	    	//game.physics.startSystem(Phaser.Physics.ARCADE);
 	    	//添加主角
 	        this.car = this.game.add.sprite(32, game.world.height - 150, 'dude');
-	        //this.car.width = 80;
-        	//this.car.height= 80;
-        	//this.car.body.setSize(250,250,0,0); //报错
 	        var carWidth = this.car.width;
 	        var carHeight = this.car.height;
 	        var posX = game.world.width * (1-(5-(1*2))/6) - carWidth / 2;
@@ -149,7 +145,9 @@ var states = {
 	        this.car.y = posY;
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
-	        
+	        this.car.width = 60;
+          	this.car.height= 60;
+          	this.car.body.setSize(60,60,0,0); 
 	        
 	        // 创建动画
 	    	this.car.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -223,13 +221,6 @@ var states = {
 				this.car.animations.play('center');
 			},this);
 			
-			// 定时器，创建障碍物和奖励   //TODO
-        	this.timer = game.time.events.loop(500, this.add_move_sprite, this);
-        	
-        	// 定时器，倒计时
-        	this.reduceTimer = game.time.events.loop(1000, this.reduceTime, this); 
-			// 先不启动时钟
-        	game.time.events.stop(false);
 			//第一次游戏展示引导页
 			var that = this;
 			var firstplay = window.localStorage.getItem("firstplay");
@@ -237,17 +228,14 @@ var states = {
 				$('#leadPage').fadeIn(100);
 				firstplay = window.localStorage.setItem("firstplay",true);
 			}else {
-				// 启动时钟
-				game.time.events.start();
+				//添加321开始倒计时
+				this.ThreeTwoOne();
 			}
 			$("#close_leadPage").click(function(){
 				$('#leadPage').fadeOut(100);
-				// 启动时钟
-				game.time.events.start();
+				//添加321开始倒计时
+				that.ThreeTwoOne();
 			})
-			
-			//添加开始倒计时
-			
     	},
     	this.update = function(){
     		// 小车和障碍物的碰撞监听
@@ -403,6 +391,49 @@ var states = {
 		    star.kill();
 		    // 播放音效
     		scoreMusic.play();
+	    },
+	    this.ThreeTwoOne = function(numImg){//321开始倒计时
+	    	var num =3;
+	    	var imgArr = ['one','three','five'];
+	    	var ThreeTwoOneTimer = game.time.events.loop(1000,function(){
+	    		if(num<=0){
+	    			game.time.events.remove(ThreeTwoOneTimer)
+	    			//alert('kaishi');
+	    			// 定时器，创建障碍物和奖励   //TODO
+		        	this.timer = game.time.events.loop(500, this.add_move_sprite, this);
+		        	// 定时器，倒计时
+		        	this.reduceTimer = game.time.events.loop(1000, this.reduceTime, this); 
+	    			return
+	    		}
+	    		this.tweenImg(imgArr[num-1]);
+	    		num--;
+	    	},this)
+	    	
+	    },
+	    this.tweenImg = function(numImg){
+	    	// 添加倒计时图片
+		    var goal = game.add.image(game.world.centerX, game.world.centerY, numImg);
+		    var goalImg = game.cache.getImage(numImg);
+		    goal.width = 0;
+		    goal.height = 0;
+		    goal.anchor.setTo(0.5,0.5);
+		    goal.alpha = 0;
+		    // 添加过渡效果
+		    var showTween = game.add.tween(goal).to({
+		        alpha: 1,
+		        width : game.world.width/3,
+		    	height : game.world.width/3
+		    }, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
+		    showTween.onComplete.add(function() {
+		        var hideTween = game.add.tween(goal).to({
+		            alpha: 0,
+		            width : 0,
+		    		height : 0
+		        }, 200, Phaser.Easing.Linear.None, true, 200, 0, false);
+		        hideTween.onComplete.add(function() {
+		            
+		        });
+		    });
 	    }
     },
     // 结束场景
