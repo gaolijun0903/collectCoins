@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta https-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no, initial-scale=1">
+    <meta name = "format-detection" content = "telephone=no"><!--防止iOS网页中的数字被识别为电话号码-->
+    <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
+    <title>易到圣诞送豪礼</title>
+    <script type="text/javascript">
+        var screenWidth=window.screen.width;
+        document.getElementsByTagName('html')[0].style.fontSize=screenWidth/10+'px';
+    </script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-18761483-4', 'auto');  ga('send', 'pageview');
+    </script>
+    <style type="text/css">
+        * { padding:0; margin:0;-webkit-tap-highlight-color: rgba(0,0,0,0); box-sizing: border-box;}
+        HTML ,body { font-size:12px;height:100%;width:100%; font-family: "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;}
+        #share_iframe{display: none;}
+        li { list-style-type:none;}
+        input, input[type="button"], input[type="submit"], input[type="reset"] {-webkit-appearance: none; color:slateblue; border:none; outline: none; background:transparent; width: 100%;}
+        body{background-color: #120109;}
+        .wrapper{ width: 10.0rem;min-height: 100%;position: relative;}
+
+        .head{ width: 10.0rem; height: 16.24rem; position: relative; }
+        .head .rule-btn{position: absolute;
+            top: 2.453333rem;
+            border-radius: 50%;
+            left: 0.333333rem;
+            z-index: 30;
+            width: 1.44rem;
+            height: 1.413333rem;}
+        .ball .myprize-btn{ position: absolute;
+            top: 0;
+            border-radius: 50%;
+            left: 50%;
+            z-index: 30;
+            width: 1.6rem;
+            margin-left: -0.8rem;
+            height: 1.546667rem;}
+
+        .draw{width: 10.0rem;
+            position: absolute;
+            top: 3.306667rem;
+            left: 0;}
+        .draw .draw-des{margin: 0 auto; width: 4.48rem; height: 0.866667rem; line-height: 0.866667rem; text-align: center; background: #710220; color: #fff; border-radius: 0.24rem;}
+        .draw .draw-des .draw-num{ color: #fff; }
+        .draw .drawbg-line{ margin: -0.43rem auto 0; width: 6.28rem; height: 8.306667rem; border: 1px solid #710220; border-radius: 15px; }
+        .draw .prize-wrapper{text-align: center;position: relative;}
+        .draw .prize-wrapper .prize{display: inline-block;
+            width: 7.026667rem;
+            height: 7.026667rem;}
+        .draw .prize-wrapper .prize .cap{ position: absolute; top: 2.986667rem; left: 1.05rem; width: 	0.8rem; height: 0.24rem; background:#710220; border-radius: 2px; }
+        .draw .draw-btn{display: inline-block;
+            width: 7.026667rem;
+            height: 7.026667rem;}
+
+        .lucky-list{ position: relative; padding-bottom: 1.0rem; }
+        .lucky-list .lucky-title{ width: 10.0rem; height: 0.76rem; }
+        .lucky-list .lucky-list-des{ margin: 0.5rem auto 0; width: 5.4rem; height: 0.866667rem; line-height: 0.866667rem; text-align: center; background: #710220; color: #fff; border-radius: 0.24rem; }
+        .lucky-list .lucky-bg{ margin: 0.4rem auto 0; width: 8.946667rem; padding: 0.23rem; height: 13.7rem; border: 1px solid #710220; border-radius: 15px; }
+        .lucky-list .lucky-bg .lucky-head .cell{ color: #6a6267; }
+        .lucky-list .lucky-bg .lucky-body{ height: 11.75rem; overflow: hidden;}
+        .lucky-list .list-item{ height: 1.226667rem; margin-bottom: 0.206667rem; background: #27071e; color: #b32e58; }
+        .lucky-list .list-item .cell{ display: inline-block; line-height: 1.226667rem; text-align: center; font-size: 0.373333rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lucky-list .list-item .name{ width:2.16rem; }
+        .lucky-list .list-item .tel{ width:3.2rem; }
+        .lucky-list .list-item .prize{ width:2.25rem; color: #f04632;}
+        .lucky-list .list-item .prizered{color: #ffec47;}
+        .lucky-list .lucky-bg .list-body-no{line-height: 8rem; color: #fff; text-align: center; font-size: 0.4rem;}
+
+        .mask-wrapper{ position: fixed; top: 0; left: 0;  width: 100%; height: 100%;z-index: 20; text-align: center; }
+        .mask-wrapper .mask-inner{ position: absolute; top: 3.0rem; left: 0.42rem; width: 9.17rem;}
+        .mask-wrapper .mask-inner .mask-star{ width: 4.213333rem; height:1.373333rem; margin: 0.97rem auto 0; }
+        .mask-wrapper .mask-inner .mask-text{margin-top: 3.253333rem; text-align: center; color: #fceea2;  font-size: 0.4rem; line-height: 0.88rem;}
+        .mask-wrapper .mask-inner .mask-btn{margin: 0.7rem auto 0; width: 6.5rem; height: 1.3rem; background: #e5004f;border-radius: 15px; text-align: center; color: #fff; font-size: 0.56rem; line-height: 1.3rem; letter-spacing: 20px;}
+
+        .mask-wrapper .mask-rule{ height: auto; top: 2.0rem; bottom: 2.0rem; color: #fff; padding: 0.3rem; }
+        .mask-wrapper .mask-rule h4{ line-height: 1.4rem; text-align: center; font-size: 0.5rem; }
+        .mask-wrapper .mask-rule .ruletext{ line-height: 0.6rem; font-size: 0.4rem; }
+        .mask-wrapper .rule-container{height: 100%;overflow: scroll;}
+        .mask-wrapper .mask-btn-close{     position: absolute;
+            width: 1.28rem;
+            height: 1.28rem;
+            bottom: 0.533333rem;
+            left: 50%;
+            margin-left: -0.64rem;
+            border-radius: 50%;
+            background: url("//i1.yongche.name/media/g2/M03/1A/29/rBEBP1o84A2IW_MnAAAEunnuJDgAAKXgQP_-yYAAATa466.png") no-repeat center;
+            background-size: 100%;
+        }
+        .mask-wrapper .myprize-container{}
+        .mask-wrapper .myprize-head{ height: 2.0rem; background: url(http://i1.Yongche.name/media/g2/M02/1A/2B/rBEBJVozS9aIF5ImAAAO7CLDpBIAAKYTQONsP4AAA8E765.png); background-size: 100%; }
+        .mask-wrapper .myprize-item{
+            line-height: 0.96rem;
+            font-size: 0.4rem;
+            text-align: center;
+            color: #fceea2;
+            background-size: 100%;
+        }
+        .mask-wrapper .mask-phone{margin: -0.5rem auto 0; width: 2.4rem;height: 2.4rem; }
+
+        .toast{ position: fixed; top: 35%; left: 10%; width: 80%; height: 40px; line-height: 40px; background: rgba(0,0,0,0.5); color: #fff; z-index: 30; text-align: center; border-radius: 10px;font-size: 18px;}
+
+        .slide-fade-enter-active { transition: all .3s ease; }
+        .slide-fade-leave-active { transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+        .slide-fade-enter , .slide-fade-leave-to { transform: translateY(-100px); opacity: 0; }
+
+        .slide-up-fade-enter-active { transition: all .3s ease; }
+        .slide-up-fade-leave-active { transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+        .slide-up-fade-enter , .slide-up-fade-leave-to { transform: translateY(100px); opacity: 0; }
+
+        .bounce-enter-active { animation: bounce-in .5s; }
+        .bounce-leave-active { animation: bounce-in .5s reverse; }
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            80% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @-webkit-keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            80% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .arrow { width: 20px; height: 20px; position: absolute; bottom: 25px; left: 50%; margin-left: -11px; border: 3px solid transparent; border-top: 3px solid #fff; border-left: 3px solid #fff; z-index:1; opacity: .8; -webkit-transform: rotate(45deg); -webkit-animation: arrow 1.5s infinite ease-in-out; }
+        @-webkit-keyframes arrow {
+            0% {
+                -webkit-transform:translate(0, 0px) rotate(45deg)
+            }
+            50% {
+                -webkit-transform:translate(0, 5px) rotate(45deg)
+            }
+            100% {
+                -webkit-transform:translate(0, 10px) rotate(45deg)
+            }
+        }
+        [v-cloak] {
+            display: none;
+        }
+
+        .logo{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: 100%;text-align: center;
+        }
+        .logo img{
+            width: 6.306667rem;
+            margin: 0.44rem auto;display: inline-block;
+        }
+        .rule-img{
+            position: absolute;
+            top: 0;
+            left: 0.333333rem;
+        }
+        .rule-img img{
+            width: 1.44rem;
+        }
+        .ball{
+            position: absolute;
+            left: 0;
+            bottom:0;
+            width: 100%;text-align: center;
+        }
+        .ball img{
+            width: 2.48rem;
+            margin: 0 auto;display: inline-block;
+        }
+        .drawbtn-wrapper{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: 100%;text-align: center;
+        }
+        .share{
+            position: absolute;
+            top: 0;
+            right: 0.24rem;
+            z-index: 2;
+        }
+        .share img{
+            width: 0.96rem;
+        }
+        .share .share-btn{
+            position: absolute;
+            border-radius: 0.8rem;
+            left: 3px;
+            z-index: 2;
+            width: 0.8rem;
+            height: 2.733333rem;
+            bottom: 0;
+        }
+        .rollss{
+            width: 10.0rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+        }
+        .rollss img{
+            display: inline-block;
+            width: 8.293333rem;
+        }
+        .rollwrapper{
+            color: #3e7aa5;
+        }
+        .rollwrapper .list-item{
+            height: 46px;
+            line-height: 46px;
+        }
+        #rollid{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;overflow: hidden;
+            height: 46px;
+        }
+        .mask-img{
+            width: 7.026667rem;
+            display: inline-block;
+            margin-top: 3.306667rem;
+        }
+        .sureclose{
+            /*background: #fff;*/
+            position: relative;
+            top: -2.333333rem;
+            text-align: center;
+            width: 100%;
+        }
+        .sureclose div{
+            width: 2.28rem;
+            display: inline-block;
+            /*background: blue;*/
+            height: 20px;
+        }
+        .sureclose.toaddress{
+            top: -3.9rem;
+        }
+        .noperson{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            overflow: hidden;
+            height: 46px;
+            line-height: 46px;color: #3e7aa5;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <div class="wrapper" v-if="inApp"><!--APP中打开-->
+        <div class="head">
+            <img src="//i2.yongche.name/media/g2/M02/1A/35/rBEBP1o815CIJy69AAD8ePz1IIQAAKb_wNqh64AAPyQ569.jpg" width="100%" height="100%"/>
+            <div class="rule-btn" @click=showRule></div>
+            <div class="rule-img"><img src="//i2.yongche.name/media/g2/M04/1A/35/rBEBP1o8172Iey-qAAALskbvjW8AAKb_gOirJ8AAAvK362.png" alt=""></div>
+            <div class="ball"><img src="//i1.yongche.name/media/g2/M04/1A/35/rBEBJVo819OIN8YZAAAYr9bFQSwAAKb_gOkHysAABjH649.png" alt=""><div class="myprize-btn" @click="showMyPrize"></div></div>
+            <div class="share" v-show="btn_share"><img src="//i3.yongche.name/media/g2/M04/1A/35/rBEBP1o81_KIXaUPAAAMHc3clPQAAKb_gPEJC0AAAw1011.png" alt=""><div class="share-btn" id="share-btn"></div></div>
+            <div class="share" v-show="!btn_share"><img src="//i2.yongche.name/media/g2/M04/1A/35/rBEBJVo83GCISMahAAAKqSxqekgAAKcAgNJl6MAAArB381.png" alt=""></div>
+            <div class="logo"><img src="//i2.yongche.name/media/g2/M04/1A/35/rBEBP1o82A2IDPMpAAArBeHGJYwAAKb_gPS4BcAACsd121.png" alt=""></div>
+            <!--<div class="arrow"></div>-->
+        </div>
+        <div class="draw">
+            <!--<div class="draw-des">-->
+            <!--<div class="ok-draw">您当前有<span class="draw-num" v-html="drawNum">1</span>次抽奖机会</div>-->
+            <!--</div>-->
+            <!--<div class="drawbg-line"></div>-->
+
+            <div class="prize-wrapper">
+                <div class="prize" v-for="prize in prizeArr" v-show="currentIdx==prize.index">
+                    <!--<img v-show="currentIdx!=prize.index" :src="prize.blue" width="100%" height="100%"/>-->
+                    <img :src="prize.red" width="100%" height="100%"/>
+                    <!--<div class="cap"></div>-->
+                </div>
+                <div class="drawbtn-wrapper">
+                    <div class="draw-btn" @click=getResult v-show="showdrabtn">
+                        <img v-show="(drawNum==0) && (!isClick)" src="//i2.yongche.name/media/g2/M03/1A/35/rBEBJVo82KqIarnvAAAbHAzck8IAAKcAQBtLNUAABs0004.png" width="100%" height="100%"/>
+                        <img v-show="(drawNum==1) && (!isClick)" src="//i2.yongche.name/media/g2/M03/1A/35/rBEBP1o82MCIf6zwAABARtEtq5UAAKcAQCpWDIAAEBe722.png" width="100%" height="100%" @click.stop="cannotdraw"/>
+                        <img v-show="(drawNum==1) && isClick" src="//i2.yongche.name/media/g2/M03/1A/35/rBEBP1o82MCIf6zwAABARtEtq5UAAKcAQCpWDIAAEBe722.png" width="100%" height="100%"/>
+                        <img v-show="(drawNum==2) && isClick" src="//i2.yongche.name/media/g2/M03/1A/35/rBEBP1o82NOIXytIAAA9Wrq87_YAAKcAQEC5PkAAD1y517.png" width="100%" height="100%"/>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="rollss">
+            <img src="//i1.yongche.name/media/g2/M04/1A/35/rBEBP1o82O-IX9gGAAALNHx_TOkAAKb_gPgGiEAAAtM107.png" alt=""/>
+            <div id="rollid" v-show="luckyList.length">
+                <div class="rollwrapper" id="list1">
+                    <div class="list-item" v-for="(item,index) in luckyList">
+                        <span class="">恭喜尾号{{item.cellphone.slice(7)}}的用户抽中</span><span  v-html="toPrize(item.award_type)"></span>
+                    </div>
+                </div>
+                <div class="rollwrapper" id="list2">
+                    <div class="list-item" v-for="(item,index) in luckyList">
+                        <span class="">恭喜尾号{{item.cellphone.slice(7)}}的用户抽中</span><span  v-html="toPrize(item.award_type)"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="noperson" v-show="luckyList.length===0">中奖名单将会在这里展现</div>
+        </div>
+        <transition name="slide-fade"><!--未登录-->
+            <div class="mask-wrapper" v-show="inApp&&showMask&&!isLogin">
+                <div class="mask-inner" style="background: darkslateblue;border-radius: 32px;">
+                    <div class="mask-star">
+                        <img src="http://i2.Yongche.name/media/g2/M01/1A/2B/rBEBJVozJImIHLduAAALcKNibAQAAKYNwNjW7kAAAuI916.png" width="100%" height="100%"/>
+                    </div>
+                    <div class="mask-text" style="margin-top: 1.253333rem;">
+                        <div class="text-line1">您尚未登录</div>
+                        <div class="text-line2" >请点击去登录</div>
+                    </div>
+                    <div class="mask-btn" @click.stop="closeMask" style="background: burlywood;margin: 0.7rem auto 0.6rem;">确定</div>
+                </div>
+            </div>
+        </transition>
+        <transition name="bounce"><!--中奖弹窗-->
+            <div class="mask-wrapper" v-if="inApp&&showMask&&isLogin&&(!isShowRule)&&(!isShowPrize)">
+                <img :src="toMaskPrize(prizetype)" alt="" class="mask-img">
+                <div class="sureclose">
+                    <div class="mask-btn" @click.stop="closeMask"></div>
+                </div>
+                <div class="sureclose toaddress" v-show="prizetype==1||prizetype==2||prizetype==3">
+                    <div class="mask-btn" @click.stop="toAddress"></div>
+                </div>
+            </div>
+        </transition>
+        <transition name="slide-fade"><!--活动规则-->
+            <div class="mask-wrapper" v-show="inApp&&showMask&&isLogin&&isShowRule&&(!isShowPrize)" style="z-index: 40;">
+                <img src="//i2.yongche.name/media/g2/M03/1A/35/rBEBJVo83oiIbh_VAAHHcwCRtt4AAKcAQP-LR4AAceL034.jpg" alt="" style="width: 10.0rem;height: 100%;">
+                <!--<div class="mask-inner mask-rule">-->
+                <!--<div class="rule-container">-->
+                <!--<h4>活动规则</h4>-->
+                <!--<div class="ruletext">-->
+                <!--<div class="rule-item" v-for="item in ruleList" v-html="item"></div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="mask-btn-close" @click.stop="closeMask"></div>
+            </div>
+        </transition>
+        <transition name="slide-fade"><!--我的奖品-->
+            <div class="mask-wrapper" v-show="inApp&&showMask&&isLogin&&isShowPrize&&(!isShowRule)" style="z-index: 40;">
+                <img src="//i2.yongche.name/media/g2/M03/1A/35/rBEBP1o84kOIB4WiAABbCXtLodwAAKcBQHnckkAAFsh840.jpg" alt="" style="width: 10.0rem;height: 100%;">
+                <div class="mask-inner">
+                    <div class="myprize-container">
+                        <div class="prize-list" v-show="prizeList.length!=0" style="margin-top: 3.253333rem;">
+                            <div class="myprize-item" v-for="item in prizeList">
+                                <span  v-text="toPrize(item.award_type)"></span>
+                            </div>
+                        </div>
+                        <div class="mask-text" v-if="prizeList.length==0">
+                            <div class="text-line1" >目前还没有奖品</div>
+                            <div class="text-line2" >赶快叫车获得抽奖机会参与活动吧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mask-btn-close" @click.stop="closeMask"></div>
+            </div>
+        </transition>
+
+        <transition name="slide-up-fade">
+            <div class="toast" v-show="showToast" v-html="toastMsg"></div>
+        </transition>
+    </div>
+    <div v-if="!inApp"><!--分享后不是在APP中打开-->
+        <div class="mask-wrapper" >
+            <div class="mask-inner ">
+                <div class="mask-star">
+                    <img src="http://i2.Yongche.name/media/g2/M01/1A/2B/rBEBJVozJImIHLduAAALcKNibAQAAKYNwNjW7kAAAuI916.png" width="100%" height="100%"/>
+                </div>
+                <div class="mask-phone">
+                    <img src="http://i1.Yongche.name/media/g2/M01/1A/2B/rBEBJVozJImIQxq_AAA6N3G0LAcAAKYNwNjIWoAADpP284.png" width="100%" height="100%"/>
+                </div>
+                <div class="mask-text">请在易到APP内打开</div>
+                <div class="mask-btn" onclick="WeixinJSBridge.call('closeWindow');">确定</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://i3.Yongche.name/s/js/201711/vue.min.js?1478153218"></script>
+<script src="https://i1.Yongche.name/s/js/201711/jsonp.js?1478153218"></script>
+<script src="https://i2.Yongche.name/s/js/201712/flexible.js?1478153218"></script>
+<script>
+    //document.cookie='_app_token_v3=ZNLbf6_g1Ur4GbsaVVdXwJRkPnJhpbcV84O_Es4ySYI';//TODO
+    function ajaxShare(obj){
+        // 分享变量设置
+        var _protocolLink = "yongche://share?";
+        var _protocolLinkFriend = "yongche://shareToFriend?";
+        var _protocolLinkTimeline = "yongche://shareToTimeline?";
+
+        // 分享地址
+        //var query = encodeURIComponent("&language="+obj.activity_language+"&sendName="+obj.sendName+"&sendMoney="+obj.sendMoney+"&sendIphone="+obj.sendIphone+"&headImg="+obj.headImg);
+        var shareRead_link = encodeURIComponent(obj.url);
+
+        // 分享的图片
+        var shareRead_pics = encodeURIComponent("http://i3.yongche.Name/media/g2/M01/1A/35/rBEBJVo82ViIBg3PAAAydsM-krwAAKcAAK_ajsAADKO105.jpg");
+
+        // 分享的标题
+        var shareRead_title = encodeURIComponent(obj.title);
+        // 分享的内容
+        var shareRead_content = encodeURIComponent(obj.description);
+        // 分享的需要生成二维码地址
+        var shareRead_codeUrl = encodeURIComponent("://m.yongche.com");
+        var shareRead_sourceType = 42; //1-截图分享 42-图文分享
+        var shareRead_callback = "share_callback";
+
+        var Tools = {
+            shareThisPage:function(){
+                var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&callback="+shareRead_callback+"&codeUrl="+shareRead_codeUrl;
+                var _tmpOpenLink = _protocolLink + _str;
+                window.location.href = _tmpOpenLink;
+            },
+            shareThisPageToFriend:function(){
+                var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&callback="+shareRead_callback+"&codeUrl="+shareRead_codeUrl;
+                var _tmpOpenLink = _protocolLinkFriend + _str;
+                window.location.href = _tmpOpenLink;
+            },
+            shareThisPageToTimeline:function(){
+                var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&callback="+shareRead_callback+"&codeUrl="+shareRead_codeUrl;
+                var _tmpOpenLink = _protocolLinkTimeline + _str;
+                window.location.href = _tmppenLOink;
+            }
+        };
+        var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&from=iframe&callback="+shareRead_callback;
+        var _tmpOpenLink = _protocolLink + _str;
+        console.log(_tmpOpenLink);
+//        $('.share').delegate('.share-btn', 'click', function() {
+//            ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
+//            Tools.shareThisPage();
+//        });
+        document.getElementById("share-btn").addEventListener("click", function(){
+            ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
+            Tools.shareThisPage();
+        });
+
+    }
+
+</script>
+<script type="text/javascript">
+
+    new Vue({
+        el: '#app',
+        data:{
+            inApp: true,
+            //http:"https://testing2-market.yongche.Org",
+            http:"//market.Yongche.com",
+            ruleList:[],
+            prizeArr:[
+                {//9.5 coupon
+                    blue:"//i2.yongche.name/media/g2/M02/1A/35/rBEBP1o82aWISgfDAAAjOzK8zasAAKb_wP0fGYAACNT950.png",
+                    red:"//i2.yongche.name/media/g2/M02/1A/35/rBEBP1o82hOIDDRHAABGVBUgnK4AAKb_wP9g7QAAEZs028.png",
+                    index:2
+                },
+                {//9 coupon
+                    blue:"//i1.yongche.name/media/g2/M01/1A/35/rBEBJVo82bmIRe1XAAAi4s28pzEAAKcAALgBRsAACL6092.png",
+                    red:"//i1.yongche.name/media/g2/M04/1A/35/rBEBP1o82iiIYTvWAABGbp3Ya4QAAKb_gP9PqoAAEaG082.png",
+                    index:0
+                },
+                {//hagendasi coupon
+                    blue:"//i3.yongche.name/media/g2/M02/1A/35/rBEBP1o82cyIKnmuAAAob3TBm-4AAKb_wP7phwAACiH232.png",
+                    red:"//i2.yongche.name/media/g2/M04/1A/35/rBEBJVo82keIRSlvAABHVW-OD9gAAKcAgCaT0QAAEdt754.png",
+                    index:3
+                },
+                {//iphone
+                    blue:"//i2.yongche.name/media/g2/M02/1A/35/rBEBJVo82eGITgJMAAAsxJXdzgYAAKb_wP8DVAAACzc425.png",
+                    red:"//i3.yongche.name/media/g2/M04/1A/35/rBEBJVo82mOIduO8AABG7l72VrcAAKcAgDQUAAAAEcG885.png",
+                    index:1
+                },
+                {//travel
+                    blue:"//i1.yongche.name/media/g2/M02/1A/35/rBEBJVo82fmINTwoAAAtTM2m0lYAAKb_wP9F3QAAC1k804.png",
+                    red:"//i1.yongche.name/media/g2/M04/1A/35/rBEBP1o82nuIcdUTAABGG8TVPeAAAKcAgDwN-gAAEYz433.png",
+                    index:4
+                }],
+            prizeList:[],
+            isLogin:1,
+            drawNum:0,
+            isClick:0,
+            currentIdx:1,
+            luckyList:[],
+            showMask:false,
+            isShowRule:false,
+            isShowPrize:false,
+            maskText:{
+                text1:"",
+                text2:""
+            },
+            award_type:0,
+            showToast:false,
+            toastMsg:"",
+            btn_share:0,
+            invite:'',
+            showdrabtn:true,
+            prizetype:'',
+            timer1:'',
+            dddd:false,
+        },
+        mounted: function(){
+            this.MyMar='';
+            var isYidao = document.cookie.indexOf("_app_token_v3");
+            isYidao = 1; //TODO
+            if(isYidao===-1){
+                this.inApp = false;
+            }else{
+                this.inApp = true;
+                this.initData();
+            }
+        },
+        methods:{
+            initData:function (){// 获取随叫随到订单数
+                var vm = this;
+                JSONP.init({
+                    error:function(ex){
+                        //alert("Failed to load:" + ex.url);
+                    }
+                })
+                JSONP.get(vm.http+"/miscellaneous/Activitychristmasuser/getCommon", function (data) {
+                    console.log(data)
+                    // data.code=200//TODO
+                    if(data.code==200){
+                        vm.luckyList = data.list;//中奖名单
+                        vm.toroll();
+                        vm.drawNum = data.result.num;//可以抽奖次数
+                        vm.btn_share = data.result.btn_share;//是否点亮分享按钮
+                        vm.invite = data.result.invite;//邀请人ID
+                        //toshare
+                        ajaxShare({
+                            url:'http://www.yongche.com/cms/page/christmaslogin.html?invite='+vm.invite,
+                            title:'来自易到的圣诞邀请',
+                            description:'双人游，iPhone x等大奖送不停！'
+                        })
+                        // vm.drawNum=2;//TODO
+                        if(vm.drawNum>=1){
+                            vm.isClick = 1;
+                        }
+
+                    }else if(data.code==203){
+                        vm.isLogin = 0;
+                        vm.showMask=true;
+                        return;
+                    }else{
+                        vm.toastMsgFn(data.code);
+                    }
+                });
+            },
+            getResult:function(){//点击抽奖
+                if(this.drawNum<=0 || this.isClick==0){//不可以抽奖
+                    return
+                }
+                this.isClick=0;
+                this.rotatePrizess();
+
+            },
+            rotatePrize:function(idx){
+                if(this.MyMar){
+                    clearInterval(this.MyMar)
+                }
+                var vm = this;
+                var rotateNum = 4*5+idx;
+                var i=1 , time = 20 , timer;
+                vm.currentIdx = 2;
+                function count(){
+                    i++;
+                    if(timer){
+                        clearTimeout(timer);
+                    }
+                    if(i==3){
+                        time+=80;
+                    }
+                    timer = setTimeout(count,time);
+                    vm.currentIdx = i%5;
+                    if(i>15){
+                        time+=i*2;
+                    }
+                    if(i==rotateNum){
+
+                        if(idx==1){
+                            vm.currentIdx=4
+                        }else if(idx==2){
+                            vm.currentIdx=1
+                        }else if(idx==3){
+                            vm.currentIdx=3
+                        }else if(idx==4){
+                            vm.currentIdx=0
+                        }else{
+                            vm.currentIdx=2
+                        }
+                        clearTimeout(timer);
+                        vm.award_type=idx;
+                        setTimeout(function(){
+                            vm.showdrabtn=false;
+                            vm.showMask=true;
+                            vm.toroll();
+                            vm.dddd=false;
+                            if(vm.drawNum<=0){
+                                vm.isClick=0;
+                            }else {
+                                vm.isClick=1;
+                            }
+                        },150)
+                    }
+                }
+                count();
+            },
+            rotatePrizess:function () {
+                this.drawNum-=1;
+                if(this.MyMar){
+                    clearInterval(this.MyMar)
+                }
+                var vm = this;
+                var i1=1 , time1 = 100;
+                this.currentIdx = 2;
+                function count1(){
+                    i1++;
+                    if(vm.timer1){
+                        clearTimeout(vm.timer1);
+                    }
+                    vm.timer1 = setTimeout(count1,time1);
+                    vm.currentIdx = i1%5;
+                    console.log(vm.currentIdx)
+                    if(vm.dddd){
+                        clearTimeout(vm.timer1);
+                    }
+                }
+                count1();
+
+
+                //get prizetype
+                JSONP.init({
+                    error:function(ex){
+                        //alert("Failed to load:" + ex.url);
+                    }
+                })
+                JSONP.get( vm.http+"/miscellaneous/Activitychristmasuser/getResult", function (data) {
+                    // data.code=200//TODO
+                    if(data.code==200){//100%中奖
+                        //开始轮播//TODO
+                        vm.dddd=true;
+                        // vm.drawNum-=1;
+                        vm.rotatePrize(data.result.award_type);
+                        vm.toMaskPrize(data.result.award_type);
+                        vm.prizetype=data.result.award_type;
+//                        vm.prizetype=5;
+//                        vm.rotatePrize(5);
+//                        vm.toMaskPrize(5);
+                        if(vm.luckyList.length==0){
+                            vm.luckyList.unshift(data.result);
+                        }else {
+                            vm.luckyList[1]=data.result;
+                        }
+
+                    }else if(data.code==101){
+                        vm.toastMsgFn("活动未开始");
+                    }else if(data.code==102){
+                        vm.toastMsgFn("活动已结束");
+                    }else{
+                        vm.toastMsgFn(data.code);
+                    }
+
+                });
+
+            },
+            showRule:function(){
+                this.showMask=true;
+                this.isShowRule=true;
+            },
+            cannotdraw:function () {
+                return false;
+            },
+            showMyPrize:function(){
+                var vm=this;
+                JSONP.get(vm.http+"/miscellaneous/Activitychristmasuser/getPrizes", function (data) {
+                    console.log(data)
+                    if(data.code==200){
+                        vm.prizeList = data.result;//我的奖品列表
+                        vm.showMask=true;
+                        vm.isShowPrize=true;
+                    }else if(data.code==203){
+                        vm.isLogin = 0;
+                        vm.showMask=true;
+                        return;
+                    }else{
+                        vm.toastMsgFn(data.code);
+                    }
+                });
+
+            },
+            closeMask:function(){
+                this.showdrabtn=true;
+                this.showMask=false;
+                if(!this.isLogin){
+                    window.location.href = "yongche://login?done="+encodeURIComponent(window.location.href+"?t="+new Date().getTime());
+                    return;
+                }
+                if(this.isShowRule){
+                    this.isShowRule=false;
+                    return;
+                }
+                if(this.isShowPrize){
+                    this.isShowPrize=false;
+                    return;
+                }
+                this.initData();
+            },
+            toAddress:function(){
+                this.initData();
+                window.location.href="https://www.wenjuan.in/s/NFjqimo/";
+            },
+            toastMsgFn:function(msg){
+                var vm = this;
+                vm.showToast = true;
+                vm.toastMsg=msg;
+                setTimeout(function(){
+                    vm.showToast = false;
+                },2000)
+            },
+            toPrize:function(num){
+                if(num===1){
+                    return "日本双人游";
+                }else if(num==2){
+                    return "iPhone X";
+                }else if(num==3){
+                    return "哈根达斯代金券";
+                }else if(num==4){
+                    return "9折用车券";
+                }else{
+                    return "9.5折用车券";
+                }
+            },
+            toMaskPrize:function(num){
+                if(num===1){
+                    return this.prizeArr[4].blue;
+                }else if(num==2){
+                    return this.prizeArr[3].blue;
+                }else if(num==3){
+                    return this.prizeArr[2].blue;
+                }else if(num==4){
+                    return this.prizeArr[1].blue;
+                }else{
+                    return this.prizeArr[0].blue;
+                }
+            },
+            toroll:function () {
+                document.getElementById('rollid').scrollTop=0;
+                if(this.MyMar){
+                    clearInterval(this.MyMar)
+                }
+                var speed=2000;
+                var list=document.getElementById('list1');
+                var list2=document.getElementById('list2');
+                var rule=document.getElementById('rollid');
+                list2.innerHTML=list.innerHTML;
+                function Marquee(){
+                    if(list2.offsetTop-rule.scrollTop<=0)
+                        rule.scrollTop-=(list.offsetHeight-46);
+                    else{
+                        rule.scrollTop+=46;
+                    }
+                }
+                this.MyMar=setInterval(Marquee,speed);
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>
