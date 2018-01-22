@@ -1,11 +1,11 @@
-// current
-
-
+// v2.0
+//控制主角方式，改为拖动，只可横向拖动，简化定时器（合二为一）
 var width = window.innerWidth;  
 var height = window.innerHeight; 
 
 // 创建游戏实例
 var game = new Phaser.Game(width, height, Phaser.AUTO, '#game');
+
 // 定义场景
 var states = {
 	// 加载场景
@@ -36,6 +36,7 @@ var states = {
 	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
             game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
             
+            game.load.image('discount', 'images/discount.png'); //结束页-优惠券
 	        game.load.image('replaybtn', 'images/replaybtn.png'); //结束页-再玩一次
 	        
             // 添加进度文字
@@ -44,11 +45,11 @@ var states = {
                 fill: '#eee'
             });
             progressText.anchor.setTo(0.5, 0.5);
-            // 监听加载完一个单个文件的事件
+            // 监听加载完一个文件的事件
             game.load.onFileComplete.add(function(progress) {
                 progressText.text = progress + '%';
             });
-            // 监听所有资源加载完毕事件
+            // 监听加载完毕事件
             game.load.onLoadComplete.add(onLoad);
             // 加载完毕回调方法
             function onLoad() {
@@ -58,12 +59,24 @@ var states = {
     },
     // 开始场景
     created: function() {
-    	var button;
+    	var button,muteButton;
     	this.create = function() {
+    		// 声音管理类 
+    		this.soundManager = game.sound;
             // 添加背景
 	        var bg = game.add.image(0, 0, 'bg1');
 	        bg.width = game.world.width;
 	        bg.height = game.world.height;
+	        
+	        // 添加静音按钮  播放
+	        muteButton = game.add.button(game.world.centerX, 30, 'mute-play', onMute, this, 0, 0, 0);
+	        this.judgeMute();
+	        muteButton.anchor.setTo(0.5, 0.5);
+	        function onMute(){
+	        	this.soundManager.mute =  !this.soundManager.mute;
+	        	this.judgeMute();
+	        }
+	        
 	        // 添加标题
 	        var title = game.add.text(game.world.centerX, game.world.height * 0.25, '一战到底赢大奖', {
 	            fontSize: '40px',
@@ -103,11 +116,26 @@ var states = {
 	        	$('#prize').fadeIn(100);
 	        }
 	        // 添加"分享 "按钮
-	        startButton = game.add.button(game.world.centerX, game.world.height, 'sharebtn', onShare, this, 2, 1, 0);
-	        startButton.anchor.setTo(0.5, 1.5);
+	        shareButton = game.add.button(game.world.centerX, game.world.height, 'sharebtn', onShare, this, 2, 1, 0);
+	        shareButton.anchor.setTo(0.5, 1.5);
 	        function onShare(){
 	        	alert('分享')
 	        }
+       },
+       this.judgeMute = function(update){
+	    	if(update){
+	    		if(this.soundManager.mute){
+	        		muteButton.angle = 0;
+	        	}else{
+	        		muteButton.angle += 1;
+	        	}
+	    	}else{
+	    		if(this.soundManager.mute){
+	        		muteButton.setFrames(1, 1,1);
+	        	}else{
+	        		muteButton.setFrames(0, 0,0);
+	        	}
+	    	}
         }
     },
     // 游戏场景
@@ -124,7 +152,6 @@ var states = {
 		var move_velocity = 200;
 		// x滑动的最小触发距离
 		var minTouchDis = width / 8;
-		//var	halfRoadWidth = (this.game.world.width-grassBeltWidth*2)/6;
     	this.create = function(){
     		// 声音管理类
     		this.soundManager = game.sound;
@@ -154,11 +181,11 @@ var states = {
 	        game.physics.arcade.enable(this.car);
 	        this.car.width = 60;
           	this.car.height= 60;
-          	this.car.body.setSize(60,60,0,0); 
+          	this.car.body.setSize(40,40,0,0); 
 	        
 	        // 创建动画
 	    	this.car.animations.add('left', [0, 1, 2, 3], 10, true);
-	    	this.car.animations.add('center', [4], 10, true);
+	    	this.car.animations.add('center', [4], 1, true);
 	  		this.car.animations.add('right', [5, 6, 7, 8], 10, true);
 	  		this.car.animations.play('center');
 	  		
@@ -169,8 +196,7 @@ var states = {
 	        this.obstacles.forEach(function(item){
 	        	item.width = 50;
 	        	item.height= 50;
-	        	item.body.setSize(50,50,0,0);
-	        	
+	        	item.body.setSize(40,40,0,0);
 	        	// kill超出边界的障碍物
 		        item.checkWorldBounds = true;
 		        item.outOfBoundsKill = true;
@@ -179,7 +205,7 @@ var states = {
 	        // 创建一个group，包含10个奖励星星
 	        this.stars = game.add.group();
 	        this.stars.enableBody = true;
-	        this.stars.createMultiple(21, 'star');
+	        this.stars.createMultiple(20, 'star');
 	        this.stars.forEach(function(item){
 	        	// kill超出边界的障碍物
 		        item.checkWorldBounds = true;
@@ -187,9 +213,9 @@ var states = {
 	        })
 	       
 	       	// 添加头部背景
-	        //var bg = game.add.image(0, 0, 'header');
-	       // bg.width = game.world.width;
-	        //bg.height = 90;
+	        var bg = game.add.image(0, 0, 'header');
+	        bg.width = game.world.width;
+	        bg.height = 90;
 	        
 	        // 添加时间
 			this.remainTime = 60;
@@ -233,13 +259,11 @@ var states = {
 				$('#leadPage').fadeIn(100);
 				firstplay = window.localStorage.setItem("firstplay",true);
 			}else {
-				//添加321开始倒计时
-				this.ThreeTwoOne();
+				this.ThreeTwoOne();//321开始倒计时
 			}
 			$("#close_leadPage").click(function(){
 				$('#leadPage').fadeOut(100);
-				//添加321开始倒计时
-				that.ThreeTwoOne();
+				that.ThreeTwoOne();//321开始倒计时
 			})
     	},
     	this.update = function(){
@@ -249,7 +273,7 @@ var states = {
     		// 小车和奖励的碰撞监听
     		game.physics.arcade.overlap(this.car, this.stars, this.eatStarFunc, null, this);
     	},
-	    this.moveCallback = function(pointer, x, y, isTap) {
+    	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
 			if(preX<x){//右划
 				this.car.animations.play('right');
@@ -267,25 +291,25 @@ var states = {
 				this.car.x = x;
 			}
 		},
-	    this.ThreeTwoOne = function(numImg){//321开始倒计时
+	    this.ThreeTwoOne = function(numImg){
 	    	var num =3;
 	    	var imgArr = ['one','three','five'];
 	    	var ThreeTwoOneTimer = game.time.events.loop(1000,function(){
 	    		if(num<=0){
-	    			game.time.events.remove(ThreeTwoOneTimer);
+	    			game.time.events.remove(ThreeTwoOneTimer)
 	    			// 监听滑动事件
 					//this.game.input.addMoveCallback(this.moveCallback,this);  //放在此处防止倒计时结束前可以拖动主角
-	    			
-		        	// 定时器，倒计时
+	    			// 定时器，倒计时
 		        	this.reduceTimer = game.time.events.loop(500, this.timerCallback, this); 
-	    			return;
+	    			return
 	    		}
 	    		this.tweenImg(imgArr[num-1]);
 	    		num--;
 	    	},this)
+	    	
 	    },
 	    this.tweenImg = function(numImg){
-	    	// 添加倒计时图片
+	    	// 添加得分图片
 		    var goal = game.add.image(game.world.centerX, game.world.centerY, numImg);
 		    var goalImg = game.cache.getImage(numImg);
 		    goal.width = 0;
@@ -309,7 +333,7 @@ var states = {
 		        });
 		    });
 	    },
-	    this.judgeMute = function(update){
+	   	this.judgeMute = function(update){
 	    	if(update){
 	    		if(this.soundManager.mute){
 	        		muteButton.angle = 0;
@@ -323,16 +347,14 @@ var states = {
 	        		muteButton.setFrames(0, 0,0);
 	        	}
 	    	}
-       },
-        this.add_move_sprite = function(){
+        },
+	    this.add_move_sprite = function(){
 	    	// 随机[0,10)的整数，确定是创建障碍物还是星星
 	    	var starNum = Math.floor(Math.random()*10);
-	    	if(starNum <= 4){ 
-	    		this.add_n_star(1);
-	    	}else if(starNum <= 6){ 
+	    	if(starNum <= 1){
 	    		this.add_n_star(2);
-	    	}else if(starNum <= 7){
-	    		this.add_n_star(3);
+	    	}else if(starNum <= 4){
+	    		this.add_n_star(1);
 	    	}else{
 	    		this.add_one_obstacle();
 	    	}
@@ -349,7 +371,6 @@ var states = {
 		  		var y = -obstacle.height;
 	        	// 重新设置位置
 		        obstacle.reset(x, y);
-		        
 	        }
 	    },
 	    this.add_n_star = function(n){
@@ -362,10 +383,9 @@ var states = {
 		        if(star){
 		    		var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
 		    		var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-star.width/2;
-			  		var y = (star.height+20)*(n-i-1);;
+			  		var y = (star.height+10)*(n-i-1);;
 		        	// 重新设置位置
 			        star.reset(x, y);
-			        
 		        }
 	     	}
 	    },
@@ -375,28 +395,25 @@ var states = {
 	    },
 	    this.reduceTime = function(){
 	    	this.remainTime -= 0.5;
-	    	
-	    	// 结束场景
-	        if(this.remainTime <= 0){ 
-	        	this.allStopMove();
-		    	//添加时间到的闹铃声音
-	        	game.time.events.add(1000, function(){
-	        	 	game.state.start('over', true, false, this.score); 
-	        	}, this);
-	        }
-	    	
-	        this.remainTimeText.text = "时间: "+this.remainTime;
-	        
-	        //可否用重力加速度代替  TODO
-	        var v = move_velocity + (60-this.remainTime)*10;
+	    	//console.log(this.remainTime+"===="+parseInt(this.remainTime));
+	        this.remainTimeText.text = "时间: "+parseInt(this.remainTime);
+	        //随着时间进行，速度越来越快
+	        var v = move_velocity + (60-this.remainTime)*20;
 	        this.obstacles.forEachAlive(function(item){
 	    		item.body.velocity.y = v;
 	    	});
 	    	this.stars.forEachAlive(function(item){
 	    		item.body.velocity.y = v;
 	    	});
-	    	
-	        
+	        // 结束场景
+	        if(this.remainTime <= 0){ 
+	        	this.allStopMove();
+		    	//添加时间到的闹铃声音
+		    	alert('时间到')
+	        	game.time.events.add(1000, function(){
+	        	 	game.state.start('over', true, false, this.score); 
+	        	}, this);
+	        }
 	    },
 	    this.allStopMove = function(){
 	    	// 移除定时器
@@ -408,13 +425,12 @@ var states = {
 	    	this.stars.forEach(function(item){
 	    		item.body.velocity.y = 0;
 	    	})
-	    	//取消滑动监听
+	    	//取消滑动监听，主角不可移动
 	    	this.game.input.deleteMoveCallback(this.moveCallback,this);
 	    },
 	    this.crashCarFunc = function(car, obstacle){
 	    	obstacle.kill();
 	    	this.allStopMove();
-	    	
 	    	// 播放音效
     		bombMusic.play();
 	    	car.animations.play('right');
@@ -438,7 +454,6 @@ var states = {
 		        }, 100, Phaser.Easing.Linear.None, true, 200, 0, false);
 		        hideTween.onComplete.add(function() {
 		            goal.kill();
-		            
 		            game.state.start('over', true, false, that.score); 
 		        });
 		    });
@@ -471,7 +486,6 @@ var states = {
         	this.scoreText.text = '分数: ' + this.score; 
 		    // 清除star
 		    star.kill();
-		    
 		    // 播放音效
     		scoreMusic.play();
 	    }
@@ -483,19 +497,31 @@ var states = {
 	        score = arguments[0];
 	    }
 	    this.create = function() {
+	    	// 声音管理类
+    		this.soundManager = game.sound;
 	        // 添加背景
 	        var bg = game.add.image(0, 0, 'bg1');
 	        bg.width = game.world.width;
 	        bg.height = game.world.height;
+	        
+	        // 添加静音按钮  播放
+	        muteButton = game.add.button(game.world.centerX, 30, 'mute-play', onMute, this, 0, 0, 0);
+	        this.judgeMute();
+	        muteButton.anchor.setTo(0.5, 0.5);
+	        function onMute(){
+	        	this.soundManager.mute =  !this.soundManager.mute;
+	        	this.judgeMute();
+	        }
+	        
 	        // 添加文本
-	        var title = game.add.text(game.world.centerX, game.world.height * 0.25, '游戏结束', {
-	            fontSize: '40px',
+	        var title = game.add.text(game.world.centerX, game.world.height * 0.2, '游戏得分', {
+	            fontSize: '28px',
 	            fontWeight: 'bold',
 	            fill: '#f2bb15'
 	        });
 	        title.anchor.setTo(0.5, 0.5);
-	        var scoreStr = '你的得分是：'+score+'分';
-	        var scoreText = game.add.text(game.world.centerX, game.world.height * 0.4, scoreStr, {
+	        var scoreStr = score+'分';
+	        var scoreText = game.add.text(game.world.centerX, game.world.height * 0.25, scoreStr, {
 	            fontSize: '30px',
 	            fontWeight: 'bold',
 	            fill: '#f2bb15'
@@ -504,27 +530,55 @@ var states = {
 	        //超过98%用户
 	        title.anchor.setTo(0.5, 0.5);
 	        var scoreStr = '超过98%用户';
-	        var scoreText = game.add.text(game.world.centerX, game.world.height * 0.5, scoreStr, {
-	            fontSize: '30px',
+	        var scoreText = game.add.text(game.world.centerX, game.world.height * 0.3, scoreStr, {
+	            fontSize: '20px',
 	            fontWeight: 'bold',
 	            fill: '#f2bb15'
 	        });
 	        scoreText.anchor.setTo(0.5, 0.5);
+	        // 添加文本“恭喜获得”
+	        var title = game.add.text(game.world.centerX, game.world.height * 0.4, '恭喜获得', {
+	            fontSize: '20px',
+	            fontWeight: 'bold',
+	            fill: '#f2bb15'
+	        });
+	        title.anchor.setTo(0.5, 0.5);
 	        
-	         // 添加"再玩一次 "按钮
-	        replayButton = game.add.button(game.world.centerX, game.world.height * 0.6, 'replaybtn', onReplay, this, 2, 1, 0);
+	        //优惠券
+	        var discount = game.add.image(game.world.centerX, game.world.height * 0.5, 'discount');
+	        discount.width = game.world.width*0.6;
+	        discount.height = 60;
+	        discount.anchor.setTo(0.5, 0.5);
+	        
+	        // 添加"再玩一次 "按钮
+	        replayButton = game.add.button(game.world.centerX, game.world.height * 0.75, 'replaybtn', onReplay, this, 2, 1, 0);
 	        replayButton.anchor.setTo(0.5, 0.5);
 	        function onReplay(){
 	        	game.state.start('play');
 	        }
 			
 			 // 添加"分享 "按钮
-	        startButton2 = game.add.button(game.world.centerX, game.world.height, 'sharebtn', onShare2, this, 2, 1, 0);
+	        startButton2 = game.add.button(game.world.centerX, game.world.height * 0.85, 'sharebtn', onShare2, this, 2, 1, 0);
 	        startButton2.anchor.setTo(0.5, 1.5);
 	        function onShare2(){
 	        	alert('分享')
 	        }
-	    }
+	    },
+       this.judgeMute = function(update){
+	    	if(update){
+	    		if(this.soundManager.mute){
+	        		muteButton.angle = 0;
+	        	}else{
+	        		muteButton.angle += 1;
+	        	}
+	    	}else{
+	    		if(this.soundManager.mute){
+	        		muteButton.setFrames(1, 1,1);
+	        	}else{
+	        		muteButton.setFrames(0, 0,0);
+	        	}
+	    	}
+        }
     }
 };
 

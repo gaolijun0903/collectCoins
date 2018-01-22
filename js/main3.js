@@ -169,12 +169,20 @@ var states = {
 	        	item.width = 50;
 	        	item.height= 50;
 	        	item.body.setSize(50,50,0,0);
+	        	// kill超出边界的障碍物
+		        item.checkWorldBounds = true;
+		        item.outOfBoundsKill = true;
 	        })
 	        
 	        // 创建一个group，包含10个奖励星星
 	        this.stars = game.add.group();
 	        this.stars.enableBody = true;
 	        this.stars.createMultiple(20, 'star');
+	        this.stars.forEach(function(item){
+	        	// kill超出边界的障碍物
+		        item.checkWorldBounds = true;
+		        item.outOfBoundsKill = true;
+	        })
 	       
 	       	// 添加头部背景
 	        var bg = game.add.image(0, 0, 'header');

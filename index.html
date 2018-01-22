@@ -117,9 +117,30 @@
 			
 			//bomb 
 			//http://i1.yongche.name/s/download/201801/boom.mp3?1478153218
+			
+			$.ajax({
+	            type:'get',
+	            url:'https://market.yongche.com/miscellaneous/Activitychristmasuser/checkNow',
+	            dataType:'jsonp',
+	            success:function(data) {
+	                console.log(data);
+	                if(data.code==200){
+	                    logined.show();
+	                    alert('已登录');
+	
+	                    btn_down.show();
+	                } else if(data.code==201) {
+	                    alert('活动已结束');
+	                    btn_down.show();
+	                }
+	            },
+	            error:function(err){
+	                alert(err.msg)
+	            }
+        	});
 	
 		</script>
-		<script src="js/main.js?version=1.2"></script>
+		<script src="js/main2.js?version=1.2"></script>
 		
 	</body>
 </html>
