@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
+    <title>glj</title>
+  
+</head>
+<body>
+  <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+  	document.cookie='_app_token_v3=ZNLbf6_g1Ur4GbsaVVdXwJRkPnJhpbcV84O_Es4ySYI';
+  	
+  	var testUrl = 'https://testing2-market.Yongche.org/Miscellaneous/Activityusergame/'; //线下接口
+		var gameNum = 0; //游戏次数
+		var shareToken = '';
+  	initData();
+		
+		function initData(){
+			$.ajax({
+	            type:'get',
+	            url: testUrl + 'getCommon',
+	            dataType:'jsonp',
+	            success:function(data) {
+	                //console.log(data);
+	                if(data.code==200){
+	                    alert('已登录');
+						gameNum = data.result.gameNum;
+	                    shareToken = data.result.shareToken;
+	                    //toshare
+						/* ajaxShare({
+                            url:'http://www.yongche.com/cms/page/christmaslogin.html?invite='+shareToken,
+                            title:'来自易到的圣诞邀请',
+                            description:'双人游，iPhone x等大奖送不停！'
+                        })*/
+                        
+	                }else if(data.code==403) {//未登录
+	                    console.log('未登录');
+	                    
+	                }else if(data.code==504) {//不在活动期间
+	                    console.log('不在活动期间');
+	                    
+	                }else if(data.code==500) {//用户信息为空
+	                    console.log('用户信息为空');
+	                    
+	                }else if(data.code==507) {//访问频率过快
+	                    console.log('访问频率过快');
+	                    
+	                } 
+	            },
+	            error:function(err){
+	                alert(err.msg)
+	            }
+        	});
+		}
+  </script>
+	
+</body>
+</html>
