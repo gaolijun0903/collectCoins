@@ -1,5 +1,5 @@
-<!--端内分享相关-->
-	
+		//<!--端内分享相关-->
+		//<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	    //document.cookie='_app_token_v3=ZNLbf6_g1Ur4GbsaVVdXwJRkPnJhpbcV84O_Es4ySYI';//TODO
 	    function ajaxShare(obj){
 	        // 分享变量设置

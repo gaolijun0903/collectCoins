@@ -1,0 +1,122 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html,
+body{
+	width: 10.0rem;
+	height: 100%;
+	position: relative;
+}
+ul,li{
+	list-style: none;
+}
+input{
+    outline: none;
+    border:none;
+    -webkit-appearance: none;
+}
+.wrapper{
+	width: 10.0rem;
+	height: 100%;
+	/*background: url(../assets/3.png);*/
+}
+.mask{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 10.0rem;
+	height: 100%;
+	line-height:  0.67rem;
+	font-size: 30px;
+	text-align: center;
+	background:rgba(0,0,0,0.4);
+	display: none;
+}
+.mask .container{
+	margin: 2.0rem auto 0;
+	width: 8.0rem;
+	height: 8.0rem;
+	background: #fff;
+	border-radius:0.133rem;
+}
+.lead{
+	margin-bottom: 0.133rem;
+	font-size: 18px;
+	color: #fff;
+}
+.close_btn{
+	margin: 0 auto;
+	width: 0.533333rem;
+	height: 0.533333rem;
+	background: url(../images/closebtn.png);
+	background-size: 100%;
+}
+.leadPage{
+	padding-top: 120px;
+}
+.ok_btn{
+	margin: 0 auto;
+	width: 40px;
+	height:40px;
+	background: url(../images/ok.jpg);
+	background-size: 100%;
+}
+
+.login-contain{
+	padding: 0.8rem;
+	text-align: left;
+}
+.login-contain .login-title{
+	
+	font-size: 0.5rem;
+	line-height: 1.3rem;
+}		
+        
+.login-contain  .login-input{
+	margin-bottom: 0.3rem;
+    display: inline-block;
+    width:6.2rem;
+    height:1.067rem;
+    border:1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 0.373333rem;
+	padding-left: 0.33333rem;
+}
+.login-contain .login-tel{
+  
+}
+.login-contain .login-input-short{
+	width:3.3rem;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 0.1rem;
+}
+.login-contain .login-code{
+	width:2.5rem;
+	height:1.067rem;
+    font-size: 0.373333rem;
+	display: inline-block;
+}
+.login-contain .login-getmsgcode{
+	color: #FFFFFF;
+	background: #E92C2A;
+    border-radius: 0.5rem;
+}
+.login-contain .login-captchacode{
+	background: #CCCCCC;
+}
+.login-captchacode-wrapper{
+	display: none;
+}
+.login-contain .login-btn{
+	width:6.2rem;
+    height:1.067rem;
+    color: #FFFFFF;
+    background: #E92C2A;
+    border-radius: 0.5rem;
+    font-size: 0.55rem;
+    text-align: center;
+    line-height: 1.067rem;
+}

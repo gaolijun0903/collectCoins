@@ -1,67 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="screen-orientation" content="portrait">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="format-detection" content="telephone=no">
+<html>
+	<head>
+	<meta charset="UTF-8"/>
+    <meta https-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no, initial-scale=1">
+    <meta name = "format-detection" content = "telephone=no"><!--防止iOS网页中的数字被识别为电话号码-->
     <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
     <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
-    <title>glj</title>
-  
-</head>
-<body>
-  <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
-  <script type="text/javascript">
-  	document.cookie='_app_token_v3=ZNLbf6_g1Ur4GbsaVVdXwJRkPnJhpbcV84O_Es4ySYI';
-  	
-  	var testUrl = 'https://testing2-market.Yongche.org/Miscellaneous/Activityusergame/'; //线下接口
+	<title>小车</title>
+	 <script src="https://i2.Yongche.name/s/js/201712/flexible.js?1478153218"></script>
+	<link rel="stylesheet" type="text/css" href="css/glj.css"/>
+	<script src="js/jquery-3.0.0.min.js"></script>
+       
+	</head>
+	<body>
+		<div class="wrapper"> 
+			<div id="helphim" class="helphim">助力</div>
+			<div id="game_div"></div>
+		</div>
+		<div id="rule" class="mask rule-mask">
+			<div class="container rule">
+				<h3>活动规则</h3>
+				<ul>
+					<li class="rule-item">lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+				</ul>
+			</div>
+			<div id="close_rule" class="close_btn"></div>
+		</div>
+		<div id="prize" class="mask prize-mask">
+			<div class="container">
+				<h3>我的奖品</h3>
+				<ul>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+					<li>lallal </li>
+				</ul>
+			</div>
+			<div id="close_prize" class="close_btn"></div>
+		</div>
+		<div id="leadPage" class="mask leadPage-mask">
+			<ul>
+				<li class="lead">左右滑动，更换跑道</li>
+				<li class="lead">吃到金币越多越好</li>
+				<li class="lead">碰到炸弹，直接结束游戏 </li>
+			</ul>
+			<div id="close_leadPage" class="ok_btn"></div>
+		</div>
+		<div id="loginMask" class="mask login-mask">
+			<div class="container login-contain">
+	            <div class="login-title">手机号登录</div>
+	            <input id="login-tel" type="tel" class="login-input" placeholder="请输入手机号" maxlength="11">
+	            
+	            <div class="login-captchacode-wrapper"> <!--图形验证码-->
+	                <input id="login-captchacode" class="login-input login-input-short" type="text" placeholder="请输入验证码" maxlength="4">
+	                <span class="login-code login-captchacode"><img  id="login-getcaptchacode" width="100%" height="100%" src="https://market.yongche.com/activity/Webuser/getCaptcha"></span>
+	            </div>
+	            <div>  <!--短信验证码-->
+	                <input id="login-msgcode" class="login-input login-input-short" type="tel" placeholder="请输入验证码" maxlength="6">
+	                <input id="login-getmsgcode" type="button" class="login-code login-getmsgcode" value="获取验证码">
+	            </div>
+	            <div id="login-btn" class="login-btn">登&nbsp;&nbsp;&nbsp;录</div>
+	        </div>
+        </div>
+		
+		
+
+	
+	<script>
+		document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';
+		var testUrl = 'https://testing2-market.Yongche.org/Miscellaneous/Activityusergame/'; //线下接口
 		var gameNum = 0; //游戏次数
 		var shareToken = '';
-  	initData();
 		
-		function initData(){
-			$.ajax({
-	            type:'get',
-	            url: testUrl + 'getCommon',
-	            dataType:'jsonp',
-	            success:function(data) {
-	                //console.log(data);
-	                if(data.code==200){
-	                    alert('已登录');
-						gameNum = data.result.gameNum;
-	                    shareToken = data.result.shareToken;
-	                    //toshare
-						/* ajaxShare({
-                            url:'http://www.yongche.com/cms/page/christmaslogin.html?invite='+shareToken,
-                            title:'来自易到的圣诞邀请',
-                            description:'双人游，iPhone x等大奖送不停！'
-                        })*/
-                        
-	                }else if(data.code==403) {//未登录
-	                    console.log('未登录');
-	                    
-	                }else if(data.code==504) {//不在活动期间
-	                    console.log('不在活动期间');
-	                    
-	                }else if(data.code==500) {//用户信息为空
-	                    console.log('用户信息为空');
-	                    
-	                }else if(data.code==507) {//访问频率过快
-	                    console.log('访问频率过快');
-	                    
-	                } 
-	            },
-	            error:function(err){
-	                alert(err.msg)
-	            }
-        	});
-		}
-  </script>
-	
-</body>
+	</script>
+	<script src="js/glj.js"></script>
+	</body>
 </html>
