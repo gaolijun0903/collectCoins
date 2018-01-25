@@ -7,17 +7,78 @@
     <meta name = "format-detection" content = "telephone=no"><!--防止iOS网页中的数字被识别为电话号码-->
     <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
     <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
-	<title>小车</title>
-	 <script src="https://i2.Yongche.name/s/js/201712/flexible.js?1478153218"></script>
-	<link rel="stylesheet" type="text/css" href="css/glj.css"/>
-	<script src="js/jquery-3.0.0.min.js"></script>
-       
+		<title>小车</title>
+		<!--<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			html,
+			body{
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			ul,li{
+				list-style: none;
+			}
+			.mask{
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 100%;
+				height: 100%;
+				line-height: 50px;
+				font-size: 30px;
+				text-align: center;
+				background:rgba(0,0,0,0.4);
+				display: none;
+			}
+			.mask .container{
+				margin: 15% auto 0;
+				width: 80%;
+				height: 70%;
+				background: #fff;
+				border-radius:10px;
+			}
+			.lead{
+				margin-bottom: 10px;
+				font-size: 18px;
+				color: #fff;
+			}
+			.close_btn{
+				margin: 0 auto;
+				width: 40px;
+				height:40px;
+				background: url(images/closebtn.png);
+				background-size: 100%;
+			}
+			.leadPage{
+				padding-top: 120px;
+			}
+			.ok_btn{
+				margin: 0 auto;
+				width: 40px;
+				height:40px;
+				background: url(images/ok.jpg);
+				background-size: 100%;
+			}
+		</style>-->
+		<script src="https://i2.Yongche.name/s/js/201712/flexible.js?1478153218"></script>
+		<link rel="stylesheet" type="text/css" href="css/glj.css"/>
+		<script src="gamelib/phaser.min.js"></script>
+		<script src="js/jquery-3.0.0.min.js"></script>
+		<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		
 	</head>
 	<body>
-		<div class="wrapper"> 
-			<div id="helphim" class="helphim">助力</div>
-			<div id="game_div"></div>
-		</div>
+		<div id="game"></div>
+		<!--<div class="wrapper"> 
+			<div id="helphim" class="helphim"></div>
+			<div id="game"></div>
+		</div>-->
+		
 		<div id="rule" class="mask rule-mask">
 			<div class="container rule-contain">
 				<div class="mask-title">活动规则</div>
@@ -67,8 +128,19 @@
         </div>
 		
 		
+	<script>
+		
 
-	
+		$("#close_rule").click(function(){
+			$('#rule').fadeOut(300);
+		})
+		$("#close_prize").click(function(){
+			$('#prize').fadeOut(300);
+		})
+		
+		
+
+	</script>
 	<script>
 		document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';
 		var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
@@ -76,9 +148,12 @@
 		var gameNum = 0; //游戏次数
 		var shareToken = '';
 		
-		$('#prize').show();
+		//$('#prize').show();
 		
 	</script>
-	<script src="js/glj.js"></script>
+	<script src="js/glj.js"></script>	
+		
+	<script src="gamelib/main.js"></script>
+	
 	</body>
 </html>

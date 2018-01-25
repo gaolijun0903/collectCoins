@@ -3,6 +3,8 @@
 var width = window.innerWidth;  
 var height = window.innerHeight; 
 
+var playNum = 6;//TODO ajax获取
+
 // 创建游戏实例
 var game = new Phaser.Game(width, height, Phaser.AUTO, '#game');
 
@@ -17,27 +19,29 @@ var states = {
 	        // 加载游戏资源
 	        game.load.crossOrigin = 'anonymous'; // 设置跨域
 	        game.load.image('homepagebg', 'images/homepagebg.png');//首页-背景
-	        game.load.image('title', 'images/title.png');  //首页-标题
+	        
 	        game.load.image('startbtn', 'images/startbtn.png'); //首页-开始游戏按钮
 	        game.load.image('rulebtn', 'images/rulesbtn.png'); //首页-活动规则按钮
 	        game.load.image('myprizebtn', 'images/myprizebtn.png'); //首页-我的奖品按钮
 	        game.load.image('sharebtn', 'images/sharebtn.png'); //首页-分享按钮 、  结束页-分享按钮
-	        game.load.spritesheet('dude', 'images/dude.png', 32, 48); //游戏主角
+	        game.load.spritesheet('dude', 'images/dude.png', 360, 422); //游戏主角
+	       
 	        
 	        game.load.image('playbg', 'images/playbg.png');//游戏页-背景
 	        game.load.image('timerbg', 'images/timerbg.png');//游戏页-定时器背景
 	        game.load.image('playcount', 'images/playcount.png');//游戏页-游戏次数背景
 	        game.load.image('coinbg', 'images/coinbg.png');//游戏页-金币数背景
-	        game.load.image('coin', 'images/coin.png'); //游戏页-金币
+	        //game.load.image('coin', 'images/coin.png'); 
+	        game.load.spritesheet('coin', 'images/coin.png', 162, 162); //游戏页-金币
 	        game.load.image('stone', 'images/stone.png'); //游戏页-石头
 	        game.load.image('roadblock', 'images/roadblock.png');//游戏页-路障
 	        game.load.image('garbagecan', 'images/garbagecan.png');//游戏页-垃圾桶
 	        
-	        //game.load.image('bomb', 'images/bomb.png'); //游戏页-炸弹
-	        game.load.image('five', 'images/five.png'); //游戏页-加分图片 （开始倒计时暂用）
-	        game.load.image('three', 'images/three.png');//游戏页-加分图片 （开始倒计时暂用）
+	        game.load.image('plus100', 'images/plus100.png'); //游戏页-加分图片 
+	        game.load.image('three', 'images/three.png'); //游戏页-加分图片 （开始倒计时暂用）
+	        game.load.image('two', 'images/two.png');//游戏页-加分图片 （开始倒计时暂用）
 	        game.load.image('one', 'images/one.png');//游戏页-加分图片 （开始倒计时暂用）
-	        game.load.spritesheet('mute-play', 'images/mute-play.png', 41, 22); //游戏页-静音及播放
+	        game.load.spritesheet('mute-play', 'images/mute-play.png', 64, 47); //游戏页-静音及播放
 	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
 	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
             game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
@@ -59,8 +63,10 @@ var states = {
             game.load.onLoadComplete.add(onLoad);
             // 加载完毕回调方法
             function onLoad() {
+            	//ajax请求数据，希望数据返回，并且资源加载完毕后才进入created场景
             	game.state.start('created');
             }
+            
 	    }
     },
     // 开始场景
@@ -74,60 +80,56 @@ var states = {
 	        var bg = game.add.image(0, 0, 'homepagebg');
 	        bg.width = game.world.width;
 	        bg.height = game.world.height;
+	        // 添加"活动规则"按钮
+	        ruleButton = game.add.button(game.world.width -60-9 , 20, 'rulebtn', showRules, this, 2, 1, 0);
+	        ruleButton.width = 60;
+			ruleButton.height = 43;
+	        function showRules(){
+	        	$('#rule').fadeIn(100);
+	        }
+	        // 添加"我的奖品"按钮
+	        prizeButton = game.add.button(16, 16, 'myprizebtn', showPrizes, this, 2, 1, 0);
+	        prizeButton.width = 65;
+			prizeButton.height = 48;
+	        function showPrizes(){
+	        	$('#prize').fadeIn(100);
+	        }
+	        
+	       	// 添加"我有几次游戏机会"
+            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ playNum +'次游戏机会', {
+                fontSize: '18px',
+                fill: '#FFFFFF'
+            });
+            gamecountText.anchor.setTo(0.5, 1);
+            
+	        // 添加"开始游戏"按钮
+	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'startbtn', onStart, this, 2, 1, 0);
+	        startButton.width = 173;
+	        startButton.height = 35;
+	        startButton.anchor.setTo(0.5, 1);
+	        function onStart(){
+	        	game.state.start('play');
+	        }
+	        
+	        
+	        // 添加"分享 "按钮
+	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'sharebtn', onShare, this, 2, 1, 0);
+	        shareButton.width = 173;
+	        shareButton.height = 39;
+	        shareButton.anchor.setTo(0.5, 1);
+	        function onShare(){
+	        	alert('分享')
+	        }
 	        
 	        // 添加静音按钮  播放
-	        muteButton = game.add.button(game.world.centerX, 30, 'mute-play', onMute, this, 0, 0, 0);
+	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 0, 0, 0);
+	        muteButton.width = 32;
+			muteButton.height = 23;
 	        this.judgeMute();
 	        muteButton.anchor.setTo(0.5, 0.5);
 	        function onMute(){
 	        	this.soundManager.mute =  !this.soundManager.mute;
 	        	this.judgeMute();
-	        }
-	        
-	        // 添加标题
-	        var title = game.add.text(game.world.centerX, game.world.height * 0.25, '一战到底赢大奖', {
-	            fontSize: '40px',
-	            fontWeight: 'bold',
-	            fill: '#f2bb15'
-	        });
-	        title.anchor.setTo(0.5, 0.5);
-	        
-	      
-	        // 添加主角
-	        var man = game.add.sprite(game.world.centerX, game.world.height * 0.75, 'dude');
-	        var manImage = game.cache.getImage('dude');
-	        man.width = game.world.width * 0.2;
-	        man.height = game.world.width * 0.2;
-	        man.anchor.setTo(0.5, 0.5);
-	        man.animations.add('left', [0, 1, 2, 3], 10, true);
-	  		man.animations.add('right', [5, 6, 7, 8], 10, true);
-	  		man.animations.play('right');
-	       
-	        // 添加"开始游戏"按钮
-	        startButton = game.add.button(game.world.centerX, game.world.centerY, 'startbtn', onStart, this, 2, 1, 0);
-	        startButton.anchor.setTo(0.5, 0.5);
-	        function onStart(){
-	        	game.state.start('play');
-	        }
-	        
-	        // 添加"活动规则"按钮
-	        ruleButton = game.add.button(0, 0, 'rulebtn', showRules, this, 2, 1, 0);
-	        function showRules(){
-	        	$('#rule').fadeIn(100);
-	        }
-	        // 添加"我的奖品"按钮
-	        prizeButton = game.add.button(0, 0, 'myprizebtn', showPrizes, this, 2, 1, 0);
-	        var prizeButtonx = game.world.width - prizeButton.width - prizeButton.width / 2;
-	        var prizeButtony = prizeButton.height / 2;
-	        prizeButton.reset(prizeButtonx, prizeButtony);
-	        function showPrizes(){
-	        	$('#prize').fadeIn(100);
-	        }
-	        // 添加"分享 "按钮
-	        shareButton = game.add.button(game.world.centerX, game.world.height, 'sharebtn', onShare, this, 2, 1, 0);
-	        shareButton.anchor.setTo(0.5, 1.5);
-	        function onShare(){
-	        	alert('分享')
 	        }
        },
         this.judgeMute = function(update){
@@ -176,23 +178,17 @@ var states = {
 	        bg.height = game.world.height;
     		
 	    	//添加主角
-	        this.car = this.game.add.sprite(32, game.world.height - 150, 'dude');
-	        var carWidth = this.car.width;
-	        var carHeight = this.car.height;
-	        var posX = game.world.width * (1-(5-(1*2))/6) - carWidth / 2;
-		  	var posY = game.world.height - carHeight - carHeight / 3;
-	        this.car.x = posX;
-	        this.car.y = posY;
+	        this.car = this.game.add.sprite(game.world.centerX, game.world.height - 100, 'dude');
+	        this.car.width = 120;
+          	this.car.height= 140;
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
-	        this.car.width = 60;
-          	this.car.height= 60;
-          	this.car.body.setSize(40,40,0,0); 
-	        
+          	this.car.body.setSize(120,140,0,0); 
 	        // 创建动画
-	    	this.car.animations.add('left', [0, 1, 2, 3], 10, true);
-	    	this.car.animations.add('center', [4], 1, true);
-	  		this.car.animations.add('right', [5, 6, 7, 8], 10, true);
+	    	this.car.animations.add('left', [8, 10, 9], 10, true);
+	    	this.car.animations.add('center', [0,1,2,3,4,5,6,7], 10, true);
+	  		this.car.animations.add('right', [12, 13, 14, 15], 10, true);
+	  		this.car.animations.add('over', [16], 10, true)
 	  		this.car.animations.play('center');
 	  		
 	  		
@@ -210,13 +206,15 @@ var states = {
 	        this.remainTimeText = this.game.add.text(62, 25, "01：00", style);
 			
 			// 添加次数背景
-	        var timerbg = game.add.image(game.world.centerX-25, 16, 'playcount');
+	        var timerbg = game.add.image(game.world.centerX, 45, 'playcount');
 	        timerbg.width = 49;
 	        timerbg.height = 49;
+	        timerbg.anchor.setTo(0.5, 0.5);
 	        // 添加次数
 			this.remainCount = 3;
 	        var style = { font: "22px Arial", fill: "#ffffff" };
-	        this.remainCountText = this.game.add.text(game.world.centerX, 25, this.remainCount, style);
+	        this.remainCountText = this.game.add.text(game.world.centerX, 45, this.remainCount, style);
+	        this.remainCountText.anchor.setTo(0.5, 0.5);
 	        
 			// 添加分数背景
 	        var coinbg = game.add.image(game.world.width-19-112, 16, 'coinbg');
@@ -228,7 +226,10 @@ var states = {
 	        this.scoreText = this.game.add.text(game.world.width-19-90, 25, " "+this.score, style);
 	        
 	        // 添加静音按钮  播放
-	        muteButton = game.add.button(game.world.width-19, 40, 'mute-play', onMute, this, 0, 0, 0);
+	        // 添加静音按钮  播放
+	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 0, 0, 0);
+	        muteButton.width = 32;
+			muteButton.height = 23;
 	        this.judgeMute();
 	        muteButton.anchor.setTo(0.5, 0.5);
 	        function onMute(){
@@ -287,7 +288,7 @@ var states = {
 		},
 	    this.ThreeTwoOne = function(numImg){
 	    	var num =3;
-	    	var imgArr = ['one','three','five'];
+	    	var imgArr = ['one','two','three'];
 	    	var ThreeTwoOneTimer = game.time.events.loop(1000,function(){
 	    		if(num<=0){
 	    			game.time.events.remove(ThreeTwoOneTimer)
@@ -377,6 +378,11 @@ var states = {
 			  		var y = -obstacle.height;
 			  		// 重新设置位置
 			        obstacle.reset(x, y);
+			        if(type==='coin'){
+			        	// 创建动画
+				    	obstacle.animations.add('jump', [0, 1,], 10, true);
+				  		obstacle.animations.play('jump');
+			        }
 			    //}   
 			}
        	},
@@ -419,18 +425,18 @@ var states = {
 	    	obstacle.kill();
 	    	var imageName = '';
 	    	if(obstacle.type==='coin'){
-	    		imageName = 'one';
+	    		imageName = 'plus100';
 	    		// 更新分数
 			   	this.score += 1;
 	        	this.scoreText.text =  this.score; 
 			    // 播放音效
 	    		scoreMusic.play();
 	    	}else{
-	    		imageName = 'five';
+	    		imageName = 'plus100';//TODO
 	    		this.allStopMove();
 	    		// 播放音效
 	    		bombMusic.play();
-		    	car.animations.play('right');
+		    	car.animations.play('over');
 	    	}
 	    	
 	    	// 添加爆炸图片

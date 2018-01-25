@@ -12,6 +12,9 @@ $("#close_rule").click(function(){
 $("#close_prize").click(function(){
 	$('#prize').fadeOut(300);
 })
+$("#close_leadPage").click(function(){
+	$('#leadPage').fadeOut(300);
+})
 
 var telInput = $('#login-tel'),   //手机号输入框
 	msgInput = $('#login-msgcode'),   //短信验证码输入框
@@ -35,12 +38,12 @@ var inApp = isYidao===-1 ? false : true;
 var gameToken = '';
 var goldNum = 0;
 
-initData();
+//initData();
 
 function initData(){
 	$.ajax({
         type:'get',
-        url: testUrl + 'getCommon',
+        url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
         dataType:'jsonp',
         success:function(data) {
             //console.log(data);
@@ -57,7 +60,7 @@ function initData(){
                 
             }else if(data.code==403) {//未登录
                 console.log('未登录');
-                $('#loginMask').show();
+                //$('#loginMask').show(); //TODO
                 /*if(inApp){
                 	//端内登录地址
                 }else{
@@ -80,11 +83,11 @@ function initData(){
 	});
 }
 
-startGame()
+//startGame()
 function startGame(){//开始游戏
 	$.ajax({
         type:'get',
-        url: testUrl + 'startGame',
+        url: httpHead + '/Miscellaneous/Activityusergame/startGame',
         dataType:'jsonp',
         success:function(data) {
             //console.log(data);
@@ -95,7 +98,7 @@ function startGame(){//开始游戏
 				
             }else if(data.code==403) {//未登录
                 console.log('未登录');
-                $('#loginMask').show();
+                //$('#loginMask').show();
                 
             }else if(data.code==504) {//不在活动期间
                 console.log('不在活动期间');
@@ -119,7 +122,7 @@ function startGame(){//开始游戏
 function endGame(){//游戏结束
 	$.ajax({
         type:'get',
-        url: testUrl + 'endGame?gameToken='+gameToken+'&goldNum='+goldNum,
+        url: httpHead + '/Miscellaneous/Activityusergame/endGame?gameToken='+gameToken+'&goldNum='+goldNum,
         dataType:'jsonp',
         success:function(data) {
             //console.log(data);
@@ -152,6 +155,25 @@ function endGame(){//游戏结束
 }
 
 
+var shareToken = GetQueryString('shareToken');
+helphimBtn.click(helphimFn);
+function helphimFn() { //助力
+    $.ajax({
+        url: httpHead + '/Miscellaneous/Activityusergame/helpUser?shareToken=' +shareToken,
+        type:'get',
+        dataType:'jsonp',
+        success:function(data) {
+            console.log(data);
+            alert('您已为好友增加抽奖次数，赶快来参与活动吧！');
+        },
+        error:function(err){
+            alert(err.msg)
+        }
+    });
+    
+}
+
+
 
 //点击登录按钮
 loginBtn.click(function() {
@@ -172,7 +194,7 @@ loginBtn.click(function() {
     }
    
     $.ajax({
-        url:'https://market.yongche.com/activity/Webuser/Login?cellphone='+cellphone+'&code='+msgcode,
+        url: httpHead + '/activity/Webuser/Login?cellphone='+cellphone+'&code='+msgcode,
         type:'get',
         dataType:'jsonp',
         success:function(data) {
@@ -222,7 +244,7 @@ function getMsgCode(cellphone,captcha) {//获取短信验证码接口
 	console.log(111)
     $.ajax({
         type:'get',
-        url:'https://market.yongche.com/activity/Webuser/getCode?cellphone='+cellphone+'&captcha='+captcha,
+        url:httpHead+'/activity/Webuser/getCode?cellphone='+cellphone+'&captcha='+captcha,
         dataType:'jsonp',
         xhrFields: {
             withCredentials: true
@@ -272,25 +294,7 @@ function getMsgCode(cellphone,captcha) {//获取短信验证码接口
 
 getcaptchaBtn.click(getcaptchaFn);
 function getcaptchaFn() {//获取图形验证码
-    getcaptchaBtn.attr('src','https://market.yongche.com/activity/Webuser/getCaptcha?t='+new Date().getTime());
-}
-
-var shareToken = GetQueryString('shareToken');
-helphimBtn.click(helphimFn);
-function helphimFn() { //助力
-    $.ajax({
-        url: testUrl + 'helpUser?shareToken=' +shareToken,
-        type:'get',
-        dataType:'jsonp',
-        success:function(data) {
-            console.log(data);
-            alert('您已为好友增加抽奖次数，赶快来参与活动吧！');
-        },
-        error:function(err){
-            alert(err.msg)
-        }
-    });
-    
+    getcaptchaBtn.attr('src',httpHead+'/activity/Webuser/getCaptcha?t='+new Date().getTime());
 }
 
 function GetQueryString(name) {
