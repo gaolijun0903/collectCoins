@@ -3,8 +3,6 @@
 var width = window.innerWidth;  
 var height = window.innerHeight; 
 
-var playNum = 6;//TODO ajax获取
-
 // 创建游戏实例
 var game = new Phaser.Game(width, height, Phaser.AUTO, '#game');
 
@@ -24,18 +22,18 @@ var states = {
 	        game.load.image('rulebtn', 'images/rulesbtn.png'); //首页-活动规则按钮
 	        game.load.image('myprizebtn', 'images/myprizebtn.png'); //首页-我的奖品按钮
 	        game.load.image('sharebtn', 'images/sharebtn.png'); //首页-分享按钮 、  结束页-分享按钮
-	        game.load.spritesheet('dude', 'images/dude.png', 360, 422); //游戏主角
+	        game.load.spritesheet('dude', 'images/dude.png', 47, 55); //游戏主角
 	       
 	        
 	        game.load.image('playbg', 'images/playbg.png');//游戏页-背景
 	        game.load.image('timerbg', 'images/timerbg.png');//游戏页-定时器背景
 	        game.load.image('playcount', 'images/playcount.png');//游戏页-游戏次数背景
 	        game.load.image('coinbg', 'images/coinbg.png');//游戏页-金币数背景
-	        //game.load.image('coin', 'images/coin.png'); 
 	        game.load.spritesheet('coin', 'images/coin.png', 162, 162); //游戏页-金币
 	        game.load.image('stone', 'images/stone.png'); //游戏页-石头
 	        game.load.image('roadblock', 'images/roadblock.png');//游戏页-路障
 	        game.load.image('garbagecan', 'images/garbagecan.png');//游戏页-垃圾桶
+	        game.load.image('crash', 'images/crash.png'); 
 	        
 	        game.load.image('plus100', 'images/plus100.png'); //游戏页-加分图片 
 	        game.load.image('three', 'images/three.png'); //游戏页-加分图片 （开始倒计时暂用）
@@ -64,9 +62,11 @@ var states = {
             // 加载完毕回调方法
             function onLoad() {
             	//ajax请求数据，希望数据返回，并且资源加载完毕后才进入created场景
+            	//isLogin = true;//TODO ajax获取
+            	gameNum = 0;//TODO ajax获取
+            	
             	game.state.start('created');
             }
-            
 	    }
     },
     // 开始场景
@@ -75,7 +75,6 @@ var states = {
     	this.create = function() {
     		// 声音管理类 
     		this.soundManager = game.sound;
-    		
             // 添加背景
 	        var bg = game.add.image(0, 0, 'homepagebg');
 	        bg.width = game.world.width;
@@ -92,11 +91,16 @@ var states = {
 	        prizeButton.width = 65;
 			prizeButton.height = 48;
 	        function showPrizes(){
+	        	if(!isLogin){//未登录
+	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
+	        		$('#loginMask').show();
+	        		return 
+	        	}
 	        	$('#prize').fadeIn(100);
 	        }
 	        
 	       	// 添加"我有几次游戏机会"
-            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ playNum +'次游戏机会', {
+            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ gameNum +'次游戏机会', {
                 fontSize: '18px',
                 fill: '#FFFFFF'
             });
@@ -108,6 +112,16 @@ var states = {
 	        startButton.height = 35;
 	        startButton.anchor.setTo(0.5, 1);
 	        function onStart(){
+	        	if(!isLogin){//未登录
+	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
+	        		$('#loginMask').show();
+	        		return 
+	        	}
+	        	if(gameNum<=0){
+	        		alert('分享可获得游戏机会');
+	        		return
+	        	}
+	        	gameNum-=1;
 	        	game.state.start('play');
 	        }
 	        
@@ -118,6 +132,11 @@ var states = {
 	        shareButton.height = 39;
 	        shareButton.anchor.setTo(0.5, 1);
 	        function onShare(){
+	        	if(!isLogin){//未登录
+	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
+	        		$('#loginMask').show();
+	        		return 
+	        	}
 	        	alert('分享')
 	        }
 	        
@@ -183,7 +202,7 @@ var states = {
           	this.car.height= 140;
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
-          	this.car.body.setSize(120,140,0,0); 
+          	this.car.body.setSize(50,60,0,0); 
 	        // 创建动画
 	    	this.car.animations.add('left', [8, 10, 9], 10, true);
 	    	this.car.animations.add('center', [0,1,2,3,4,5,6,7], 10, true);
@@ -211,9 +230,8 @@ var states = {
 	        timerbg.height = 49;
 	        timerbg.anchor.setTo(0.5, 0.5);
 	        // 添加次数
-			this.remainCount = 3;
 	        var style = { font: "22px Arial", fill: "#ffffff" };
-	        this.remainCountText = this.game.add.text(game.world.centerX, 45, this.remainCount, style);
+	        this.remainCountText = this.game.add.text(game.world.centerX, 45, gameNum, style);
 	        this.remainCountText.anchor.setTo(0.5, 0.5);
 	        
 			// 添加分数背景
@@ -407,7 +425,8 @@ var states = {
 		    	//添加时间到的闹铃声音
 		    	alert('时间到')
 	        	game.time.events.add(1000, function(){
-	        	 	game.state.start('over', true, false, this.score); 
+	        		showOver(this.score);//TODO
+	        	 	//game.state.start('over', true, false, this.score); 
 	        	}, this);
 	        }
 	    },
@@ -432,7 +451,7 @@ var states = {
 			    // 播放音效
 	    		scoreMusic.play();
 	    	}else{
-	    		imageName = 'plus100';//TODO
+	    		imageName = 'crash';
 	    		this.allStopMove();
 	    		// 播放音效
 	    		bombMusic.play();
@@ -459,7 +478,8 @@ var states = {
 		        hideTween.onComplete.add(function() {
 		            goal.kill();
 		            if(obstacle.type==='coin') return
-		            game.state.start('over', true, false, that.score); 
+		            showOver(this.score); //TODO
+		            //game.state.start('over', true, false, that.score); 
 		        });
 		    });
 		    //在此把分数发送给后台

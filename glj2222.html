@@ -8,63 +8,7 @@
     <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
     <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
 		<title>小车</title>
-		<!--<style>
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
-			html,
-			body{
-				width: 100%;
-				height: 100%;
-				position: relative;
-			}
-			ul,li{
-				list-style: none;
-			}
-			.mask{
-				position: absolute;
-				top: 0;
-				right: 0;
-				width: 100%;
-				height: 100%;
-				line-height: 50px;
-				font-size: 30px;
-				text-align: center;
-				background:rgba(0,0,0,0.4);
-				display: none;
-			}
-			.mask .container{
-				margin: 15% auto 0;
-				width: 80%;
-				height: 70%;
-				background: #fff;
-				border-radius:10px;
-			}
-			.lead{
-				margin-bottom: 10px;
-				font-size: 18px;
-				color: #fff;
-			}
-			.close_btn{
-				margin: 0 auto;
-				width: 40px;
-				height:40px;
-				background: url(images/closebtn.png);
-				background-size: 100%;
-			}
-			.leadPage{
-				padding-top: 120px;
-			}
-			.ok_btn{
-				margin: 0 auto;
-				width: 40px;
-				height:40px;
-				background: url(images/ok.jpg);
-				background-size: 100%;
-			}
-		</style>-->
+		
 		<script src="https://i2.Yongche.name/s/js/201712/flexible.js?1478153218"></script>
 		<link rel="stylesheet" type="text/css" href="css/glj.css"/>
 		<script src="gamelib/phaser.min.js"></script>
@@ -95,15 +39,47 @@
 		<div id="prize" class="mask prize-mask">
 			<div class="container prize-contain">
 				<div class="mask-title">我的奖品</div>
-				<ul>
-					<li>lallal </li>
-					<li>lallal </li>
-					<li>lallal </li>
-					<li>lallal </li>
-					<li>lallal </li>
-					<li>lallal </li>
-					<li>lallal </li>
-				</ul>
+				<div class="prizewrapper">
+					<ul>
+						<li class="prizeitem prize95">
+							<div >仅限<span class="prizeitem-owner">12345</span>使用</div>
+							<div>有效期至<span class="prizeitem-deadtime">2018.2.26</span></div>
+						</li>
+						<li class="prizeitem prize90">
+							<div >仅限<span class="prizeitem-owner">1243543</span>使用</div>
+							<div>有效期至<span class="prizeitem-deadtime">2018.2.26</span></div>
+						</li>
+						<li class="prizeitem prize85">
+							<div >仅限<span class="prizeitem-owner">345656575687979879</span>使用</div>
+							<div>有效期至<span class="prizeitem-deadtime">2018.2.26</span></div>
+						</li>
+						<li class="prizeitem prize95">lallal </li>
+						<li class="prizeitem prize90">lallal </li>
+						<li class="prizeitem prize85">lallal </li>
+					</ul>
+				</div>
+				
+			</div>
+			<div id="close_prize" class="close_btn"></div>
+		</div>
+		<div id="over" class="mask over-mask">
+			<div class="container over-contain">
+				<div class="mask-title">游戏结束</div>
+				<div class="winer top-contain"><!--恭喜获得-->
+					<div class="gongxi"></div>
+					<div class="discount discount90">
+						<div >仅限<span id="over-owner">****</span>使用</div>
+						<div>有效期至<span id="over-deadtime">2018.2.26</span></div>
+					</div>
+				</div>
+				<div class="loser top-contain"><!--真遗憾-->
+					<div class="loser1">真遗憾，</div>
+					<div class="loser2">离奖励就差一点了</div>
+				</div>
+				<div class="line totalscore">累计获得<span id="totalscore">88</span>分</div>
+				<div class="line defeat">击败<span id="defeat">99</span>%用户</div>
+				<div id="playagin" class="playagin ">再玩一次（剩余<span id="gameNum">4</span>次）</div>
+				<div id="sharetofriend" class="sharetofriend">邀好友来玩再得机会</div>
 			</div>
 			<div id="close_prize" class="close_btn"></div>
 		</div>
@@ -128,27 +104,13 @@
         </div>
 		
 		
+
 	<script>
 		
-
-		$("#close_rule").click(function(){
-			$('#rule').fadeOut(300);
-		})
-		$("#close_prize").click(function(){
-			$('#prize').fadeOut(300);
-		})
 		
 		
-
-	</script>
-	<script>
-		document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';
-		var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
-		//var httpHead = 'https://market.yongche.com'; //线上接口
-		var gameNum = 0; //游戏次数
-		var shareToken = '';
 		
-		//$('#prize').show();
+		
 		
 	</script>
 	<script src="js/glj.js"></script>	

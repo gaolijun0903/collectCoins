@@ -2,6 +2,10 @@
 /**
  * 用户小游戏
  * @author lijianlin
+ * 
+ * 游戏结束，1没有返回数据， 2传参是金币数还是分数
+ * 
+ *
  *
  */
 class ActivityusergameController extends \App\Library\ControllerAbstract {

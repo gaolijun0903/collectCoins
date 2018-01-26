@@ -10,7 +10,7 @@ body{
 	position: relative;
 }
 ul,li{
-	/*list-style: none;*/
+	list-style: none;
 }
 input{
     outline: none;
@@ -77,9 +77,45 @@ input{
 	margin-bottom: 0.266667rem;
 }
 
-#prize .prize-contain{
-	
+#prize .prize-contain .prizewrapper{
+	height: 11.0rem;
+	overflow: scroll;
 }
+
+#prize .prize-contain .prizeitem{
+	margin:0.8rem auto;
+	width:5.906667rem;
+	height:1.946667rem;
+	padding: 0.2rem 0 0 2.5rem;
+	font-size: 0.28rem;
+}
+
+#prize .prize-contain .prize95{
+	background: url(../images/prize9.5.png) no-repeat;
+	background-size: 100% 100%;
+}
+#prize .prize-contain .prize90{
+	background: url(../images/prize9.0.png) no-repeat;
+	background-size: 100% 100%;
+}
+#prize .prize-contain .prize85{
+	background: url(../images/prize8.5.png) no-repeat;
+	background-size: 100% 100%;
+}
+#prize .prize-contain .prizeitem-owner{
+	display: inline-block;
+	max-width: 1.5rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	vertical-align: top;
+}
+
+
+
+
+
+
 .leadPage-mask{
 	background: url(../images/leadbg.png);
 	background-size: 100%;
@@ -90,15 +126,89 @@ input{
     top: 0.7rem;
 }
 
+#over .over-contain .top-contain{
+	margin-bottom: 0.69rem;
+	height: 5.6rem;
+	padding: 0.1px;
+}
+#over .over-contain .winer{
+	
+	display: none;
+}
+#over .over-contain .loser{
+	
+	display: none;
+}
+#over .over-contain .gongxi{
+	margin: 0.33333rem auto 0;
+	width:6.693333rem;
+	height: 2.36rem;
+	background: url(../images/overbg.jpg);
+	background-size: 100%;
+}
+#over .over-contain .discount{
+	margin: 0.53rem auto 0;
+	width:6.666667rem;
+	height:2.306667rem;
+	padding:0.5rem 0 0 3.2rem;
+}
+#over .over-contain  .discount95{
+	background: url(../images/prize9.5.png) no-repeat;
+	background-size: 100% 100%;
+}
+#over .over-contain  .discount90{
+	background: url(../images/prize9.0.png) no-repeat;
+	background-size: 100% 100%;
+}
+#over .over-contain  .discount85{
+	background: url(../images/prize8.5.png) no-repeat;
+	background-size: 100% 100%;
+}
+
+#over .over-contain .line{
+	font-size: 0.453333rem;
+	color: #a8a381;
+	text-align: center;
+}
+#over .over-contain  #totalscore{
+	font-size: 0.8rem;
+}
+#over .over-contain .playagin{
+	margin: 0.5rem auto ;
+	width:4.93rem;
+	height:0.986667rem;
+	border-radius: 0.49rem;
+	text-align: center;
+	line-height: 0.986rem;
+	font-size: 0.45rem;
+	color: #f5f5f5;
+	background: #ff5b5b;
+}
+#over .over-contain .noagin{
+	background: #CCCCCC;
+}
+#over .over-contain  .sharetofriend{
+	margin: 0 auto ;
+	width:4.93rem;
+	height:0.986rem;
+	line-height: 0.986rem;
+	text-align: center;
+	font-size: 0.45rem;
+	color: #ff5b5b;
+	border-bottom: 1px solid #FF5B5B;
+}
 
 
 
 #loginMask .login-contain{
 	padding: 0.8rem;
 	text-align: left;
+	background: #FFFFFF;
+	border: none;
+	height:auto;
+	margin-top: 3.0rem;
 }
 .login-contain .login-title{
-	
 	font-size: 0.5rem;
 	line-height: 1.3rem;
 }		
@@ -113,9 +223,7 @@ input{
     font-size: 0.373333rem;
 	padding-left: 0.33333rem;
 }
-.login-contain .login-tel{
-  
-}
+
 .login-contain .login-input-short{
 	width:3.3rem;
 	display: inline-block;
@@ -136,7 +244,7 @@ input{
 .login-contain .login-captchacode{
 	background: #CCCCCC;
 }
-.login-captchacode-wrapper{
+.login-contain .login-captchacode-wrapper{
 	display: none;
 }
 .login-contain .login-btn{

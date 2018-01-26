@@ -1,10 +1,12 @@
-var ruleText = [
-'1.  每位用户第一次进入游戏时获得一次免费游戏机会；',
-'2.  用户每打一次车，会获得一次游戏机会，邀请好友参加游戏后，双方各获得一次游戏机会，每个用户每天最多获得4次通过邀请得到的游戏机会，且每位用户只能在一天内被邀请一次；',
-'3.  当游戏开始后，在60秒内，左右滑动汽车，每得到一个金币加100分，撞到障碍物游戏结束；',
-'4.  游戏结束后，可根据所获得金币数所对应的积分获取奖励，所获奖品请在“我的奖品”页面查看；',
-'5.  奖品对应积分为：3000分可获得——9.5折优惠券一张，5000分可获得——9折优惠券一张，7000分以上可获得——8.5折优惠券一张，所获优惠券可用于用车费的部分抵扣，优惠券使用规则请参见易到App个人中心优惠券页面。'
-]
+var gameNum = '--'; //游戏次数 -初始化值， TODO 后ajax获取
+var shareToken = ''; //分享-初始值， TODO 后ajax获取
+var gameToken = ''; //游戏token -初始值， TODO 后ajax获取
+var isLogin = false;
+
+document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';
+var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
+//var httpHead = 'https://market.yongche.com'; //线上接口
+
 
 $("#close_rule").click(function(){
 	$('#rule').fadeOut(300);
@@ -15,6 +17,15 @@ $("#close_prize").click(function(){
 $("#close_leadPage").click(function(){
 	$('#leadPage').fadeOut(300);
 })
+$("#playagin").click(function(){
+	if(gameNum<=0){
+		return 
+	}
+	$('#over').hide();
+	game.state.start('play');
+	
+})
+
 
 var telInput = $('#login-tel'),   //手机号输入框
 	msgInput = $('#login-msgcode'),   //短信验证码输入框
@@ -35,8 +46,8 @@ var isYidao = document.cookie.indexOf("_app_token_v3");
 //isYidao = 1; //TODO
 var inApp = isYidao===-1 ? false : true;
    
-var gameToken = '';
-var goldNum = 0;
+
+//var goldNum = 0;
 
 //initData();
 
@@ -49,6 +60,7 @@ function initData(){
             //console.log(data);
             if(data.code==200){
                 alert('已登录');
+                isLogin = true;
 				gameNum = data.result.gameNum;
                 shareToken = data.result.shareToken;
                 //toshare
@@ -60,6 +72,7 @@ function initData(){
                 
             }else if(data.code==403) {//未登录
                 console.log('未登录');
+                isLogin = false;
                 //$('#loginMask').show(); //TODO
                 /*if(inApp){
                 	//端内登录地址
@@ -119,7 +132,7 @@ function startGame(){//开始游戏
 
 
 //endGame()
-function endGame(){//游戏结束
+function endGame(gameToken,goldNum){//游戏结束
 	$.ajax({
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/endGame?gameToken='+gameToken+'&goldNum='+goldNum,
@@ -194,14 +207,14 @@ loginBtn.click(function() {
     }
    
     $.ajax({
-        url: httpHead + '/activity/Webuser/Login?cellphone='+cellphone+'&code='+msgcode,
+        url: httpHead + '/activity/Webuser/Login?cellphone='+cellphone+'&code='+msgcode+'&captcha='+captcha,
         type:'get',
         dataType:'jsonp',
         success:function(data) {
             console.log(data);
             if(data.code==200){
 				alert('登录成功');
-                if(invite){
+                if(shareToken){
                    helphimFn();
                     
                 } else{
@@ -309,3 +322,51 @@ function checkMobile(number){//检查手机号
     }
     return true;
 }
+
+//over页面展示
+function showOver(score){
+	$('#over').show();
+	//endGame(gameToken,score);//把分数传给后台
+	var result = {
+		'score': 4000,
+		'totalscore' :8888,
+		'defeat': 88,
+		'gamenum': 8,
+		'name': '239874098',
+		'deadtime': '2018.2.26'
+	}
+	updateoverData(result)
+}
+function updateoverData(data){
+	console.log('remove')
+	if(data.score<3000){
+		$('.winer').hide()
+		$('.loser').show();
+	}else{
+		$('.loser').hide();
+		$('.winer').show().children('.discount').remove();
+		var str = '<div class="discount discount90"><div >仅限<span id="over-owner">'+ data.name +'</span>使用</div><div>有效期至<span id="over-deadtime">'+ data.deadtime +'</span></div></div>';
+		$('.winer').append($(str));
+					
+		if(data.score<5000){
+			$('.discount').addClass('discount95');
+		}else if(data.score<7000){
+			$('.discount').addClass('discount95');
+		}else{
+			$('.discount').addClass('discount95');
+		}
+	}
+	$('#totalscore').text(data.totalscore); //游戏总分
+	$('#defeat').text(data.defeat); //击败多少人
+	$('#gameNum').text(data.gameNum);//游戏次数
+	if(data.gameNum<=0){
+		$('.playagin').addClass('noagin');
+	}
+}
+
+/*function showLogin(){
+	$('#loginMask').show();
+	
+	
+}
+*/
