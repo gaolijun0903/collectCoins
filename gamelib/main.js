@@ -29,7 +29,8 @@ var states = {
 	        game.load.image('timerbg', 'images/timerbg.png');//游戏页-定时器背景
 	        game.load.image('playcount', 'images/playcount.png');//游戏页-游戏次数背景
 	        game.load.image('coinbg', 'images/coinbg.png');//游戏页-金币数背景
-	        game.load.spritesheet('coin', 'images/coin.png', 162, 162); //游戏页-金币
+	       // game.load.spritesheet('coin', 'images/coin.png', 162, 162); //游戏页-金币
+	        game.load.spritesheet('coin', 'images/coin.png', 56 ,56); //游戏页-金币
 	        game.load.image('stone', 'images/stone.png'); //游戏页-石头
 	        game.load.image('roadblock', 'images/roadblock.png');//游戏页-路障
 	        game.load.image('garbagecan', 'images/garbagecan.png');//游戏页-垃圾桶
@@ -62,8 +63,8 @@ var states = {
             // 加载完毕回调方法
             function onLoad() {
             	//ajax请求数据，希望数据返回，并且资源加载完毕后才进入created场景
-            	//isLogin = true;//TODO ajax获取
-            	gameNum = 0;//TODO ajax获取
+            	isLogin = true;//TODO ajax获取
+            	gameNum = 1;//TODO ajax获取
             	
             	game.state.start('created');
             }
@@ -192,9 +193,16 @@ var states = {
             scoreMusic = game.add.audio('scoreMusic');
             bombMusic = game.add.audio('bombMusic');
     		// 添加背景
-	        var bg = game.add.image(0, 0, 'playbg');
+	        /*var bg = game.add.image(0, 0, 'playbg');
 	        bg.width = game.world.width;
-	        bg.height = game.world.height;
+	        bg.height = game.world.height;*/
+	       
+	       this.bg = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'playbg'); 
+	        game.physics.enable(this.bg, Phaser.Physics.ARCADE); 
+	        // 滚动背景的像素宽高
+	        this.bgImg = game.cache.getImage('playbg');
+	        this.bg.tileScale.x = game.world.width / this.bgImg.width;
+	        this.bg.tileScale.y = game.world.height / this.bgImg.height;
     		
 	    	//添加主角
 	        this.car = this.game.add.sprite(game.world.centerX, game.world.height - 100, 'dude');
@@ -204,9 +212,9 @@ var states = {
 	        game.physics.arcade.enable(this.car);
           	this.car.body.setSize(50,60,0,0); 
 	        // 创建动画
-	    	this.car.animations.add('left', [8, 10, 9], 10, true);
-	    	this.car.animations.add('center', [0,1,2,3,4,5,6,7], 10, true);
-	  		this.car.animations.add('right', [12, 13, 14, 15], 10, true);
+	    	this.car.animations.add('left', [8], 10, true);
+	    	this.car.animations.add('center', [0,2,4,6], 10, true);
+	  		this.car.animations.add('right', [12], 10, true);
 	  		this.car.animations.add('over', [16], 10, true)
 	  		this.car.animations.play('center');
 	  		
@@ -284,7 +292,7 @@ var states = {
     	this.update = function(){
     		this.judgeMute(1);
     		// 小车和障碍物的碰撞监听
-    		game.physics.arcade.overlap(this.car, this.obstacles, this.crashCarFunc, null, this);
+    		//game.physics.arcade.overlap(this.car, this.obstacles, this.crashCarFunc, null, this);
     	},
     	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
@@ -384,9 +392,9 @@ var states = {
 		        //var obstacle = this.obstacles.getFirstDead();
 		        //if(obstacle){
 			  		var obstacle = this.obstacles.create(0, 0, type);
-			  		obstacle.width = 50;
-		        	obstacle.height= 50;
-		        	obstacle.body.setSize(40,40,0,0);
+//			  		obstacle.width = 50;
+//		        	obstacle.height= 50;
+//		        	obstacle.body.setSize(40,40,0,0);
 		        	// kill超出边界的障碍物
 			        obstacle.checkWorldBounds = true;
 			        obstacle.outOfBoundsKill = true;
@@ -398,7 +406,7 @@ var states = {
 			        obstacle.reset(x, y);
 			        if(type==='coin'){
 			        	// 创建动画
-				    	obstacle.animations.add('jump', [0, 1,], 10, true);
+				    	obstacle.animations.add('jump', [0, 1,2,3], 8, true);
 				  		obstacle.animations.play('jump');
 			        }
 			    //}   
@@ -415,6 +423,7 @@ var states = {
 	        this.remainTimeText.text = "00: "+timeStr;
 	        //随着时间进行，速度越来越快
 	        var v = move_velocity + (60-this.remainTime)*20;
+	        this.bg.autoScroll(0, v/(game.world.height / this.bgImg.height));
 	        this.obstacles.forEachAlive(function(item){
 	    		item.body.velocity.y = v;
 	    	});
@@ -422,6 +431,8 @@ var states = {
 	        // 结束场景
 	        if(this.remainTime <= 0){ 
 	        	this.allStopMove();
+	        	// 设置背景静止
+	    		this.bg.autoScroll(0, 0);
 		    	//添加时间到的闹铃声音
 		    	alert('时间到')
 	        	game.time.events.add(1000, function(){
@@ -451,11 +462,17 @@ var states = {
 			    // 播放音效
 	    		scoreMusic.play();
 	    	}else{
+	    		// 设置背景静止
+	    		this.bg.autoScroll(0, 0);
 	    		imageName = 'crash';
 	    		this.allStopMove();
 	    		// 播放音效
 	    		bombMusic.play();
-		    	car.animations.play('over');
+	    		
+	    		game.time.events.add(1000, function(){
+	        		showOver(this.score);//TODO
+	        	 	//game.state.start('over', true, false, this.score); 
+	        	}, this);
 	    	}
 	    	
 	    	// 添加爆炸图片
