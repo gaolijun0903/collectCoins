@@ -22,10 +22,21 @@ $("#playagin").click(function(){
 		return 
 	}
 	$('#over').hide();
+	gameNum--;
 	game.state.start('play');
 	
 })
 
+$('#sharetofriend').delegate('.share-btn', 'click', shareFn);
+function shareFn() {
+	alert('shareFn分享');//TODO
+    //ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
+    //Tools.shareThisPage();
+}        
+
+window.onresize = function(){
+ alert('change')
+}
 
 var telInput = $('#login-tel'),   //手机号输入框
 	msgInput = $('#login-msgcode'),   //短信验证码输入框
@@ -47,10 +58,6 @@ var isYidao = document.cookie.indexOf("_app_token_v3");
 var inApp = isYidao===-1 ? false : true;
    
 
-//var goldNum = 0;
-
-//initData();
-
 function initData(){
 	$.ajax({
         type:'get',
@@ -60,10 +67,12 @@ function initData(){
             //console.log(data);
             if(data.code==200){
                 alert('已登录');
+                game.state.start('created');
                 isLogin = true;
 				gameNum = data.result.gameNum;
                 shareToken = data.result.shareToken;
                 //toshare
+                //端内分享配置
                 /*ajaxShare({
                     url:'http://www.yongche.com/cms/page/christmaslogin.html?shareToken='+shareToken,
                     title:'金币大作战',
@@ -73,12 +82,6 @@ function initData(){
             }else if(data.code==403) {//未登录
                 console.log('未登录');
                 isLogin = false;
-                //$('#loginMask').show(); //TODO
-                /*if(inApp){
-                	//端内登录地址
-                }else{
-                	$('#loginMask').show();
-                }*/
             }else if(data.code==504) {//不在活动期间
                 console.log('不在活动期间');
                 
@@ -108,10 +111,8 @@ function startGame(){//开始游戏
                 alert('startGame');
 				gameToken = data.result.gameToken;
 				
-				
             }else if(data.code==403) {//未登录
                 console.log('未登录');
-                //$('#loginMask').show();
                 
             }else if(data.code==504) {//不在活动期间
                 console.log('不在活动期间');
@@ -148,7 +149,6 @@ function endGame(gameToken,goldNum){//游戏结束
                 
             }else if(data.code==401) {//请从正常渠道参与游戏
                 console.log('请从正常渠道参与游戏');
-              
                 
             }else if(data.code==504) {//不在活动期间
                 console.log('不在活动期间');
@@ -214,6 +214,7 @@ loginBtn.click(function() {
             console.log(data);
             if(data.code==200){
 				alert('登录成功');
+				initData();//登录成功后再次初始化数据
                 if(shareToken){
                    helphimFn();
                     
@@ -326,47 +327,42 @@ function checkMobile(number){//检查手机号
 //over页面展示
 function showOver(score){
 	$('#over').show();
-	//endGame(gameToken,score);//把分数传给后台
+	//endGame(gameToken,score);//把分数传给后台TODO
 	var result = {
-		'score': 4000,
-		'totalscore' :8888,
-		'defeat': 88,
-		'gamenum': 8,
+		'score': 2000,
+		'totalscore' :9888,
+		'defeat': 68,
+		'gamenum': gameNum, //数据返回后更新游戏次数 TODO
 		'name': '239874098',
 		'deadtime': '2018.2.26'
 	}
 	updateoverData(result)
 }
 function updateoverData(data){
-	console.log('remove')
+	$('#totalscore').text(data.totalscore); //游戏总分
+	$('#defeat').text(data.defeat); //击败多少人
+	$('#gameNum').text(data.gamenum);//游戏次数
+	if(data.gameNum<=0){
+		$('.playagin').addClass('noagin');
+	}
 	if(data.score<3000){
 		$('.winer').hide()
 		$('.loser').show();
 	}else{
 		$('.loser').hide();
-		$('.winer').show().children('.discount').remove();
-		var str = '<div class="discount discount90"><div >仅限<span id="over-owner">'+ data.name +'</span>使用</div><div>有效期至<span id="over-deadtime">'+ data.deadtime +'</span></div></div>';
-		$('.winer').append($(str));
-					
+		$('.winer').children('.discount').remove();
+		var levelclass = ''
 		if(data.score<5000){
-			$('.discount').addClass('discount95');
+			levelclass = 'discount95';
 		}else if(data.score<7000){
-			$('.discount').addClass('discount95');
+			levelclass = 'discount90';
 		}else{
-			$('.discount').addClass('discount95');
+			levelclass = 'discount85';
 		}
+		var str = '<div class="discount '+ levelclass +' "><div >仅限<span id="over-owner">'+ data.name +'</span>使用</div><div>有效期至<span id="over-deadtime">'+ data.deadtime +'</span></div></div>';
+		$('.winer').append($(str));
+		
+		$('.winer').show();
 	}
-	$('#totalscore').text(data.totalscore); //游戏总分
-	$('#defeat').text(data.defeat); //击败多少人
-	$('#gameNum').text(data.gameNum);//游戏次数
-	if(data.gameNum<=0){
-		$('.playagin').addClass('noagin');
-	}
-}
-
-/*function showLogin(){
-	$('#loginMask').show();
-	
 	
 }
-*/

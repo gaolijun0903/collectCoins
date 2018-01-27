@@ -86,7 +86,7 @@ input{
 	margin:0.8rem auto;
 	width:5.906667rem;
 	height:1.946667rem;
-	padding: 0.2rem 0 0 2.5rem;
+	padding: 0.2rem 0 0 2.8rem;
 	font-size: 0.28rem;
 }
 
@@ -132,11 +132,13 @@ input{
 	padding: 0.1px;
 }
 #over .over-contain .winer{
-	
 	display: none;
 }
 #over .over-contain .loser{
-	
+	font-size: 0.6rem;
+    text-align: center;
+    line-height: 1.3rem;
+    padding: 1.3rem 0 0 0;
 	display: none;
 }
 #over .over-contain .gongxi{
