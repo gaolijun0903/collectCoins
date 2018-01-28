@@ -38,7 +38,7 @@ input{
 	margin: 1.70rem auto 0;
 	width: 7.76rem;
 	height: 12.0rem;
-	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg) ;
+	background: url(../images/maskcontainbg.jpg) ;
 	border: 0.08rem solid #fcd315;
 	border-radius: 0.2rem;
 	position: relative;
@@ -62,7 +62,7 @@ input{
 	margin: 0.2rem auto;
 	width: 0.907rem;
 	height: 0.907rem;
-	background: url(http://i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IdibaAAAK4o2vF1QAAK3pwDnPOsAAAr6941.png) no-repeat;
+	background: url(../images/closebtn.png) no-repeat;
 	background-size: 100%;
 }
 #rule .rule-contain{
@@ -91,15 +91,15 @@ input{
 }
 
 #prize .prize-contain .prize95{
-	background: url(http://i1.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IYLyRAAA-lB9qS6UAAK3pQMbY10AAD6s578.png) no-repeat;
+	background: url(../images/prize9.5.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prize90{
-	background: url(http://i2.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IbSsxAAA6QVVasEQAAK3pQMbKQQAADpZ639.png) no-repeat;
+	background: url(../images/prize9.0.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prize85{
-	background: url(http://i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IJ_SqAAA_aAMF4nEAAK3pwGGAZ4AAD-A439.png) no-repeat;
+	background: url(../images/prize8.5.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prizeitem-owner{
@@ -117,7 +117,7 @@ input{
 
 
 .leadPage-mask{
-	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IRTWKAABMifFwiTgAAK3pwDtJqEAAEyh459.png);
+	background: url(../images/leadbg.png);
 	background-size: 100%;
 }
 #close_leadPage{
@@ -145,7 +145,7 @@ input{
 	margin: 0.33333rem auto 0;
 	width:6.693333rem;
 	height: 2.36rem;
-	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IRvRVAACt4ep_JkcAAK3pwDt4esAAK35479.jpg);
+	background: url(../images/overbg.jpg);
 	background-size: 100%;
 }
 #over .over-contain .discount{
@@ -155,15 +155,15 @@ input{
 	padding:0.5rem 0 0 3.2rem;
 }
 #over .over-contain  .discount95{
-	background: url(http://i1.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IYLyRAAA-lB9qS6UAAK3pQMbY10AAD6s578.png) no-repeat;
+	background: url(../images/prize9.5.png) no-repeat;
 	background-size: 100% 100%;
 }
 #over .over-contain  .discount90{
-	background: url(http://i2.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IbSsxAAA6QVVasEQAAK3pQMbKQQAADpZ639.png) no-repeat;
+	background: url(../images/prize9.0.png) no-repeat;
 	background-size: 100% 100%;
 }
 #over .over-contain  .discount85{
-	background: url(http://i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IJ_SqAAA_aAMF4nEAAK3pwGGAZ4AAD-A439.png) no-repeat;
+	background: url(../images/prize8.5.png) no-repeat;
 	background-size: 100% 100%;
 }
 

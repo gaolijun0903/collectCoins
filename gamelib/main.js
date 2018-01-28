@@ -1,58 +1,55 @@
 // current --3.0
-//
+// v3.0
+//点击屏幕任意位置，可拖动主角
+//生成障碍和金币的方法合二为一
 var width = window.innerWidth;  
 var height = window.innerHeight; 
+var spicJson = {"frames":[{"filename":"coinbg","frame":{"x":2,"y":201,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"crash","frame":{"x":2,"y":244,"w":93,"h":76},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":93,"h":76},"sourceSize":{"w":93,"h":76}},{"filename":"garbagecan","frame":{"x":170,"y":174,"w":81,"h":61},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":12,"w":81,"h":61},"sourceSize":{"w":81,"h":81}},{"filename":"loadingbar","frame":{"x":2,"y":66,"w":176,"h":12},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":176,"h":12},"sourceSize":{"w":176,"h":12}},{"filename":"loadingbg","frame":{"x":2,"y":2,"w":188,"h":62},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":188,"h":62},"sourceSize":{"w":188,"h":62}},{"filename":"myprizebtn","frame":{"x":180,"y":79,"w":65,"h":48},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":65,"h":48},"sourceSize":{"w":65,"h":48}},{"filename":"one","frame":{"x":2,"y":322,"w":36,"h":74},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":9,"y":0,"w":36,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"playcount","frame":{"x":170,"y":298,"w":49,"h":49},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":49,"h":49},"sourceSize":{"w":49,"h":49}},{"filename":"plus100","frame":{"x":97,"y":310,"w":45,"h":13},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":13},"sourceSize":{"w":45,"h":13}},{"filename":"roadblock","frame":{"x":192,"y":2,"w":59,"h":75},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":12,"y":2,"w":59,"h":75},"sourceSize":{"w":81,"h":81}},{"filename":"rulesbtn","frame":{"x":177,"y":129,"w":58,"h":43},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":58,"h":43},"sourceSize":{"w":58,"h":43}},{"filename":"sharebtn","frame":{"x":2,"y":80,"w":173,"h":39},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":39},"sourceSize":{"w":173,"h":39}},{"filename":"startbtn","frame":{"x":2,"y":121,"w":173,"h":35},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":35},"sourceSize":{"w":173,"h":35}},{"filename":"stone","frame":{"x":170,"y":237,"w":81,"h":59},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":11,"w":81,"h":59},"sourceSize":{"w":81,"h":81}},{"filename":"three","frame":{"x":116,"y":234,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"timerbg","frame":{"x":2,"y":158,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"two","frame":{"x":116,"y":158,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}}],"meta":{"app":"http://www.texturepacker.com","version":"1.0","image":"littlepic.png","format":"RGBA8888","size":{"w":256,"h":512},"scale":"1","smartupdate":"$TexturePacker:SmartUpdate:58acf86a3872a15ce4999f79014e07a7$"}};
 
 // 创建游戏实例
-var game = new Phaser.Game(width, height, Phaser.AUTO, 'game');
+var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game',true);
 
 // 定义场景
 var states = {
+	// boot场景
+	boot: function(){
+		this.preload = function(){
+			// 加载游戏资源
+	        //game.load.crossOrigin = 'anonymous'; // 设置跨域
+			game.load.image('loadingbg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
+	        game.load.image('loadingbar', '//i2.yongche.name/media/g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
+		},
+		this.create = function(){
+			game.add.image(0,0,'loadingbg');
+		},
+		this.render = function(){
+			game.state.start('preload');
+		}
+	},
 	// 加载场景
     preload: function() {
     	this.preload = function() {
     		console.log("preload");
-	        // 设置背景为黑色
-	        game.stage.backgroundColor = '#FFFFFF';
-	        // 加载游戏资源
-	        game.load.crossOrigin = 'anonymous'; // 设置跨域
-	        game.load.image('homepagebg', 'images/homepagebg.png');//首页-背景
-	        game.load.image('startbtn', 'images/startbtn.png'); //首页-开始游戏按钮
-	        game.load.image('rulebtn', 'images/rulesbtn.png'); //首页-活动规则按钮
-	        game.load.image('myprizebtn', 'images/myprizebtn.png'); //首页-我的奖品按钮
-	        game.load.image('sharebtn', 'images/sharebtn.png'); //首页-分享按钮 、  结束页-分享按钮
+	        var loadingbg = game.add.sprite(game.world.centerX,game.world.centerY,"loadingbg");
+	        var loadingbar = game.add.sprite(0,0,"loadingbar");
+	        loadingbar.reset(game.world.centerX-loadingbar.width/2,game.world.centerY);
+	        loadingbg.anchor.setTo(0.5, 0.5);
+	        loadingbar.anchor.setTo(0, -1.05);
 	        
-	       
-	        game.load.image('playbg', 'images/playbg.png');//游戏页-背景
-	        game.load.image('timerbg', 'images/timerbg.png');//游戏页-定时器背景
-	        game.load.image('playcount', 'images/playcount.png');//游戏页-游戏次数背景
-	        game.load.image('coinbg', 'images/coinbg.png');//游戏页-金币数背景
-	        game.load.spritesheet('dude', 'images/dude.png', 47, 55); //游戏页-游戏主角
-	        game.load.spritesheet('coin', 'images/coin1.png', 162, 162); //游戏页-金币
-	        //game.load.spritesheet('coin', 'images/coin.png', 56 ,56); //游戏页-金币
-	        game.load.image('stone', 'images/stone.png'); //游戏页-石头
-	        game.load.image('roadblock', 'images/roadblock.png');//游戏页-路障
-	        game.load.image('garbagecan', 'images/garbagecan.png');//游戏页-垃圾桶
-	        game.load.image('crash', 'images/crash.png');  //游戏页-碰撞
-	        game.load.image('plus100', 'images/plus100.png'); //游戏页-加分图片 
-	        game.load.image('three', 'images/three.png'); //游戏页-开始倒计时
-	        game.load.image('two', 'images/two.png');//游戏页-开始倒计时
-	        game.load.image('one', 'images/one.png');//游戏页-开始倒计时
-	        game.load.spritesheet('mute-play', 'images/mute-play.png', 32, 23); //游戏页-静音及播放
+	        game.load.setPreloadSprite(loadingbar);
+	        
+	        // 加载游戏资源
+//	        game.load.crossOrigin = 'anonymous'; // 设置跨域
+	        game.load.image('homepagebg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
+	        game.load.image('playbg', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
+	        game.load.spritesheet('dude', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IB7m-AAB72lgDCkcAAK3pwDnhcAAAHvy584.png', 47, 55); //游戏页-游戏主角
+	        game.load.spritesheet('coin', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
+	        game.load.spritesheet('mute-play', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
 	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
 	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
             game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
-            
-            // 添加进度文字
-            var progressText = game.add.text(game.world.centerX, game.world.centerY, '0%', {
-                fontSize: '60px',
-                fill: '#eee'
-            });
-            progressText.anchor.setTo(0.5, 0.5);
-            // 监听加载完一个文件的事件
-            game.load.onFileComplete.add(function(progress) {
-                progressText.text = progress + '%';
-            });
+            game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
+
             // 监听加载完毕事件
             game.load.onLoadComplete.add(onLoad);
             // 加载完毕回调方法
@@ -76,12 +73,12 @@ var states = {
 	        bg.width = game.world.width;
 	        bg.height = game.world.height;
 	        // 添加"活动规则"按钮
-	        ruleButton = game.add.button(game.world.width -60-9 , 20, 'rulebtn', showRules, this, 2, 1, 0);
+	        ruleButton = game.add.button(game.world.width -60-9 , 20,'spic',  showRules, this, 'rulesbtn','rulesbtn', 'rulesbtn');
 	        function showRules(){
 	        	$('#rule').fadeIn(100);
 	        }
 	        // 添加"我的奖品"按钮
-	        prizeButton = game.add.button(16, 16, 'myprizebtn', showPrizes, this, 2, 1, 0);
+	        prizeButton = game.add.button(16, 16,'spic', showPrizes, this, 'myprizebtn', 'myprizebtn', 'myprizebtn');
 	        function showPrizes(){
 	        	if(!isLogin){//未登录
 	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
@@ -101,7 +98,7 @@ var states = {
             gamecountText.anchor.setTo(0.5, 1);
             
 	        // 添加"开始游戏"按钮
-	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'startbtn', onStart, this);
+	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
 	        startButton.anchor.setTo(0.5, 1);
 	        function onStart(){
 	        	if(!isLogin){//未登录
@@ -124,7 +121,7 @@ var states = {
 	        }
 	        
 	        // 添加"分享 "按钮
-	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'sharebtn', onShare, this, 2, 1, 0);
+	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'spic', onShare, this, 'sharebtn', 'sharebtn', 'sharebtn');
 	        shareButton.anchor.setTo(0.5, 1);
 	        function onShare(){
 	        	if(!isLogin){//未登录
@@ -169,18 +166,21 @@ var states = {
     },
     // 游戏场景
     play: function() {
+    	console.log('23324')
     	var grassBeltWidth = 30,
     		scoreMusic,
         	bombMusic,
         	bgMusic,
         	muteButton, 
         	preX = 0,
-        	touching = false, // 是否正在触摸
         	move_velocity = 200, // 障碍物和奖励的速度
         	minTouchDis = width / 8, // x滑动的最小触发距离
         	obstaclesTypes = ['stone','roadblock','garbagecan'];
-       
+       	
     	this.create = function(){
+    		console.log('play-create')
+    		this.touching = false; // 是否正在触摸
+       		this.isAllStop=false;
     		// 声音管理类
     		this.soundManager = game.sound;
     		// 添加背景音乐
@@ -218,14 +218,14 @@ var states = {
 	        this.obstacles.enableBody = true;
 	       
 	       	// 添加时间背景
-	        var timerbg = game.add.image(19, 16, 'timerbg');
+	        var timerbg = game.add.image(19, 16,'spic', 'timerbg');
 	        // 添加时间
 			this.remainTime = 60;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
 	        this.remainTimeText = this.game.add.text(62, 25, "01：00", style);
 			
 			// 添加次数背景
-	        var timerbg = game.add.image(game.world.centerX, 42, 'playcount');
+	        var timerbg = game.add.image(game.world.centerX, 42, 'spic','playcount');
 	        timerbg.anchor.setTo(0.5, 0.5);
 	        // 添加次数
 	        var style = { font: "22px Arial", fill: "#ffffff" };
@@ -233,7 +233,7 @@ var states = {
 	        this.remainCountText.anchor.setTo(0.5, 0.5);
 	        
 			// 添加分数背景
-	        var coinbg = game.add.image(game.world.width-19-112, 16, 'coinbg');
+	        var coinbg = game.add.image(game.world.width-19-112, 16, 'spic','coinbg');
 			// 添加分数
 			this.score = 0;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
@@ -251,14 +251,9 @@ var states = {
 			// 监听滑动事件
 			this.game.input.addMoveCallback(this.moveCallback,this);
 			// 监听按下事件
-			game.input.onDown.add(function(pointer) {
-				touching = true;
-			},this);
+			game.input.onDown.add(this.onDownCb,this);
 			// 监听离开事件
-			this.game.input.onUp.add(function(pointer) {
-				touching = false;
-				this.car.animations.play('center');
-			},this);
+			this.game.input.onUp.add(this.onUpCb,this);
 			
 			//第一次游戏展示引导页
 			var that = this;
@@ -281,6 +276,7 @@ var states = {
     	},
     	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
+			console.log(123)
 			if(preX<x){//右划
 				this.car.animations.play('right');
 			}else if(preX==x){
@@ -296,6 +292,16 @@ var states = {
 			}else{
 				this.car.x = x;
 			}
+		},
+		this.onDownCb = function(pointer) {
+			touching = true;
+		},
+		this.onUpCb = function(pointer) {
+			touching = false;
+			if(this.isAllStop){
+				return
+			}
+			this.car.animations.play('center');
 		},
 	    this.ThreeTwoOne = function(numImg){
 	    	var num =3;
@@ -314,9 +320,8 @@ var states = {
 	    	},this)
 	    },
 	    this.tweenImg = function(numImg){
-	    	// 添加得分图片
-		    var goal = game.add.image(game.world.centerX, game.world.centerY, numImg);
-		    var goalImg = game.cache.getImage(numImg);
+	    	// 添加3,2,1图片
+		    var goal = game.add.image(game.world.centerX, game.world.centerY,'spic', numImg);
 		    goal.width = 0;
 		    goal.height = 0;
 		    goal.anchor.setTo(0.5,0.5);
@@ -369,31 +374,33 @@ var states = {
 	    	}
 	    },
 	    this.addmystones = function(type,n){
+	    	
 	    	// 随机[0,2]的整数,确定下落的跑道
 		    var num = Math.floor(Math.random()*3);
+		    var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
 	    	for(var i=0;i<n;i++){
-		    	// 从group中获取第一个死亡的对象
-		        //var obstacle = this.obstacles.getFirstDead();
-		        //if(obstacle){
-			  		var obstacle = this.obstacles.create(0, 0, type);
-			  		obstacle.width = 70;
-		        	obstacle.height= 70;
-		        	obstacle.body.setSize(40,40,0,0);
-		        	// kill超出边界的障碍物
-			        obstacle.checkWorldBounds = true;
-			        obstacle.outOfBoundsKill = true;
-			  		obstacle.type = type;
-		        	var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
-		        	var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-obstacle.width/2;
-			  		var y = -obstacle.height;
-			  		// 重新设置位置
-			        obstacle.reset(x, y);
-			        if(type==='coin'){
-			        	// 创建动画
-				    	obstacle.animations.add('jump', [0, 1,2,3], 8, true);
-				  		obstacle.animations.play('jump');
-			        }
-			    //}   
+	        	var obstacle;
+	        	var y;
+	        	if(type==='coin'){
+	        		obstacle = this.obstacles.create(0, 0, type);
+		        	// 创建动画
+			    	obstacle.animations.add('jump', [0, 1,2,3], 8, true);
+			  		obstacle.animations.play('jump');
+			  		y = (70)*(n-i-1);
+		        }else{
+		        	obstacle = this.obstacles.create(0, 0,'spic', type);
+		        	y = 0;
+		        }
+		        var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-obstacle.width/2;
+		  		// 重新设置位置
+		        obstacle.reset(x, y);
+		  		obstacle.type = type;
+		  		obstacle.width = 70;
+	        	obstacle.height= 70;
+	        	obstacle.body.setSize(40,40,0,0);
+	        	// kill超出边界的障碍物
+		        obstacle.checkWorldBounds = true;
+		        obstacle.outOfBoundsKill = true;
 			}
        	},
 	    this.timerCallback = function(){
@@ -432,6 +439,7 @@ var states = {
 	    	this.obstacles.forEach(function(item){
 	    		item.body.velocity.y = 0;
 	    	})
+	    	this.isAllStop = true;
 	    	//取消滑动监听，主角不可移动
 	    	this.game.input.deleteMoveCallback(this.moveCallback,this);
 	    },
@@ -448,6 +456,7 @@ var states = {
 	    	}else{
 	    		// 设置背景静止
 	    		this.bg.autoScroll(0, 0);
+	    		this.car.animations.play('over');
 	    		imageName = 'crash';
 	    		this.allStopMove();
 	    		// 播放音效
@@ -455,10 +464,7 @@ var states = {
 	    	}
 	    	
 	    	// 添加得分或碰撞图片
-		    var goal = game.add.image(obstacle.x, obstacle.y, imageName);
-		    var goalImg = game.cache.getImage(imageName);
-		    goal.width = obstacle.width;
-		    goal.height = goal.width / (goalImg.width / goalImg.height);
+		    var goal = game.add.image(obstacle.x, obstacle.y,'spic', imageName);
 		    goal.alpha = 0;
 		    // 添加过渡效果
 		    var showTween = game.add.tween(goal).to({
@@ -477,7 +483,6 @@ var states = {
 		            game.time.events.add(1000, function(){
 		            	//that.soundManager.mute = false;
 		        		showOver(this.score);//展示“游戏结束”，并把分数发送给后台 TODO
-		        		
 		        	}, this);
 		        });
 		    });
@@ -491,4 +496,4 @@ Object.keys(states).map(function(key) {
 });
 
 // 启动游戏
-game.state.start('preload');
+game.state.start('boot');

@@ -35,7 +35,7 @@ function shareFn() {
 }        
 
 window.onresize = function(){
- alert('change')
+ //alert('change')
 }
 
 var telInput = $('#login-tel'),   //手机号输入框
