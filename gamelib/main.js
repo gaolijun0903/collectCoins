@@ -19,7 +19,7 @@ var states = {
 	        game.load.image('loadingbar', '//i2.yongche.name/media/g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
 		},
 		this.create = function(){
-			game.add.image(0,0,'loadingbg');
+			//game.add.image(0,0,'loadingbg');
 		},
 		this.render = function(){
 			game.state.start('preload');
@@ -42,12 +42,21 @@ var states = {
 	        game.load.spritesheet('dude', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IB7m-AAB72lgDCkcAAK3pwDnhcAAAHvy584.png', 47, 55); //游戏页-游戏主角
 	        game.load.spritesheet('coin', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
 	        game.load.spritesheet('mute-play', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
-	        game.load.audio('bgMusic', '//24haowan-cdn.shanyougame.com/pickApple2/assets/audio/bgMusic.mp3');  //游戏页-背景音乐
-	        game.load.audio('scoreMusic', 'http://i1.yongche.name/s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
-            game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
-            game.sound.usingWebAudio = false;
-			game.sound.usingAudioTag = true;
+	        
             game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
+            
+            
+            game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
+	        //game.load.audio('scoreMusic', 'http://i1.yongche.name/s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
+	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
+	        
+            game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
+            /* 打开下面注释使用的是Audio标签播放声音,但是ios上面画面性能严重失帧，不能玩
+           	* 不打开下面注释使用的是webAudio播放声音，但是请求的声音资源使用的是ajax，erp中上传的资源后台没有放开跨域访问
+           	* 为了达到游戏最好的性能，需要后台静态资源支持跨域访问，包括的静态资源有声音，图片，js，css，json
+            */
+           /* game.sound.usingWebAudio = false;
+			game.sound.usingAudioTag = true;*/
 
             // 监听加载完毕事件
             game.load.onLoadComplete.add(onLoad);
@@ -115,8 +124,8 @@ var states = {
 	        		return
 	        	}
 	        	gameNum-=1;
-	        	startGame();  //TODO
-	        	//game.state.start('play');
+	        	//startGame();  //TODO
+	        	game.state.start('play');
 	        }
 	        
 	        // 添加"分享 "按钮
@@ -273,7 +282,6 @@ var states = {
     	},
     	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
-			console.log(123)
 			if(preX<x){//右划
 				this.car.animations.play('right');
 			}else if(preX==x){

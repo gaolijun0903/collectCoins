@@ -71,28 +71,47 @@ var telInput = $('#login-tel'),   //手机号输入框
 var isYidao = document.cookie.indexOf("_app_token_v3");
 //isYidao = 1; //TODO
 var inApp = isYidao===-1 ? false : true;
-   
+
 
 function initData(){
 	$.ajax({
+		type:"get",
+		url:"json/islogin.json",
+		async:true,
+		success: function(data){
+			game.state.start('created');
+		
+			if(data.code==200){
+                //alert('已登录');
+               
+                isLogin = true;
+				gameNum = data.result.gameNum;
+                shareToken = data.result.shareToken;
+            }
+           
+		}
+	});
+	
+	/*$.ajax({
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
         dataType:'jsonp',
         success:function(data) {
             //console.log(data);
+            game.state.start('created');
             if(data.code==200){
                 alert('已登录');
-                game.state.start('created');
+               
                 isLogin = true;
 				gameNum = data.result.gameNum;
                 shareToken = data.result.shareToken;
                 //toshare
                 //端内分享配置
-                /*ajaxShare({
-                    url:'http://www.yongche.com/cms/page/christmaslogin.html?shareToken='+shareToken,
-                    title:'金币大作战',
-                    description:'金币大作战'
-                })*/
+                //ajaxShare({
+                //    url:'http://www.yongche.com/cms/page/christmaslogin.html?shareToken='+shareToken,
+                 //  title:'金币大作战',
+                 //   description:'金币大作战'
+                //})
                 
             }else if(data.code==403) {//未登录
                 console.log('未登录');
@@ -111,10 +130,9 @@ function initData(){
         error:function(err){
             alert(err.msg)
         }
-	});
+	});*/
 }
 
-//startGame()
 function startGame(){//开始游戏
 	$.ajax({
         type:'get',
@@ -229,6 +247,7 @@ loginBtn.click(function() {
             console.log(data);
             if(data.code==200){
 				alert('登录成功');
+				$('#loginMask').hide();
 				initData();//登录成功后再次初始化数据
                 if(shareToken){
                    helphimFn();
