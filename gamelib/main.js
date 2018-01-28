@@ -15,7 +15,6 @@ var states = {
 	boot: function(){
 		this.preload = function(){
 			// 加载游戏资源
-	        //game.load.crossOrigin = 'anonymous'; // 设置跨域
 			game.load.image('loadingbg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
 	        game.load.image('loadingbar', '//i2.yongche.name/media/g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
 		},
@@ -35,18 +34,16 @@ var states = {
 	        loadingbar.reset(game.world.centerX-loadingbar.width/2,game.world.centerY);
 	        loadingbg.anchor.setTo(0.5, 0.5);
 	        loadingbar.anchor.setTo(0, -1.05);
-	        
 	        game.load.setPreloadSprite(loadingbar);
 	        
 	        // 加载游戏资源
-//	        game.load.crossOrigin = 'anonymous'; // 设置跨域
 	        game.load.image('homepagebg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
 	        game.load.image('playbg', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
 	        game.load.spritesheet('dude', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IB7m-AAB72lgDCkcAAK3pwDnhcAAAHvy584.png', 47, 55); //游戏页-游戏主角
 	        game.load.spritesheet('coin', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
 	        game.load.spritesheet('mute-play', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
-	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
-	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
+	        game.load.audio('bgMusic', '//24haowan-cdn.shanyougame.com/pickApple2/assets/audio/bgMusic.mp3');  //游戏页-背景音乐
+	        game.load.audio('scoreMusic', 'http://i1.yongche.name/s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
             game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
             game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
 
@@ -55,10 +52,10 @@ var states = {
             // 加载完毕回调方法
             function onLoad() {
             	//ajax请求数据，希望数据返回，并且资源加载完毕后才进入created场景
-            	isLogin = true;//TODO ajax获取
+            	/*isLogin = true;//TODO ajax获取
             	gameNum = 2;//TODO ajax获取
-            	game.state.start('created'); //应放在success里
-            	//initData();  TODO
+            	game.state.start('created'); //应放在success里*/
+            	initData();  //TODO
             }
 	    }
     },
@@ -116,8 +113,8 @@ var states = {
 	        		return
 	        	}
 	        	gameNum-=1;
-	        	//startGame();  //TODO
-	        	game.state.start('play');
+	        	startGame();  //TODO
+	        	//game.state.start('play');
 	        }
 	        
 	        // 添加"分享 "按钮
@@ -427,7 +424,6 @@ var states = {
 		    	alert('时间到')
 		    	var that = this;
 	        	game.time.events.add(1000, function(){
-	        		//that.soundManager.mute = false;
 	        		showOver(this.score);//展示“游戏结束”，并把分数发送给后台 TODO
 	        	}, this);
 	        }

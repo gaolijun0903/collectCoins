@@ -27,7 +27,7 @@ $("#playagin").click(function(){
 	
 })
 
-$('#sharetofriend').delegate('.share-btn', 'click', shareFn);
+$('#sharetofriend').click(shareFn);
 function shareFn() {
 	alert('shareFn分享');//TODO
     //ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
@@ -327,7 +327,7 @@ function checkMobile(number){//检查手机号
 //over页面展示
 function showOver(score){
 	$('#over').show();
-	//endGame(gameToken,score);//把分数传给后台TODO
+	endGame(gameToken,score);//把分数传给后台TODO
 	var result = {
 		'score': 2000,
 		'totalscore' :9888,

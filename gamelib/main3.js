@@ -4,17 +4,22 @@
 //生成障碍和金币的方法合二为一
 var width = window.innerWidth;  
 var height = window.innerHeight; 
+var spicJson = {"frames":[{"filename":"coinbg","frame":{"x":2,"y":201,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"crash","frame":{"x":2,"y":244,"w":93,"h":76},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":93,"h":76},"sourceSize":{"w":93,"h":76}},{"filename":"garbagecan","frame":{"x":170,"y":174,"w":81,"h":61},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":12,"w":81,"h":61},"sourceSize":{"w":81,"h":81}},{"filename":"loadingbar","frame":{"x":2,"y":66,"w":176,"h":12},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":176,"h":12},"sourceSize":{"w":176,"h":12}},{"filename":"loadingbg","frame":{"x":2,"y":2,"w":188,"h":62},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":188,"h":62},"sourceSize":{"w":188,"h":62}},{"filename":"myprizebtn","frame":{"x":180,"y":79,"w":65,"h":48},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":65,"h":48},"sourceSize":{"w":65,"h":48}},{"filename":"one","frame":{"x":2,"y":322,"w":36,"h":74},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":9,"y":0,"w":36,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"playcount","frame":{"x":170,"y":298,"w":49,"h":49},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":49,"h":49},"sourceSize":{"w":49,"h":49}},{"filename":"plus100","frame":{"x":97,"y":310,"w":45,"h":13},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":13},"sourceSize":{"w":45,"h":13}},{"filename":"roadblock","frame":{"x":192,"y":2,"w":59,"h":75},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":12,"y":2,"w":59,"h":75},"sourceSize":{"w":81,"h":81}},{"filename":"rulesbtn","frame":{"x":177,"y":129,"w":58,"h":43},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":58,"h":43},"sourceSize":{"w":58,"h":43}},{"filename":"sharebtn","frame":{"x":2,"y":80,"w":173,"h":39},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":39},"sourceSize":{"w":173,"h":39}},{"filename":"startbtn","frame":{"x":2,"y":121,"w":173,"h":35},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":35},"sourceSize":{"w":173,"h":35}},{"filename":"stone","frame":{"x":170,"y":237,"w":81,"h":59},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":11,"w":81,"h":59},"sourceSize":{"w":81,"h":81}},{"filename":"three","frame":{"x":116,"y":234,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"timerbg","frame":{"x":2,"y":158,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"two","frame":{"x":116,"y":158,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}}],"meta":{"app":"http://www.texturepacker.com","version":"1.0","image":"littlepic.png","format":"RGBA8888","size":{"w":256,"h":512},"scale":"1","smartupdate":"$TexturePacker:SmartUpdate:58acf86a3872a15ce4999f79014e07a7$"}};
 
 // 创建游戏实例
-var game = new Phaser.Game(width, height, Phaser.AUTO, 'game',true);
+var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game',true);
 
 // 定义场景
 var states = {
 	// boot场景
 	boot: function(){
 		this.preload = function(){
-			game.load.image('loadingbg', 'images/loadingbg.png');
-	        game.load.image('loadingbar', 'images/loadingbar.png');
+			// 加载游戏资源
+			game.load.image('loadingbg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
+	        game.load.image('loadingbar', '//i2.yongche.name/media/g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
+		},
+		this.create = function(){
+			game.add.image(0,0,'loadingbg');
 		},
 		this.render = function(){
 			game.state.start('preload');
@@ -33,16 +38,15 @@ var states = {
 	        game.load.setPreloadSprite(loadingbar);
 	        
 	        // 加载游戏资源
-	        game.load.crossOrigin = 'anonymous'; // 设置跨域
-	        game.load.image('homepagebg', 'images/homepagebg.png');//首页-背景
-	        game.load.image('playbg', 'images/playbg.png');//游戏页-背景
-	        game.load.spritesheet('dude', 'images/dude.png', 47, 55); //游戏页-游戏主角
-	        game.load.spritesheet('coin', 'images/coin.png', 81, 81); //游戏页-金币
-	        game.load.spritesheet('mute-play', 'images/mute-play.png', 32, 23); //游戏页-静音及播放
+	        game.load.image('homepagebg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
+	        game.load.image('playbg', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
+	        game.load.spritesheet('dude', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IB7m-AAB72lgDCkcAAK3pwDnhcAAAHvy584.png', 47, 55); //游戏页-游戏主角
+	        game.load.spritesheet('coin', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
+	        game.load.spritesheet('mute-play', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
 	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
 	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
             game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
-            game.load.atlas("spic", "images/spic.png", "images/spic.js");//精灵图
+            game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
 
             // 监听加载完毕事件
             game.load.onLoadComplete.add(onLoad);
