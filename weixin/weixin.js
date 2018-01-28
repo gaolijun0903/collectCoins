@@ -1,6 +1,4 @@
-//<!--端内分享相关-->
-//<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-//document.cookie='_app_token_v3=ZNLbf6_g1Ur4GbsaVVdXwJRkPnJhpbcV84O_Es4ySYI';//TODO
+//端内分享相
 var Tools;
 function ajaxShare(obj){
     // 分享变量设置
@@ -46,9 +44,7 @@ function ajaxShare(obj){
     console.log(_tmpOpenLink);
 }
 	
-	
-		
-//<!--微信二次分享-->	       
+//微信二次分享	       
 (function ($) {
     $.fn.wxShare = function (oParam) {
         var shareImg = oParam.shareImg;
@@ -106,15 +102,7 @@ function ajaxShare(obj){
 
 })(jQuery);
 	
-var wShare = {};
-wShare.shareImg     = 'http://i2.yongche.Name/media/g2/M03/1A/35/rBEBJVo84_iIZPtgAAAydsM-krwAAKcBQLESpgAADKO907.jpg';
-wShare.shareTitle   = '金币大作战';
-wShare.shareContent = '金币大作战';
-wShare.shareUrl = window.location.href;
-wxShareFn(wShare);
-        
-        
-//<!--GA-->
+//GA
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-18761483-4', 'auto');  ga('send', 'pageview');
+ga('create', 'UA-18761483-4', 'auto');  ga('send', 'pageview');
   

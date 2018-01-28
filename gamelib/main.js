@@ -45,6 +45,8 @@ var states = {
 	        game.load.audio('bgMusic', '//24haowan-cdn.shanyougame.com/pickApple2/assets/audio/bgMusic.mp3');  //游戏页-背景音乐
 	        game.load.audio('scoreMusic', 'http://i1.yongche.name/s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
             game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
+            game.sound.usingWebAudio = false;
+			game.sound.usingAudioTag = true;
             game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
 
             // 监听加载完毕事件
@@ -131,9 +133,8 @@ var states = {
 	                }*/
 	        		return 
 	        	}
-	        	alert('分享') //TODO
-	            //shareFn();
-	        
+	        	
+	            shareFn();
 	        }
 	        
 	        // 添加静音按钮  播放
@@ -163,7 +164,6 @@ var states = {
     },
     // 游戏场景
     play: function() {
-    	console.log('23324')
     	var grassBeltWidth = 30,
     		scoreMusic,
         	bombMusic,

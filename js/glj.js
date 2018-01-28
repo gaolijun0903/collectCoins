@@ -3,20 +3,23 @@ var shareToken = ''; //分享-初始值， TODO 后ajax获取
 var gameToken = ''; //游戏token -初始值， TODO 后ajax获取
 var isLogin = false;
 
-document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';
+//document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';
 var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
 //var httpHead = 'https://market.yongche.com'; //线上接口
 
-
+//活动规则页“关闭按钮”
 $("#close_rule").click(function(){
 	$('#rule').fadeOut(300);
 })
+//我的奖励页“关闭按钮”
 $("#close_prize").click(function(){
 	$('#prize').fadeOut(300);
 })
+//引导页“关闭按钮”
 $("#close_leadPage").click(function(){
 	$('#leadPage').fadeOut(300);
 })
+//“再玩一次”
 $("#playagin").click(function(){
 	if(gameNum<=0){
 		return 
@@ -26,13 +29,25 @@ $("#playagin").click(function(){
 	game.state.start('play');
 	
 })
-
+//“分享给朋友”
 $('#sharetofriend').click(shareFn);
 function shareFn() {
 	alert('shareFn分享');//TODO
-    //ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
-    //Tools.shareThisPage();
-}        
+	if(inApp){//端内分享
+		alert('端内分享')
+		//ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
+	    //Tools.shareThisPage();
+	}else{
+		alert('请点右上角分享');
+	}
+} 
+var wShare = {};
+wShare.shareImg = 'http://i2.yongche.Name/media/g2/M03/1A/35/rBEBJVo84_iIZPtgAAAydsM-krwAAKcBQLESpgAADKO907.jpg';
+wShare.shareTitle = '金币大作战';
+wShare.shareContent = '金币大作战';
+wShare.shareUrl = window.location.href;
+//wxShareFn(wShare);  //微信二次分享
+        
 
 window.onresize = function(){
  //alert('change')
@@ -327,7 +342,7 @@ function checkMobile(number){//检查手机号
 //over页面展示
 function showOver(score){
 	$('#over').show();
-	endGame(gameToken,score);//把分数传给后台TODO
+	//endGame(gameToken,score);//把分数传给后台TODO
 	var result = {
 		'score': 2000,
 		'totalscore' :9888,
@@ -342,7 +357,7 @@ function updateoverData(data){
 	$('#totalscore').text(data.totalscore); //游戏总分
 	$('#defeat').text(data.defeat); //击败多少人
 	$('#gameNum').text(data.gamenum);//游戏次数
-	if(data.gameNum<=0){
+	if(data.gamenum<=0){
 		$('.playagin').addClass('noagin');
 	}
 	if(data.score<3000){
