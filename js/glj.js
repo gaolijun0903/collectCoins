@@ -4,21 +4,14 @@ var gameToken = ''; //游戏token -初始值， TODO 后ajax获取
 var isLogin = false;
 
 //document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';
+// kKtwZA2vYwxbJBA5P-eiivWuFrHLWLBF-ECli2a-5WA
 var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
 //var httpHead = 'https://market.yongche.com'; //线上接口
+//活动规则页\我的奖励页\引导页\登录页---  “关闭按钮”
+$(".close_btn").click(function(){
+	$('.mask').fadeOut(300);
+})
 
-//活动规则页“关闭按钮”
-$("#close_rule").click(function(){
-	$('#rule').fadeOut(300);
-})
-//我的奖励页“关闭按钮”
-$("#close_prize").click(function(){
-	$('#prize').fadeOut(300);
-})
-//引导页“关闭按钮”
-$("#close_leadPage").click(function(){
-	$('#leadPage').fadeOut(300);
-})
 //“再玩一次”
 $("#playagin").click(function(){
 	if(gameNum<=0){
@@ -29,6 +22,9 @@ $("#playagin").click(function(){
 	game.state.start('play');
 	
 })
+$('#sharearrow').click(function(){
+	$(this).hide();
+})
 //“分享给朋友”
 $('#sharetofriend').click(shareFn);
 function shareFn() {
@@ -38,7 +34,7 @@ function shareFn() {
 		//ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
 	    //Tools.shareThisPage();
 	}else{
-		alert('请点右上角分享');
+		$('#sharearrow').show();
 	}
 } 
 var wShare = {};
@@ -74,7 +70,7 @@ var inApp = isYidao===-1 ? false : true;
 
 
 function initData(){
-	$.ajax({
+	/*$.ajax({
 		type:"get",
 		url:"json/islogin.json",
 		async:true,
@@ -90,9 +86,9 @@ function initData(){
             }
            
 		}
-	});
+	});*/
 	
-	/*$.ajax({
+	$.ajax({
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
         dataType:'jsonp',
@@ -130,7 +126,7 @@ function initData(){
         error:function(err){
             alert(err.msg)
         }
-	});*/
+	});
 }
 
 function startGame(){//开始游戏

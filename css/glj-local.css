@@ -81,7 +81,6 @@ input{
 	height: 11.0rem;
 	overflow: scroll;
 }
-
 #prize .prize-contain .prizeitem{
 	margin:0.8rem auto;
 	width:5.906667rem;
@@ -89,7 +88,6 @@ input{
 	padding: 0.2rem 0 0 2.8rem;
 	font-size: 0.28rem;
 }
-
 #prize .prize-contain .prize95{
 	background: url(../images/prize9.5.png) no-repeat;
 	background-size: 100% 100%;
@@ -111,11 +109,6 @@ input{
 	vertical-align: top;
 }
 
-
-
-
-
-
 .leadPage-mask{
 	background: url(../images/leadbg.png);
 	background-size: 100%;
@@ -125,7 +118,13 @@ input{
     right: 0.8rem;
     top: 0.7rem;
 }
-
+#sharearrow .arrowbg{
+	margin: 10.0rem auto;
+	width: 8.0rem;
+	height: 2.0rem;
+	background: url(../images/share.png) no-repeat;
+	background-size: 100%;
+}
 #over .over-contain .top-contain{
 	margin-bottom: 0.69rem;
 	height: 5.6rem;

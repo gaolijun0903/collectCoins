@@ -111,10 +111,13 @@ input{
 	vertical-align: top;
 }
 
-
-
-
-
+#sharearrow .arrowbg{
+	margin: 10.0rem auto;
+	width: 8.0rem;
+	height: 2.0rem;
+	background: url(http://i1.yongche.name/media/g2/M04/1B/3F/rBEBJVpu1QuIGeKBAAAPO8ZBMjgAAK5AwP7dDcAAA9T083.png) no-repeat;
+	background-size: 100%;
+}
 
 .leadPage-mask{
 	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IRTWKAABMifFwiTgAAK3pwDtJqEAAEyh459.png);

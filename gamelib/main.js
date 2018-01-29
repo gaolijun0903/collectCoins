@@ -9,14 +9,17 @@ var spicJson = {"frames":[{"filename":"coinbg","frame":{"x":2,"y":201,"w":112,"h
 // 创建游戏实例
 var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game',true);
 
+var httpi0 = '//i0.yongche.name/media/';
+var httpaudio = '//i0.yongche.name/';
 // 定义场景
 var states = {
 	// boot场景
 	boot: function(){
 		this.preload = function(){
 			// 加载游戏资源
-			game.load.image('loadingbg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
-	        game.load.image('loadingbar', '//i2.yongche.name/media/g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
+			//game.load.crossOrigin = 'anonymous'; // 设置跨域 TODO
+			game.load.image('loadingbg', httpi0+'g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
+	        game.load.image('loadingbar', httpi0+'g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
 		},
 		this.create = function(){
 			//game.add.image(0,0,'loadingbg');
@@ -37,36 +40,27 @@ var states = {
 	        game.load.setPreloadSprite(loadingbar);
 	        
 	        // 加载游戏资源
-	        game.load.image('homepagebg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
-	        game.load.image('playbg', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
-	        game.load.spritesheet('dude', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IB7m-AAB72lgDCkcAAK3pwDnhcAAAHvy584.png', 47, 55); //游戏页-游戏主角
-	        game.load.spritesheet('coin', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
-	        game.load.spritesheet('mute-play', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
-	        
-            game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
+	        //game.load.crossOrigin = 'anonymous'; // 设置跨域
+	        game.load.image('homepagebg', httpi0+'g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
+	        game.load.image('playbg', httpi0+'g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
+	        game.load.atlas("spic", httpi0+"g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
+	        game.load.spritesheet('dude', httpi0+'g2/M04/1B/3F/rBEBP1pu2gyIW3vsAAAltAReuR4AAK5CwM909gAACXM672.png', 66, 105); //游戏页-游戏主角
+	        game.load.spritesheet('coin', httpi0+'g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
+	        game.load.spritesheet('mute-play', httpi0+'g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
             
+            //game.load.audio('bgMusic', httpaudio+'s/download/201801/bgMusic1.mp3?1478153218');  //游戏页-背景音乐
+	        //game.load.audio('scoreMusic', httpaudio+'s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
+            //game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
             
-            game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
-	        //game.load.audio('scoreMusic', 'http://i1.yongche.name/s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
-	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
-	        
-            game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
-            /* 打开下面注释使用的是Audio标签播放声音,但是ios上面画面性能严重失帧，不能玩
-           	* 不打开下面注释使用的是webAudio播放声音，但是请求的声音资源使用的是ajax，erp中上传的资源后台没有放开跨域访问
-           	* 为了达到游戏最好的性能，需要后台静态资源支持跨域访问，包括的静态资源有声音，图片，js，css，json
-            */
-           /* game.sound.usingWebAudio = false;
-			game.sound.usingAudioTag = true;*/
-
             // 监听加载完毕事件
             game.load.onLoadComplete.add(onLoad);
             // 加载完毕回调方法
             function onLoad() {
             	//ajax请求数据，希望数据返回，并且资源加载完毕后才进入created场景
-            	/*isLogin = true;//TODO ajax获取
+            	isLogin = true;//TODO ajax获取
             	gameNum = 2;//TODO ajax获取
-            	game.state.start('created'); //应放在success里*/
-            	initData();  //TODO
+            	game.state.start('created'); //应放在success里
+            	//initData();  //TODO
             }
 	    }
     },
@@ -124,7 +118,7 @@ var states = {
 	        		return
 	        	}
 	        	gameNum-=1;
-	        	//startGame();  //TODO
+	        	startGame();  //TODO
 	        	game.state.start('play');
 	        }
 	        
@@ -173,7 +167,7 @@ var states = {
     },
     // 游戏场景
     play: function() {
-    	var grassBeltWidth = 30,
+    	var grassBeltWidth = 40,
     		scoreMusic,
         	bombMusic,
         	bgMusic,
@@ -187,7 +181,7 @@ var states = {
     		console.log('play-create')
     		this.touching = false; // 是否正在触摸
        		this.isAllStop=false;
-    		// 声音管理类
+    		// 声音管理类 TODO
     		this.soundManager = game.sound;
     		// 添加背景音乐
             if (!bgMusic) {
@@ -207,17 +201,18 @@ var states = {
     		
 	    	//添加主角
 	        this.car = this.game.add.sprite(game.world.centerX, game.world.height - 100, 'dude');
-	        this.car.width = 120;
-          	this.car.height= 140;
+	        this.car.width = 99;
+          	this.car.height= 157.5;
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
-          	this.car.body.setSize(30,60,0,0); 
+          	this.car.body.setSize(66,105,0,0); 
 	        // 创建动画
-	    	this.car.animations.add('left', [8], 10, true);
-	    	this.car.animations.add('center', [0,2,4,6], 10, true);
-	  		this.car.animations.add('right', [12], 10, true);
-	  		this.car.animations.add('over', [16], 10, true)
+	  		this.car.animations.add('left', [4], 10, true);
+	    	this.car.animations.add('center', [0,1,2,3], 10, true);
+	  		this.car.animations.add('right', [5], 10, true);
+	  		this.car.animations.add('over', [6], 10, true);
 	  		this.car.animations.play('center');
+	  		
 	  		
 	        // 创建一个group，包含coin  stone  roadblock  garbagecan
 	        this.obstacles = game.add.group();
@@ -379,19 +374,20 @@ var states = {
 	    	}
 	    },
 	    this.addmystones = function(type,n){
-	    	
 	    	// 随机[0,2]的整数,确定下落的跑道
 		    var num = Math.floor(Math.random()*3);
 		    var	halfRoadWidth = (game.world.width-grassBeltWidth*2)/6;
 	    	for(var i=0;i<n;i++){
 	        	var obstacle;
 	        	var y;
+	        	var w= 70,h=70;
 	        	if(type==='coin'){
 	        		obstacle = this.obstacles.create(0, 0, type);
 		        	// 创建动画
 			    	obstacle.animations.add('jump', [0, 1,2,3], 8, true);
 			  		obstacle.animations.play('jump');
 			  		y = (70)*(n-i-1);
+			  		
 		        }else{
 		        	obstacle = this.obstacles.create(0, 0,'spic', type);
 		        	y = 0;
@@ -400,8 +396,8 @@ var states = {
 		  		// 重新设置位置
 		        obstacle.reset(x, y);
 		  		obstacle.type = type;
-		  		obstacle.width = 70;
-	        	obstacle.height= 70;
+		  		obstacle.width = w;
+	        	obstacle.height= h;
 	        	obstacle.body.setSize(40,40,0,0);
 	        	// kill超出边界的障碍物
 		        obstacle.checkWorldBounds = true;
@@ -455,16 +451,16 @@ var states = {
 	    		// 更新分数
 			   	this.score += 1;
 	        	this.scoreText.text =  this.score; 
-			    // 播放音效
-	    		scoreMusic.play();
+			    // 播放音效 TODO
+	    		//scoreMusic.play();
 	    	}else{
 	    		// 设置背景静止
 	    		this.bg.autoScroll(0, 0);
 	    		this.car.animations.play('over');
 	    		imageName = 'crash';
 	    		this.allStopMove();
-	    		// 播放音效
-	    		bombMusic.play();
+	    		// 播放音效 TODO
+	    		//bombMusic.play();  
 	    	}
 	    	
 	    	// 添加得分或碰撞图片
