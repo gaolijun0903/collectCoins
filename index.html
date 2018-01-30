@@ -35,23 +35,21 @@
 			<div class="container prize-contain">
 				<div class="mask-title">我的奖品</div>
 				<div class="prizewrapper">
-					<ul>
+					<ul class="prizelist">
 						<li class="prizeitem prize95">
-							<div >仅限<span class="prizeitem-owner">12345</span>使用</div>
-							<div>有效期至<span class="prizeitem-deadtime">2018.2.26</span></div>
+							<!--<div >仅限<span class="prizeitem-owner">12345</span>使用</div>
+							<div>有效期至<span class="prizeitem-deadtime">2018.2.26</span></div>-->
 						</li>
-						<li class="prizeitem prize90">
-							<div >仅限<span class="prizeitem-owner">1243543</span>使用</div>
-							<div>有效期至<span class="prizeitem-deadtime">2018.2.26</span></div>
-						</li>
-						<li class="prizeitem prize85">
-							<div >仅限<span class="prizeitem-owner">345656575687979879</span>使用</div>
-							<div>有效期至<span class="prizeitem-deadtime">2018.2.26</span></div>
-						</li>
-						<li class="prizeitem prize95">lallal </li>
-						<li class="prizeitem prize90">lallal </li>
-						<li class="prizeitem prize85">lallal </li>
+						<li class="prizeitem prize90"></li>
+						<li class="prizeitem prize85"></li>
+						<li class="prizeitem prize95"> </li>
+						<li class="prizeitem prize90"> </li>
+						<li class="prizeitem prize85"> </li>
 					</ul>
+					<div class="noprize">
+					尚未获得奖品，<br/>
+					赶快开始游戏吧
+					</div>
 				</div>
 				
 			</div>
@@ -63,8 +61,8 @@
 				<div class="winer top-contain"><!--恭喜获得-->
 					<div class="gongxi"></div>
 					<div class="discount discount90">
-						<div >仅限<span id="over-owner">****</span>使用</div>
-						<div>有效期至<span id="over-deadtime">2018.2.26</span></div>
+						<!--<div >仅限<span id="over-owner">****</span>使用</div>
+						<div>有效期至<span id="over-deadtime">2018.2.26</span></div>-->
 					</div>
 				</div>
 				<div class="loser top-contain"><!--真遗憾-->
@@ -100,7 +98,7 @@
 	        </div>
 	        <div id="close_login" class="close_btn"></div>
         </div>
-
+		<div class="toast"></div>
 	
 	<script src="gamelib/phaser.min.js"></script>
 	
@@ -119,3 +117,4 @@
 	<script src='weixin/weixin.js'></script>
 	</body>
 </html>
+

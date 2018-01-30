@@ -4,22 +4,21 @@
 //生成障碍和金币的方法合二为一
 var width = window.innerWidth;  
 var height = window.innerHeight; 
+var httpimg = 'https://www.yongche.com/media/get_image.php?media_id=';
+var httpaudio = '//i0.yongche.name/';
 var spicJson = {"frames":[{"filename":"coinbg","frame":{"x":2,"y":201,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"crash","frame":{"x":2,"y":244,"w":93,"h":76},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":93,"h":76},"sourceSize":{"w":93,"h":76}},{"filename":"garbagecan","frame":{"x":170,"y":174,"w":81,"h":61},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":12,"w":81,"h":61},"sourceSize":{"w":81,"h":81}},{"filename":"loadingbar","frame":{"x":2,"y":66,"w":176,"h":12},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":176,"h":12},"sourceSize":{"w":176,"h":12}},{"filename":"loadingbg","frame":{"x":2,"y":2,"w":188,"h":62},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":188,"h":62},"sourceSize":{"w":188,"h":62}},{"filename":"myprizebtn","frame":{"x":180,"y":79,"w":65,"h":48},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":65,"h":48},"sourceSize":{"w":65,"h":48}},{"filename":"one","frame":{"x":2,"y":322,"w":36,"h":74},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":9,"y":0,"w":36,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"playcount","frame":{"x":170,"y":298,"w":49,"h":49},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":49,"h":49},"sourceSize":{"w":49,"h":49}},{"filename":"plus100","frame":{"x":97,"y":310,"w":45,"h":13},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":13},"sourceSize":{"w":45,"h":13}},{"filename":"roadblock","frame":{"x":192,"y":2,"w":59,"h":75},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":12,"y":2,"w":59,"h":75},"sourceSize":{"w":81,"h":81}},{"filename":"rulesbtn","frame":{"x":177,"y":129,"w":58,"h":43},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":58,"h":43},"sourceSize":{"w":58,"h":43}},{"filename":"sharebtn","frame":{"x":2,"y":80,"w":173,"h":39},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":39},"sourceSize":{"w":173,"h":39}},{"filename":"startbtn","frame":{"x":2,"y":121,"w":173,"h":35},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":35},"sourceSize":{"w":173,"h":35}},{"filename":"stone","frame":{"x":170,"y":237,"w":81,"h":59},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":11,"w":81,"h":59},"sourceSize":{"w":81,"h":81}},{"filename":"three","frame":{"x":116,"y":234,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"timerbg","frame":{"x":2,"y":158,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"two","frame":{"x":116,"y":158,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}}],"meta":{"app":"http://www.texturepacker.com","version":"1.0","image":"littlepic.png","format":"RGBA8888","size":{"w":256,"h":512},"scale":"1","smartupdate":"$TexturePacker:SmartUpdate:58acf86a3872a15ce4999f79014e07a7$"}};
 
 // 创建游戏实例
 var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game',true);
 
-var httpi0 = '//i0.yongche.name/media/';
-var httpaudio = '//i0.yongche.name/';
 // 定义场景
 var states = {
 	// boot场景
 	boot: function(){
 		this.preload = function(){
 			// 加载游戏资源
-			//game.load.crossOrigin = 'anonymous'; // 设置跨域 TODO
-			game.load.image('loadingbg', httpi0+'g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
-	        game.load.image('loadingbar', httpi0+'g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
+			game.load.image('loadingbg', httpimg+'g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
+	        game.load.image('loadingbar', httpimg+'g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
 		},
 		this.create = function(){
 			//game.add.image(0,0,'loadingbg');
@@ -40,27 +39,22 @@ var states = {
 	        game.load.setPreloadSprite(loadingbar);
 	        
 	        // 加载游戏资源
-	        //game.load.crossOrigin = 'anonymous'; // 设置跨域
-	        game.load.image('homepagebg', httpi0+'g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
-	        game.load.image('playbg', httpi0+'g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
-	        game.load.atlas("spic", httpi0+"g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
-	        game.load.spritesheet('dude', httpi0+'g2/M04/1B/3F/rBEBP1pu2gyIW3vsAAAltAReuR4AAK5CwM909gAACXM672.png', 66, 105); //游戏页-游戏主角
-	        game.load.spritesheet('coin', httpi0+'g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
-	        game.load.spritesheet('mute-play', httpi0+'g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
-            
-            //game.load.audio('bgMusic', httpaudio+'s/download/201801/bgMusic1.mp3?1478153218');  //游戏页-背景音乐
-	        //game.load.audio('scoreMusic', httpaudio+'s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
-            //game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
+	        game.load.image('homepagebg', httpimg+'g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
+	        game.load.image('playbg', httpimg+'g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
+	        game.load.atlas("spic", httpimg+"g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
+	        game.load.spritesheet('dude', httpimg+'g2/M04/1B/3F/rBEBP1pu2gyIW3vsAAAltAReuR4AAK5CwM909gAACXM672.png', 66, 105); //游戏页-游戏主角
+	        game.load.spritesheet('coin', httpimg+'g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
+	        game.load.spritesheet('mute-play', httpimg+'g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
+            game.load.crossOrigin = 'anonymous'; // 设置跨域
+            game.load.audio('bgMusic', httpaudio+'s/download/201801/bgMusic1.mp3?1478153218');  //游戏页-背景音乐
+	        game.load.audio('scoreMusic', httpaudio+'s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
+            game.load.audio('bombMusic', httpaudio+'s/download/201801/bombom.mp3?1478153218');  //游戏页-爆炸音乐
             
             // 监听加载完毕事件
             game.load.onLoadComplete.add(onLoad);
             // 加载完毕回调方法
             function onLoad() {
-            	//ajax请求数据，希望数据返回，并且资源加载完毕后才进入created场景
-            	isLogin = true;//TODO ajax获取
-            	gameNum = 2;//TODO ajax获取
-            	game.state.start('created'); //应放在success里
-            	//initData();  //TODO
+            	initData();  
             }
 	    }
     },
@@ -114,11 +108,11 @@ var states = {
 	        		return 
 	        	}
 	        	if(gameNum<=0){
-	        		alert('分享可获得游戏机会');
+	        		toastMsg('分享可获得游戏机会');
 	        		return
 	        	}
 	        	gameNum-=1;
-	        	startGame();  //TODO
+	        	startGame(); 
 	        	game.state.start('play');
 	        }
 	        
@@ -205,7 +199,7 @@ var states = {
           	this.car.height= 157.5;
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
-          	this.car.body.setSize(66,105,0,0); 
+          	this.car.body.setSize(40,73,13,5);  
 	        // 创建动画
 	  		this.car.animations.add('left', [4], 10, true);
 	    	this.car.animations.add('center', [0,1,2,3], 10, true);
@@ -275,6 +269,13 @@ var states = {
     		// 小车和障碍物的碰撞监听
     		game.physics.arcade.overlap(this.car, this.obstacles, this.crashCarFunc, null, this);
     	},
+    	this.render = function() {
+		    game.debug.bodyInfo(this.car, 32, 32);// 在坐标（32，32）位置显示文本debug信息
+		    game.debug.body(this.car);// 绘制矩形body
+		    this.obstacles.forEach(function(item){
+		    	game.debug.body(item);// 绘制矩形body
+		    })
+		},
     	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
 			if(preX<x){//右划
@@ -398,7 +399,7 @@ var states = {
 		  		obstacle.type = type;
 		  		obstacle.width = w;
 	        	obstacle.height= h;
-	        	obstacle.body.setSize(40,40,0,0);
+	        	obstacle.body.setSize(48,50,15,10);
 	        	// kill超出边界的障碍物
 		        obstacle.checkWorldBounds = true;
 		        obstacle.outOfBoundsKill = true;
@@ -428,7 +429,7 @@ var states = {
 		    	alert('时间到')
 		    	var that = this;
 	        	game.time.events.add(1000, function(){
-	        		showOver(this.score);//展示“游戏结束”，并把分数发送给后台 TODO
+	        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 TODO
 	        	}, this);
 	        }
 	    },
@@ -452,7 +453,7 @@ var states = {
 			   	this.score += 1;
 	        	this.scoreText.text =  this.score; 
 			    // 播放音效 TODO
-	    		//scoreMusic.play();
+	    		scoreMusic.play();
 	    	}else{
 	    		// 设置背景静止
 	    		this.bg.autoScroll(0, 0);
@@ -460,7 +461,7 @@ var states = {
 	    		imageName = 'crash';
 	    		this.allStopMove();
 	    		// 播放音效 TODO
-	    		//bombMusic.play();  
+	    		bombMusic.play();  
 	    	}
 	    	
 	    	// 添加得分或碰撞图片
@@ -482,7 +483,7 @@ var states = {
 		            if(obstacle.type==='coin') return
 		            game.time.events.add(1000, function(){
 		            	//that.soundManager.mute = false;
-		        		showOver(this.score);//展示“游戏结束”，并把分数发送给后台 TODO
+		        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 
 		        	}, this);
 		        });
 		    });

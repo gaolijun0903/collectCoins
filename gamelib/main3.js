@@ -40,7 +40,7 @@ var states = {
 	        // 加载游戏资源
 	        game.load.image('homepagebg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
 	        game.load.image('playbg', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
-	        game.load.spritesheet('dude', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IB7m-AAB72lgDCkcAAK3pwDnhcAAAHvy584.png', 47, 55); //游戏页-游戏主角
+	        game.load.spritesheet('dude', '//i2.yongche.name/media/g2/M04/1B/3F/rBEBP1pu2gyIW3vsAAAltAReuR4AAK5CwM909gAACXM672.png', 66, 105); //游戏页-游戏主角
 	        game.load.spritesheet('coin', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
 	        game.load.spritesheet('mute-play', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
 	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
@@ -198,16 +198,16 @@ var states = {
     		
 	    	//添加主角
 	        this.car = this.game.add.sprite(game.world.centerX, game.world.height - 100, 'dude');
-	        this.car.width = 120;
-          	this.car.height= 140;
+	        this.car.width = 99;
+          	this.car.height= 157.5;
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
-          	this.car.body.setSize(30,60,0,0); 
+          	this.car.body.setSize(40,73,13,5);  
 	        // 创建动画
-	    	this.car.animations.add('left', [8], 10, true);
-	    	this.car.animations.add('center', [0,2,4,6], 10, true);
-	  		this.car.animations.add('right', [12], 10, true);
-	  		this.car.animations.add('over', [16], 10, true)
+	    	this.car.animations.add('left', [4], 10, true);
+	    	this.car.animations.add('center', [0,1,2,3], 10, true);
+	  		this.car.animations.add('right', [5], 10, true);
+	  		this.car.animations.add('over', [6], 10, true);
 	  		this.car.animations.play('center');
 	  		
 	        // 创建一个group，包含coin  stone  roadblock  garbagecan
@@ -271,9 +271,15 @@ var states = {
     		// 小车和障碍物的碰撞监听
     		game.physics.arcade.overlap(this.car, this.obstacles, this.crashCarFunc, null, this);
     	},
+		this.render = function() {
+		    game.debug.bodyInfo(this.car, 32, 32);// 在坐标（32，32）位置显示文本debug信息
+		    game.debug.body(this.car);// 绘制矩形body
+		    this.obstacles.forEach(function(item){
+		    	game.debug.body(item);// 绘制矩形body
+		    })
+		},
     	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
-			console.log(123)
 			if(preX<x){//右划
 				this.car.animations.play('right');
 			}else if(preX==x){
@@ -394,7 +400,7 @@ var states = {
 		  		obstacle.type = type;
 		  		obstacle.width = 70;
 	        	obstacle.height= 70;
-	        	obstacle.body.setSize(40,40,0,0);
+	        	obstacle.body.setSize(48,50,15,10);
 	        	// kill超出边界的障碍物
 		        obstacle.checkWorldBounds = true;
 		        obstacle.outOfBoundsKill = true;
@@ -422,9 +428,11 @@ var states = {
 	    		this.bg.autoScroll(0, 0);
 		    	//添加时间到的闹铃声音
 		    	alert('时间到')
+		    	console.log(this.score);
 		    	var that = this;
 	        	game.time.events.add(1000, function(){
 	        		//that.soundManager.mute = false;
+	        		console.log(this.score);
 	        		showOver(this.score);//展示“游戏结束”，并把分数发送给后台 TODO
 	        	}, this);
 	        }
@@ -469,6 +477,7 @@ var states = {
 		        y: goal.y - 20
 		    }, 100, Phaser.Easing.Linear.None, true, 0, 0, false);
 		    var that = this;
+		   // console.log(this.score);
 		    showTween.onComplete.add(function() {
 		        var hideTween = game.add.tween(goal).to({
 		            alpha: 0,
@@ -479,7 +488,7 @@ var states = {
 		            if(obstacle.type==='coin') return
 		            game.time.events.add(1000, function(){
 		            	//that.soundManager.mute = false;
-		        		showOver(this.score);//展示“游戏结束”，并把分数发送给后台 TODO
+		        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 TODO
 		        	}, this);
 		        });
 		    });

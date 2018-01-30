@@ -81,7 +81,15 @@ input{
 	height: 11.0rem;
 	overflow: scroll;
 }
-
+#prize .prize-contain .noprize{
+	font-size: 0.6rem;
+    text-align: center;
+    line-height: 1.3rem;
+    padding-top: 2rem;
+}
+#prize .prize-contain .prizelist{
+	display: none;
+}
 #prize .prize-contain .prizeitem{
 	margin:0.8rem auto;
 	width:5.906667rem;
@@ -91,15 +99,15 @@ input{
 }
 
 #prize .prize-contain .prize95{
-	background: url(http://i1.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IYLyRAAA-lB9qS6UAAK3pQMbY10AAD6s578.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M02/1C/02/rBEBP1pwO-2IL5IQAAAS2l_y62AAAK6DwP91GAAABLy197.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prize90{
-	background: url(http://i2.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IbSsxAAA6QVVasEQAAK3pQMbKQQAADpZ639.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M01/1C/02/rBEBP1pwO-2IIFweAAAPzJjH1aIAAK6EgMPauAAAA_k547.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prize85{
-	background: url(http://i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IJ_SqAAA_aAMF4nEAAK3pwGGAZ4AAD-A439.png) no-repeat;
+	background: url(http://i2.yongche.name/media/g2/M01/1C/02/rBEBJVpwO-yIfxG0AAATOlAQekEAAK6EgMPV44AABNS668.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prizeitem-owner{
@@ -158,15 +166,15 @@ input{
 	padding:0.5rem 0 0 3.2rem;
 }
 #over .over-contain  .discount95{
-	background: url(http://i1.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IYLyRAAA-lB9qS6UAAK3pQMbY10AAD6s578.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M02/1C/02/rBEBP1pwO-2IL5IQAAAS2l_y62AAAK6DwP91GAAABLy197.png) no-repeat;
 	background-size: 100% 100%;
 }
 #over .over-contain  .discount90{
-	background: url(http://i2.yongche.name/media/g2/M03/1B/3C/rBEBP1pshD-IbSsxAAA6QVVasEQAAK3pQMbKQQAADpZ639.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M01/1C/02/rBEBP1pwO-2IIFweAAAPzJjH1aIAAK6EgMPauAAAA_k547.png) no-repeat;
 	background-size: 100% 100%;
 }
 #over .over-contain  .discount85{
-	background: url(http://i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IJ_SqAAA_aAMF4nEAAK3pwGGAZ4AAD-A439.png) no-repeat;
+	background: url(http://i2.yongche.name/media/g2/M01/1C/02/rBEBJVpwO-yIfxG0AAATOlAQekEAAK6EgMPV44AABNS668.png) no-repeat;
 	background-size: 100% 100%;
 }
 
@@ -262,3 +270,5 @@ input{
     text-align: center;
     line-height: 1.067rem;
 }
+/*错误提示吐司*/
+.toast{ position: fixed; bottom : 35%; left: 10%; width: 80%; height: 40px; line-height: 40px; background: rgba(0,0,0,0.5); color: #fff; z-index: 30; text-align: center; border-radius: 10px;font-size: 18px;display: none;}
