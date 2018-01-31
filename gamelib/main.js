@@ -37,9 +37,10 @@ var states = {
 	        loadingbg.anchor.setTo(0.5, 0.5);
 	        loadingbar.anchor.setTo(0, -1.05);
 	        game.load.setPreloadSprite(loadingbar);
-	        
+ 
+			//g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png
 	        // 加载游戏资源
-	        game.load.image('homepagebg', httpimg+'g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
+	        game.load.image('homepagebg', httpimg+'g2/M01/1C/04/rBEBP1pxgyeIE05HAAXMI327Te4AAK7DwCSJ8AABcw7461.png');//首页-背景
 	        game.load.image('playbg', httpimg+'g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
 	        game.load.atlas("spic", httpimg+"g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
 	        game.load.spritesheet('dude', httpimg+'g2/M04/1B/3F/rBEBP1pu2gyIW3vsAAAltAReuR4AAK5CwM909gAACXM672.png', 66, 105); //游戏页-游戏主角
@@ -62,6 +63,7 @@ var states = {
     created: function() {
     	var button,muteButton;
     	this.create = function() {
+    		alert('create')
     		// 声音管理类 
     		this.soundManager = game.sound;
             // 添加背景
@@ -76,35 +78,31 @@ var states = {
 	        // 添加"我的奖品"按钮
 	        prizeButton = game.add.button(16, 16,'spic', showPrizes, this, 'myprizebtn', 'myprizebtn', 'myprizebtn');
 	        function showPrizes(){
-	        	if(!isLogin){//未登录
-	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
-	        		$('#loginMask').show();
-	        		/*if(inApp){  //TODO
-                		//端内登录地址
+	        	if(!isLogin){//未登录--我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
+	        		if(inApp){  
+                		var link = 'yongche://login?done=' + encodeURIComponent(window.location.href);
+                    	window.location.href = link;
 	                }else{
 	                	$('#loginMask').show();
-	                }*/
+	                }
 	        		return 
 	        	}
 	        	$('#prize').fadeIn(100);
 	        }
-	        
 	       	// 添加"我有几次游戏机会"
             var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ gameNum +'次游戏机会', { fontSize: '18px', fill: '#FFFFFF' });
             gamecountText.anchor.setTo(0.5, 1);
-            
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
 	        startButton.anchor.setTo(0.5, 1);
 	        function onStart(){
 	        	if(!isLogin){//未登录
-	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
-	        		$('#loginMask').show();
-	        		/*if(inApp){
-                		//端内登录地址
+	        		if(inApp){
+                		var link = 'yongche://login?done=' + encodeURIComponent(window.location.href);
+                    	window.location.href = link;
 	                }else{
 	                	$('#loginMask').show();
-	                }*/
+	                }
 	        		return 
 	        	}
 	        	if(gameNum<=0){
@@ -115,27 +113,26 @@ var states = {
 	        	startGame(); 
 	        	game.state.start('play');
 	        }
-	        
 	        // 添加"分享 "按钮
 	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'spic', onShare, this, 'sharebtn', 'sharebtn', 'sharebtn');
 	        shareButton.anchor.setTo(0.5, 1);
 	        function onShare(){
 	        	if(!isLogin){//未登录
-	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
-	        		$('#loginMask').show();
-	        		/*if(inApp){
-                		//端内登录地址
+	        		if(inApp){
+                		var link = 'yongche://login?done=' + encodeURIComponent(window.location.href);
+                    	window.location.href = link;
 	                }else{
 	                	$('#loginMask').show();
-	                }*/
+	                }
 	        		return 
 	        	}
-	        	
 	            shareFn();
 	        }
 	        
 	        // 添加静音按钮  播放
-	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 0, 0, 0);
+	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 1, 1, 1);
+	        muteButton.width = 40;
+          	muteButton.height= 40;
 	        this.judgeMute();
 	        muteButton.anchor.setTo(0.5, 0.5);
 	        function onMute(){
@@ -152,9 +149,9 @@ var states = {
 	        	}
 	    	}else{
 	    		if(this.soundManager.mute){
-	        		muteButton.setFrames(1, 1,1);
-	        	}else{
 	        		muteButton.setFrames(0, 0,0);
+	        	}else{
+	        		muteButton.setFrames(1, 1,1);
 	        	}
 	    	}
         }
@@ -175,7 +172,7 @@ var states = {
     		console.log('play-create')
     		this.touching = false; // 是否正在触摸
        		this.isAllStop=false;
-    		// 声音管理类 TODO
+    		// 声音管理类 
     		this.soundManager = game.sound;
     		// 添加背景音乐
             if (!bgMusic) {
@@ -192,7 +189,6 @@ var states = {
 	        this.bgImg = game.cache.getImage('playbg');
 	        this.bg.tileScale.x = game.world.width / this.bgImg.width;
 	        this.bg.tileScale.y = game.world.height / this.bgImg.height;
-    		
 	    	//添加主角
 	        this.car = this.game.add.sprite(game.world.centerX, game.world.height - 100, 'dude');
 	        this.car.width = 99;
@@ -206,19 +202,15 @@ var states = {
 	  		this.car.animations.add('right', [5], 10, true);
 	  		this.car.animations.add('over', [6], 10, true);
 	  		this.car.animations.play('center');
-	  		
-	  		
 	        // 创建一个group，包含coin  stone  roadblock  garbagecan
 	        this.obstacles = game.add.group();
 	        this.obstacles.enableBody = true;
-	       
 	       	// 添加时间背景
 	        var timerbg = game.add.image(19, 16,'spic', 'timerbg');
 	        // 添加时间
 			this.remainTime = 60;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
 	        this.remainTimeText = this.game.add.text(62, 25, "01：00", style);
-			
 			// 添加次数背景
 	        var timerbg = game.add.image(game.world.centerX, 42, 'spic','playcount');
 	        timerbg.anchor.setTo(0.5, 0.5);
@@ -226,14 +218,12 @@ var states = {
 	        var style = { font: "22px Arial", fill: "#ffffff" };
 	        this.remainCountText = this.game.add.text(game.world.centerX, 42, gameNum, style);
 	        this.remainCountText.anchor.setTo(0.5, 0.5);
-	        
 			// 添加分数背景
 	        var coinbg = game.add.image(game.world.width-19-112, 16, 'spic','coinbg');
 			// 添加分数
 			this.score = 0;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
 	        this.scoreText = this.game.add.text(game.world.width-19-90, 25, " "+this.score, style);
-	        
 	        // 添加静音按钮  播放
 	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 0, 0, 0);
 	        this.judgeMute();
@@ -242,14 +232,12 @@ var states = {
 	        	this.soundManager.mute =  !this.soundManager.mute;
 	        	this.judgeMute();
 	        }
-	        
 			// 监听滑动事件
 			this.game.input.addMoveCallback(this.moveCallback,this);
 			// 监听按下事件
 			game.input.onDown.add(this.onDownCb,this);
 			// 监听离开事件
 			this.game.input.onUp.add(this.onUpCb,this);
-			
 			//第一次游戏展示引导页
 			var that = this;
 			var firstplay = window.localStorage.getItem("firstplay");
@@ -269,13 +257,13 @@ var states = {
     		// 小车和障碍物的碰撞监听
     		game.physics.arcade.overlap(this.car, this.obstacles, this.crashCarFunc, null, this);
     	},
-    	this.render = function() {
+    	/*this.render = function() {
 		    game.debug.bodyInfo(this.car, 32, 32);// 在坐标（32，32）位置显示文本debug信息
 		    game.debug.body(this.car);// 绘制矩形body
 		    this.obstacles.forEach(function(item){
 		    	game.debug.body(item);// 绘制矩形body
 		    })
-		},
+		},*/
     	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
 			if(preX<x){//右划
@@ -339,9 +327,6 @@ var states = {
 		            width : 0,
 		    		height : 0
 		        }, 200, Phaser.Easing.Linear.None, true, 200, 0, false);
-		        hideTween.onComplete.add(function() {
-		            
-		        });
 		    });
 	    },
 	   	this.judgeMute = function(update){
@@ -388,7 +373,6 @@ var states = {
 			    	obstacle.animations.add('jump', [0, 1,2,3], 8, true);
 			  		obstacle.animations.play('jump');
 			  		y = (70)*(n-i-1);
-			  		
 		        }else{
 		        	obstacle = this.obstacles.create(0, 0,'spic', type);
 		        	y = 0;
@@ -399,7 +383,7 @@ var states = {
 		  		obstacle.type = type;
 		  		obstacle.width = w;
 	        	obstacle.height= h;
-	        	obstacle.body.setSize(48,50,15,10);
+	        	obstacle.body.setSize(63,50,10,10);
 	        	// kill超出边界的障碍物
 		        obstacle.checkWorldBounds = true;
 		        obstacle.outOfBoundsKill = true;
@@ -419,7 +403,6 @@ var states = {
 	        this.obstacles.forEachAlive(function(item){
 	    		item.body.velocity.y = v;
 	    	});
-
 	        // 结束场景
 	        if(this.remainTime <= 0){ 
 	        	this.allStopMove();
@@ -429,7 +412,7 @@ var states = {
 		    	alert('时间到')
 		    	var that = this;
 	        	game.time.events.add(1000, function(){
-	        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 TODO
+	        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 
 	        	}, this);
 	        }
 	    },
@@ -452,7 +435,7 @@ var states = {
 	    		// 更新分数
 			   	this.score += 1;
 	        	this.scoreText.text =  this.score; 
-			    // 播放音效 TODO
+			    // 播放音效
 	    		scoreMusic.play();
 	    	}else{
 	    		// 设置背景静止
@@ -460,7 +443,7 @@ var states = {
 	    		this.car.animations.play('over');
 	    		imageName = 'crash';
 	    		this.allStopMove();
-	    		// 播放音效 TODO
+	    		// 播放音效 
 	    		bombMusic.play();  
 	    	}
 	    	
@@ -482,7 +465,6 @@ var states = {
 		            goal.kill();
 		            if(obstacle.type==='coin') return
 		            game.time.events.add(1000, function(){
-		            	//that.soundManager.mute = false;
 		        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 
 		        	}, this);
 		        });

@@ -201,7 +201,7 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
     }
     
     
-    /**
+   /**
      * 小游戏助力接口
      */
     public function helpUserAction(){
@@ -275,14 +275,14 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
                 $this->echoJson(503, '服务器正在偷懒，请稍后重试');
             }
         } else {
-            $helpUserGameRet['remain_num'] = 1;
+            $helpUserGameRet['remain_num'] = 2;
             $insertResData = [
                 'user_id' => $helpUserId,
                 'name'    => $helpUserInfo['name'],
                 'cellphone'=> $helpUserInfo['cellphone'],
                 'location'=> $helpUserInfo['city'],
-                'total_num' => 1,
-                'remain_num' => 1
+                'total_num' => 2,
+                'remain_num' => 2
             ];
             if (!$userGameResObj->insert($insertResData)){
                 $this->echoJson(503, '服务器正在偷懒，请稍后重试');
@@ -293,7 +293,6 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
         $this->echoJson(200, '助力成功', ['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
 
     }
-    
 
     //检查用户登录
     protected function _checkUser(){

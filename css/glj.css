@@ -5,7 +5,7 @@
 }
 html,
 body{
-	width: 10.0rem;
+	width: 100%;
 	height: 100%;
 	position: relative;
 }
@@ -23,21 +23,22 @@ input{
 	
 }
 .mask{
-	position: absolute;
+	position: fixed;
+	left: 0;
 	top: 0;
 	right: 0;
-	width: 10.0rem;
+	bottom: 0;
+	width: 100%;
 	height: 100%;
 	line-height:  0.67rem;
 	font-size: 30px;
-	
 	background:rgba(0,0,0,0.4);
 	display: none;
 }
 .mask .container{
-	margin: 1.70rem auto 0;
-	width: 7.76rem;
-	height: 12.0rem;
+	margin: 20% auto 0;
+	width: 80%;
+	height: 75%;
 	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg) ;
 	border: 0.08rem solid #fcd315;
 	border-radius: 0.2rem;
@@ -60,8 +61,8 @@ input{
 }
 .mask .close_btn{
 	margin: 0.2rem auto;
-	width: 0.907rem;
-	height: 0.907rem;
+	width:37px;
+	height: 37px;
 	background: url(http://i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IdibaAAAK4o2vF1QAAK3pwDnPOsAAAr6941.png) no-repeat;
 	background-size: 100%;
 }
@@ -214,45 +215,45 @@ input{
 
 
 #loginMask .login-contain{
-	padding: 0.8rem;
+	padding: 30px;
 	text-align: left;
 	background: #FFFFFF;
 	border: none;
 	height:auto;
-	margin-top: 3.0rem;
+	margin-top: 30%;
 }
 .login-contain .login-title{
-	font-size: 0.5rem;
-	line-height: 1.3rem;
+	font-size: 22px;
+	line-height: 54px;
 }		
         
 .login-contain  .login-input{
-	margin-bottom: 0.3rem;
+	margin-bottom: 12px;
     display: inline-block;
-    width:6.2rem;
-    height:1.067rem;
+    width:95%;
+    height:45px;
     border:1px solid #ccc;
-    border-radius: 0.5rem;
-    font-size: 0.373333rem;
-	padding-left: 0.33333rem;
+    border-radius: 23px;
+    font-size: 16px;
+	padding-left: 12px;
 }
 
 .login-contain .login-input-short{
-	width:3.3rem;
+	width:50%;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 0.1rem;
+	margin-right: 5px;
 }
 .login-contain .login-code{
-	width:2.5rem;
-	height:1.067rem;
-    font-size: 0.373333rem;
+	width:40%;
+	height:45px;
+    font-size: 16px;
 	display: inline-block;
 }
 .login-contain .login-getmsgcode{
 	color: #FFFFFF;
 	background: #E92C2A;
-    border-radius: 0.5rem;
+    border-radius: 23px;
 }
 .login-contain .login-captchacode{
 	background: #CCCCCC;
@@ -261,7 +262,7 @@ input{
 	display: none;
 }
 .login-contain .login-btn{
-	width:6.2rem;
+	width:95%;
     height:1.067rem;
     color: #FFFFFF;
     background: #E92C2A;
@@ -271,4 +272,4 @@ input{
     line-height: 1.067rem;
 }
 /*错误提示吐司*/
-.toast{ position: fixed; bottom : 35%; left: 10%; width: 80%; height: 40px; line-height: 40px; background: rgba(0,0,0,0.5); color: #fff; z-index: 30; text-align: center; border-radius: 10px;font-size: 18px;display: none;}
+.toast{ position: fixed; bottom : 35%; left: 10%; width: 80%; height: 40px; line-height: 40px; background: rgba(0,0,0,0.5); color: #fff; z-index: 30; text-align: center; border-radius: 10px;font-size: 18px;display: none;}	

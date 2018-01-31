@@ -400,7 +400,7 @@ var states = {
 		  		obstacle.type = type;
 		  		obstacle.width = 70;
 	        	obstacle.height= 70;
-	        	obstacle.body.setSize(48,50,15,10);
+	        	obstacle.body.setSize(63,50,10,10);
 	        	// kill超出边界的障碍物
 		        obstacle.checkWorldBounds = true;
 		        obstacle.outOfBoundsKill = true;

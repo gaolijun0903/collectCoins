@@ -5,14 +5,10 @@ function ajaxShare(obj){
     var _protocolLink = "yongche://share?";
     var _protocolLinkFriend = "yongche://shareToFriend?";
     var _protocolLinkTimeline = "yongche://shareToTimeline?";
-
     // 分享地址
-    //var query = encodeURIComponent("&language="+obj.activity_language+"&sendName="+obj.sendName+"&sendMoney="+obj.sendMoney+"&sendIphone="+obj.sendIphone+"&headImg="+obj.headImg);
     var shareRead_link = encodeURIComponent(obj.url);
-
     // 分享的图片
-    var shareRead_pics = encodeURIComponent("http://i3.yongche.Name/media/g2/M01/1A/35/rBEBJVo82ViIBg3PAAAydsM-krwAAKcAAK_ajsAADKO105.jpg");
-
+    var shareRead_pics = encodeURIComponent(obj.shareimg);
     // 分享的标题
     var shareRead_title = encodeURIComponent(obj.title);
     // 分享的内容
@@ -41,7 +37,7 @@ function ajaxShare(obj){
     };
     var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&from=iframe&callback="+shareRead_callback;
     var _tmpOpenLink = _protocolLink + _str;
-    console.log(_tmpOpenLink);
+    //console.log(_tmpOpenLink);
 }
 	
 //微信二次分享	       
@@ -91,7 +87,6 @@ function ajaxShare(obj){
                 wx.onMenuShareAppMessage(shareData);
                 wx.onMenuShareTimeline(shareData);
                 wx.onMenuShareQQ(shareData);
-                //alert('ok');
             });
         }
     }
