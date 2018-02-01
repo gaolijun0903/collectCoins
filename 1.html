@@ -30,9 +30,8 @@ input{
     -webkit-appearance: none;
 }
 .wrapper{
-	width: 10.0rem;
+	width: 100%;
 	height: 100%;
-	
 }
 .mask{
 	position: fixed;
@@ -48,9 +47,9 @@ input{
 	display: none;
 }
 .mask .container{
-	margin: 20% auto 0;
-	width: 80%;
-	height: 75%;
+	margin: 1.70rem auto 0;
+	width: 7.76rem;
+	height: 12.0rem;
 	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg) ;
 	border: 0.08rem solid #fcd315;
 	border-radius: 0.2rem;
@@ -152,7 +151,7 @@ input{
 
 #over .over-contain .top-contain{
 	margin-bottom: 0.69rem;
-	height: 5.6rem;
+	height: 5.0rem;
 	padding: 0.1px;
 }
 #over .over-contain .winer{
@@ -190,7 +189,6 @@ input{
 	background: url(http://i2.yongche.name/media/g2/M01/1C/02/rBEBJVpwO-yIfxG0AAATOlAQekEAAK6EgMPV44AABNS668.png) no-repeat;
 	background-size: 100% 100%;
 }
-
 #over .over-contain .line{
 	font-size: 0.453333rem;
 	color: #a8a381;
@@ -206,7 +204,7 @@ input{
 	border-radius: 0.49rem;
 	text-align: center;
 	line-height: 0.986rem;
-	font-size: 0.45rem;
+	font-size: 0.40rem;
 	color: #f5f5f5;
 	background: #ff5b5b;
 }
@@ -221,24 +219,23 @@ input{
 	text-align: center;
 	font-size: 0.45rem;
 	color: #ff5b5b;
-	border-bottom: 1px solid #FF5B5B;
 }
-
-
-
 #loginMask .login-contain{
+	margin: 30% auto 0;
+	width: 80%;
+	height: auto;
+	border-radius: 0.2rem;
+	position: relative;
+	color: #eca205;
+	/*font-size: 0.346667rem;*/
 	padding: 30px;
-	text-align: left;
+	/*text-align: left;*/
 	background: #FFFFFF;
-	border: none;
-	height:auto;
-	margin-top: 30%;
 }
 .login-contain .login-title{
 	font-size: 22px;
 	line-height: 54px;
 }		
-        
 .login-contain  .login-input{
 	margin-bottom: 12px;
     display: inline-block;
@@ -249,7 +246,6 @@ input{
     font-size: 16px;
 	padding-left: 12px;
 }
-
 .login-contain .login-input-short{
 	width:50%;
 	display: inline-block;
@@ -295,13 +291,15 @@ input{
 			<div id="rule" class="mask rule-mask">
 				<div class="container rule-contain">
 					<div class="mask-title">活动规则</div>
-					<ul>
-						<li class="rule-item">每位用户第一次进入游戏时获得一次免费游戏机会； </li>
-						<li class="rule-item">用户每打一次车，会获得一次游戏机会，邀请好友参加游戏后，双方各获得一次游戏机会，每个用户每天最多获得4次通过邀请得到的游戏机会，且每位用户只能在一天内被邀请一次；</li>
-						<li class="rule-item">当游戏开始后，在60秒内，左右滑动汽车，每得到一个金币加100分，撞到障碍物游戏结束； </li>
-						<li class="rule-item">游戏结束后，可根据所获得金币数所对应的积分获取奖励，所获奖品请在“我的奖品”页面查看； </li>
-						<li class="rule-item">奖品对应积分为：3000分可获得——9.5折优惠券一张，5000分可获得——9折优惠券一张，7000分以上可获得——8.5折优惠券一张，所获优惠券可用于用车费的部分抵扣，优惠券使用规则请参见易到App个人中心优惠券页面。</li>
-					</ul>
+					<div class="prizewrapper">
+						<ul>
+							<li class="rule-item">每位用户第一次进入游戏时获得一次免费游戏机会； </li>
+							<li class="rule-item">用户每打一次车，会获得一次游戏机会，邀请好友参加游戏后，双方各获得一次游戏机会，每个用户每天最多获得4次通过邀请得到的游戏机会，且每位用户只能在一天内被邀请一次；</li>
+							<li class="rule-item">当游戏开始后，在60秒内，左右滑动汽车，每得到一个金币加100分，撞到障碍物游戏结束； </li>
+							<li class="rule-item">游戏结束后，可根据所获得金币数所对应的积分获取奖励，所获奖品请在“我的奖品”页面查看； </li>
+							<li class="rule-item">奖品对应积分为：3000分可获得——9.5折优惠券一张，5000分可获得——9折优惠券一张，7000分以上可获得——8.5折优惠券一张，所获优惠券可用于用车费的部分抵扣，优惠券使用规则请参见易到App个人中心优惠券页面。</li>
+						</ul>
+					</div>	
 				</div>
 				<div id="close_rule" class="close_btn"></div>
 			</div>
@@ -310,15 +308,12 @@ input{
 					<div class="mask-title">我的奖品</div>
 					<div class="prizewrapper">
 						<ul class="prizelist">
-							<li class="prizeitem prize95"></li>
-							<li class="prizeitem prize85"> </li>
 						</ul>
 						<div class="noprize">
 						尚未获得奖品，<br/>
 						赶快开始游戏吧
 						</div>
 					</div>
-					
 				</div>
 				<div id="close_prize" class="close_btn"></div>
 			</div>
@@ -327,17 +322,17 @@ input{
 					<div class="mask-title">游戏结束</div>
 					<div class="winer top-contain"><!--恭喜获得-->
 						<div class="gongxi"></div>
-						<div class="discount discount90"></div>
 					</div>
 					<div class="loser top-contain"><!--真遗憾-->
 						<div class="loser1">真遗憾，</div>
 						<div class="loser2">离奖励就差一点了</div>
 					</div>
-					<div class="line totalscore">累计获得<span id="totalscore">88</span>分</div>
-					<div class="line defeat">击败<span id="defeat">99</span>%用户</div>
-					<div id="playagin" class="playagin ">再玩一次（剩余<span id="gameNum">4</span>次）</div>
-					<div id="sharetofriend" class="sharetofriend">邀好友来玩再得机会</div>
+					<div class="line totalscore">本次获得<span id="totalscore"></span>分</div>
+					<div class="line defeat">击败<span id="defeat"></span>%用户</div>
+					<div id="playagin" class="playagin ">再玩一次（剩余<span id="gameNum"></span>次）</div>
+					<div id="sharetofriend" class="sharetofriend">邀好友来玩再得机会  &gt;</div>
 				</div>
+				<div id="close_over" class="close_btn"></div>
 			</div>
 			<div id="leadPage" class="mask leadPage-mask">
 				<div id="close_leadPage" class="close_btn"></div>
@@ -346,7 +341,7 @@ input{
 				<div class="arrowbg"></div>
 			</div>
 			<div id="loginMask" class="mask login-mask">
-				<div class="container login-contain">
+				<div class=" login-contain">
 		            <div class="login-title">手机号登录</div>
 		            <input id="login-tel" type="tel" class="login-input" placeholder="请输入手机号" maxlength="11">
 		            
@@ -358,13 +353,13 @@ input{
 		                <input id="login-msgcode" class="login-input login-input-short" type="tel" placeholder="请输入验证码" maxlength="6">
 		                <input id="login-getmsgcode" type="button" class="login-code login-getmsgcode" value="获取验证码">
 		            </div>
-		            <div id="login-btn" class="login-btn">登&nbsp;&nbsp;&nbsp;录</div>
+		            <div id="login-btn" class="login-btn">登   录</div>
 		        </div>
 		        <div id="close_login" class="close_btn"></div>
 	        </div>
 			<div class="toast"></div>
 		</div>
-
+		
 <script src="https://i3.Yongche.name/s/js/201801/myphaser2.6.min.js?1478153218"></script>
 <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -491,8 +486,6 @@ var telInput = $('#login-tel'),   //手机号输入框
 	msgcode;
 var shareToken1 = GetQueryString('shareToken');
 
-//document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';    //16800120011
-// kKtwZA2vYwxbJBA5P-eiivWuFrHLWLBF-ECli2a-5WA
 var httpHead = 'https://testing-market.Yongche.org'; //线下接口
 //var httpHead = 'https://market.yongche.com'; //线上接口
 
@@ -512,6 +505,15 @@ $("#playagin").click(function(){
 	startGame();
 	initData(1);
 })
+
+//结束页关闭返回首页
+$('#close_over').click(function(){
+	$('.mask').fadeOut(300);
+	initData()
+	//game.state.start('created');
+})
+
+//端外分享箭头指引
 $('#sharearrow').click(function(){
 	$(this).hide();
 })
@@ -526,33 +528,40 @@ function shareFn() {
 	}
 } 
 var wShare = {};
-wShare.shareImg = 'http://i2.yongche.Name/media/g2/M03/1A/35/rBEBJVo84_iIZPtgAAAydsM-krwAAKcBQLESpgAADKO907.jpg';
-wShare.shareTitle = '金币大作战';
-wShare.shareContent = '金币大作战';
+wShare.shareImg = 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png';
+wShare.shareTitle = '快来参加易到金币大作战';
+wShare.shareContent = '参与游戏赢用车券啦';
 wShare.shareUrl = 'http://www.yongche.com/cms/page/glj.html?shareToken=';
 wxShareFn(wShare);  //微信二次分享
         
 window.onresize = function(){
  //alert('change')
 }
-
-function initData(isagin){
+function initData(){
+	if(shareToken1){
+        helphimFn();
+    } else{
+        getCommon();
+    }
+            
+}
+function getCommon(isagin){
 	$.ajax({
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
         dataType:'jsonp',
         success:function(data) {
-            alert('initData'+data.code);
+            alert('getCommon'+data.code);
             if(data.code==200){
                 isLogin = true;
 				gameNum = data.result.gameNum;
-                getMyPrizelist();
+                if(!isagin){getMyPrizelist();}
                 if(inApp){
                 	if(!isagin){
                 		//端内分享配置
 		                ajaxShare({
 		                    url:'http://www.yongche.com/cms/page/glj.html?shareToken='+data.result.shareToken,
-		                    shareimg:'http://i3.yongche.Name/media/g2/M01/1A/35/rBEBJVo82ViIBg3PAAAydsM-krwAAKcAAK_ajsAADKO105.jpg',
+		                    shareimg:'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
 		                    title:'金币大作战',
 		                    description:'金币大作战'
 		                })
@@ -628,7 +637,7 @@ function endGame(gameToken,goldNum){//游戏结束
         url: httpHead + '/Miscellaneous/Activityusergame/endGame?gameToken='+gameToken+'&goldNum='+goldNum,
         dataType:'jsonp',
         success:function(data) {
-            alert('endGame'+data.code);
+            //alert('endGame'+data.code);
             if(data.code==200){
 				updateoverData(data.result)
             }else if(data.code==400) {//参数不正确
@@ -679,7 +688,7 @@ loginBtn.click(function() {
                 if(shareToken1){
                     helphimFn();
                 } else{
-                    toastMsg('邀请人未参与该活动');
+                    game.state.start('created');
                 }
             } else{
                 toastMsg('Login'+data.code,data.msg);
@@ -692,7 +701,6 @@ loginBtn.click(function() {
 });
 
 function helphimFn() { //助力
-	
     $.ajax({
         url: httpHead + '/Miscellaneous/Activityusergame/helpUser?shareToken=' +shareToken1,
         type:'get',
@@ -704,9 +712,11 @@ function helphimFn() { //助力
 	            gameNum = data.result.gameNum;
 	            wShare.shareUrl = 'http://www.yongche.com/cms/page/glj.html?shareToken='+ data.result.shareToken;
 	            game.state.start('created');
+	            getMyPrizelist();
         	}else{
         		toastMsg(data.msg);
         	}
+        	game.state.start('created')
         },
         error:function(err){
             console.log(err.msg);
@@ -811,7 +821,7 @@ function showOver(score){
 }
 function updateoverData(data){
 	$('.winer').children('.discount').remove();
-	$('#totalscore').text(data.totalgold); //游戏总分
+	$('#totalscore').text(data.goldNum); //游戏总分
 	$('#defeat').text(data.defeat); //击败多少人
 	$('#gameNum').text(data.gamenum);//游戏次数
 	if(data.gamenum<=0){
@@ -825,9 +835,9 @@ function updateoverData(data){
 		var levelclass = '';
 		if(data.awardId===4874){
 			levelclass = 'discount95';
-		}else if(data.awardId===4884 ){
+		}else if(data.awardId===5138 ){
 			levelclass = 'discount90';
-		}else if(data.awardId===4882){
+		}else if(data.awardId===5136){
 			levelclass = 'discount85';
 		}
 		var str = '<div class="discount '+ levelclass +' "></div>';
@@ -836,7 +846,7 @@ function updateoverData(data){
 }
 
 function updateMyPrizelist(prizelist){
-	console.log(prizelist)
+	alert('prizelist.length=='+prizelist.length)
 	var str = '', levelclass = '';
 	if(prizelist.length<=0){
 		$('.prizelist').hide();
@@ -848,11 +858,11 @@ function updateMyPrizelist(prizelist){
 	$('.prizelist').children('.prizeitem').remove();
 	prizelist.forEach(function(item){
 		if(item.awardId==4874){
-			levelclass = 'discount95';
-		}else if(item.awardId==4884){
-			levelclass = 'discount90';
-		}else if(item.awardId===4882){
-			levelclass = 'discount85';
+			levelclass = 'prize95';
+		}else if(item.awardId==5138){
+			levelclass = 'prize90';
+		}else if(item.awardId===5136){
+			levelclass = 'prize85';
 		}
 		str += '<li class="prizeitem '+ levelclass +'"></li>';
 	})
@@ -957,9 +967,12 @@ var states = {
 	        	}
 	        	$('#prize').fadeIn(100);
 	        }
-	       	// 添加"我有几次游戏机会"
-            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ gameNum +'次游戏机会', { fontSize: '18px', fill: '#FFFFFF' });
-            gamecountText.anchor.setTo(0.5, 1);
+	        if(isLogin){//未登录
+        		// 添加"我有几次游戏机会"
+	            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ gameNum +'次游戏机会', { fontSize: '18px', fill: '#FFFFFF' });
+	            gamecountText.anchor.setTo(0.5, 1);
+        	}
+	       	
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
 	        startButton.anchor.setTo(0.5, 1);
@@ -1088,12 +1101,12 @@ var states = {
 	        this.remainCountText.anchor.setTo(0.5, 0.5);
 			// 添加分数背景
 	        var coinbg = game.add.image(game.world.width-19-112, 16, 'spic','coinbg');
-			// 添加分数
+			// 添加分数和金币数
 			this.score = 0;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
 	        this.scoreText = this.game.add.text(game.world.width-19-90, 25, " "+this.score, style);
 	        // 添加静音按钮  播放
-	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 0, 0, 0);
+	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 1, 1, 1);
 	        this.judgeMute();
 	        muteButton.anchor.setTo(0.5, 0.5);
 	        function onMute(){
@@ -1206,9 +1219,9 @@ var states = {
 	        	}
 	    	}else{
 	    		if(this.soundManager.mute){
-	        		muteButton.setFrames(1, 1,1);
-	        	}else{
 	        		muteButton.setFrames(0, 0,0);
+	        	}else{
+	        		muteButton.setFrames(1, 1,1);
 	        	}
 	    	}
         },
@@ -1280,7 +1293,7 @@ var states = {
 		    	alert('时间到')
 		    	var that = this;
 	        	game.time.events.add(1000, function(){
-	        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 
+	        		showOver(parseInt(that.score/100));//展示“游戏结束”，并把分数发送给后台 
 	        	}, this);
 	        }
 	    },
@@ -1301,7 +1314,7 @@ var states = {
 	    	if(obstacle.type==='coin'){
 	    		imageName = 'plus100';
 	    		// 更新分数
-			   	this.score += 1;
+			   	this.score += 1*100;
 	        	this.scoreText.text =  this.score; 
 			    // 播放音效
 	    		scoreMusic.play();
@@ -1333,7 +1346,7 @@ var states = {
 		            goal.kill();
 		            if(obstacle.type==='coin') return
 		            game.time.events.add(1000, function(){
-		        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 
+		        		showOver(parseInt(that.score/100));//展示“游戏结束”，并把分数发送给后台 
 		        	}, this);
 		        });
 		    });

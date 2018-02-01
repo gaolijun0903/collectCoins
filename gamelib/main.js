@@ -1,5 +1,3 @@
-// current --3.0
-// v3.0
 //点击屏幕任意位置，可拖动主角
 //生成障碍和金币的方法合二为一
 var width = window.innerWidth;  
@@ -89,9 +87,12 @@ var states = {
 	        	}
 	        	$('#prize').fadeIn(100);
 	        }
-	       	// 添加"我有几次游戏机会"
-            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ gameNum +'次游戏机会', { fontSize: '18px', fill: '#FFFFFF' });
-            gamecountText.anchor.setTo(0.5, 1);
+	        if(isLogin){//未登录
+        		// 添加"我有几次游戏机会"
+	            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ gameNum +'次游戏机会', { fontSize: '18px', fill: '#FFFFFF' });
+	            gamecountText.anchor.setTo(0.5, 1);
+        	}
+	       	
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
 	        startButton.anchor.setTo(0.5, 1);
@@ -131,10 +132,10 @@ var states = {
 	        
 	        // 添加静音按钮  播放
 	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 1, 1, 1);
-	        muteButton.width = 40;
-          	muteButton.height= 40;
 	        this.judgeMute();
 	        muteButton.anchor.setTo(0.5, 0.5);
+	        game.physics.arcade.enable(muteButton); //TODO
+          	muteButton.body.setSize(40,40,-4,-4);
 	        function onMute(){
 	        	this.soundManager.mute =  !this.soundManager.mute;
 	        	this.judgeMute();
@@ -220,12 +221,12 @@ var states = {
 	        this.remainCountText.anchor.setTo(0.5, 0.5);
 			// 添加分数背景
 	        var coinbg = game.add.image(game.world.width-19-112, 16, 'spic','coinbg');
-			// 添加分数
+			// 添加分数和金币数
 			this.score = 0;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
 	        this.scoreText = this.game.add.text(game.world.width-19-90, 25, " "+this.score, style);
 	        // 添加静音按钮  播放
-	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 0, 0, 0);
+	        muteButton = game.add.button(game.world.width-32-14, game.world.height-23-14, 'mute-play', onMute, this, 1, 1, 1);
 	        this.judgeMute();
 	        muteButton.anchor.setTo(0.5, 0.5);
 	        function onMute(){
@@ -338,9 +339,9 @@ var states = {
 	        	}
 	    	}else{
 	    		if(this.soundManager.mute){
-	        		muteButton.setFrames(1, 1,1);
-	        	}else{
 	        		muteButton.setFrames(0, 0,0);
+	        	}else{
+	        		muteButton.setFrames(1, 1,1);
 	        	}
 	    	}
         },
@@ -412,7 +413,7 @@ var states = {
 		    	alert('时间到')
 		    	var that = this;
 	        	game.time.events.add(1000, function(){
-	        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 
+	        		showOver(parseInt(that.score/100));//展示“游戏结束”，并把分数发送给后台 
 	        	}, this);
 	        }
 	    },
@@ -433,7 +434,7 @@ var states = {
 	    	if(obstacle.type==='coin'){
 	    		imageName = 'plus100';
 	    		// 更新分数
-			   	this.score += 1;
+			   	this.score += 1*100;
 	        	this.scoreText.text =  this.score; 
 			    // 播放音效
 	    		scoreMusic.play();
@@ -465,7 +466,7 @@ var states = {
 		            goal.kill();
 		            if(obstacle.type==='coin') return
 		            game.time.events.add(1000, function(){
-		        		showOver(that.score);//展示“游戏结束”，并把分数发送给后台 
+		        		showOver(parseInt(that.score/100));//展示“游戏结束”，并把分数发送给后台 
 		        	}, this);
 		        });
 		    });

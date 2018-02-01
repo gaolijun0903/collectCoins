@@ -18,9 +18,8 @@ input{
     -webkit-appearance: none;
 }
 .wrapper{
-	width: 10.0rem;
+	width: 100%;
 	height: 100%;
-	
 }
 .mask{
 	position: fixed;
@@ -36,9 +35,9 @@ input{
 	display: none;
 }
 .mask .container{
-	margin: 20% auto 0;
-	width: 80%;
-	height: 75%;
+	margin: 1.70rem auto 0;
+	width: 7.76rem;
+	height: 12.0rem;
 	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg) ;
 	border: 0.08rem solid #fcd315;
 	border-radius: 0.2rem;
@@ -140,7 +139,7 @@ input{
 
 #over .over-contain .top-contain{
 	margin-bottom: 0.69rem;
-	height: 5.6rem;
+	height: 5.0rem;
 	padding: 0.1px;
 }
 #over .over-contain .winer{
@@ -178,7 +177,6 @@ input{
 	background: url(http://i2.yongche.name/media/g2/M01/1C/02/rBEBJVpwO-yIfxG0AAATOlAQekEAAK6EgMPV44AABNS668.png) no-repeat;
 	background-size: 100% 100%;
 }
-
 #over .over-contain .line{
 	font-size: 0.453333rem;
 	color: #a8a381;
@@ -194,7 +192,7 @@ input{
 	border-radius: 0.49rem;
 	text-align: center;
 	line-height: 0.986rem;
-	font-size: 0.45rem;
+	font-size: 0.40rem;
 	color: #f5f5f5;
 	background: #ff5b5b;
 }
@@ -209,24 +207,23 @@ input{
 	text-align: center;
 	font-size: 0.45rem;
 	color: #ff5b5b;
-	border-bottom: 1px solid #FF5B5B;
 }
-
-
-
 #loginMask .login-contain{
+	margin: 30% auto 0;
+	width: 80%;
+	height: auto;
+	border-radius: 0.2rem;
+	position: relative;
+	color: #eca205;
+	/*font-size: 0.346667rem;*/
 	padding: 30px;
-	text-align: left;
+	/*text-align: left;*/
 	background: #FFFFFF;
-	border: none;
-	height:auto;
-	margin-top: 30%;
 }
 .login-contain .login-title{
 	font-size: 22px;
 	line-height: 54px;
 }		
-        
 .login-contain  .login-input{
 	margin-bottom: 12px;
     display: inline-block;
@@ -237,7 +234,6 @@ input{
     font-size: 16px;
 	padding-left: 12px;
 }
-
 .login-contain .login-input-short{
 	width:50%;
 	display: inline-block;
