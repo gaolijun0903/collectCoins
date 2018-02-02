@@ -2,12 +2,6 @@
 /**
  * 用户小游戏
  * @author lijianlin
- * 
- * 游戏结束，1没有返回数据， 
- * 
- * init接口，如果登录了，把我的奖品一起返回
- * 
- *
  *
  */
 class ActivityusergameController extends \App\Library\ControllerAbstract {
@@ -51,11 +45,8 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
                 'total_num' => 1,
                 'remain_num' => 1
             ];
-            if ($userGameResObj->insert($insertData)) {
-                $this->echoJson(200, '成功', ['gameNum'=>1, 'shareToken'=>$shareToken]);
-            } else {
-                $this->echoJson(507, '访问频率过快');
-            }
+            $userGameResObj->insert($insertData);
+            $this->echoJson(200, '成功', ['gameNum'=>1, 'shareToken'=>$shareToken]);
         } else {
             $this->echoJson(200, '成功', ['gameNum'=>$userGameRet['remain_num'], 'shareToken'=>$shareToken]);
         }
@@ -100,7 +91,7 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
         ];
         $id = $userGameAwardObj->insert($insertData);
         if ($id) {
-            $gameToken = \App\Library\StringEncrypt::encode($id.'|'.$user_id.'|'.\App\Library\StringEncrypt::TOKEN);
+            $gameToken = \App\Library\StringEncrypt::encode($id.'|'.$user_id.'|'.$now);
             $this->echoJson(200, '开始游戏', ['gameToken'=>$gameToken]);
         } else {
             $this->echoJson(503, '服务器正在偷懒，请稍后重试');
@@ -128,7 +119,7 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
         
         //获取前端传过来的参数
         $gameToken = $this->input->get('gameToken',true);
-        $goldNum = $this->input->get('goldNum',true);
+        $goldNum = intval($this->input->get('goldNum',true));
         $goldNum = $goldNum ? $goldNum>0 ? $goldNum : 0 : 0;
         if (empty($gameToken)) {
             $this->echoJson(400, '参数不正确');
@@ -145,10 +136,10 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
             $this->echoJson(400, '参数不正确');
         }
         
-        $id = $tokenArr[0];
-        $tokenUserId = $tokenArr[1];
-        $token = $tokenArr[2];
-        if ($user_id != $tokenUserId || $token != \App\Library\StringEncrypt::TOKEN) {
+        $id = intval($tokenArr[0]);
+        $tokenUserId = intval($tokenArr[1]);
+        $tokenNow = intval($tokenArr[2]);
+        if ($user_id != $tokenUserId || ($now - $tokenNow) <= 3) {
             $this->echoJson(400, '参数不正确');
         }
         
@@ -166,29 +157,30 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
         }
 
         //计算所获优惠券类型
-        $couponId = 0;
+        $couponId = '';
         foreach($userGameConf['couponInfo'] as $key=>$value) {
-            if ($goldNum >= $value[0] && $goldNum < $value[1]) {
+            if ($goldNum >= $value['gold'][0] && $goldNum < $value['gold'][1]) {
                 $couponId = $key;
                 break;
             }
         }
         
         //更新用户金币总数
-        if (!$userGameAwardObj->update(['gold_num'=>$goldNum, 'award'=>$couponId, 'end_time'=>$now, 'status'=>2], $where)){
+        if (!$userGameAwardObj->update(['gold_num'=>$goldNum, 'awardId'=>$couponId, 'end_time'=>$now, 'status'=>2], $where)){
             $this->echoJson(400, '参数不正确');
         }
         if (!empty($goldNum)){
             if (!$userGameResObj->update(['total_gold_num[+]'=>$goldNum], ['AND'=>['user_id'=>$user_id]])) {
                 $this->echoJson(503, '服务器正在偷懒，请稍后重试');
             }
+            $userGameRet['total_gold_num'] += $goldNum;
         }
 
-        //如果获得优惠券着需要发送优惠券
+        //如果获得优惠券则需要发送优惠券
         $flag = true;
         if (!empty($couponId)) {
             $couponObj = new \App\Library\UserCenter\Coupon();
-            $flag = $couponObj->send($user_id,[['coupon_id'=>$couponId, 'coupon_num'=>1]],'2017用户小游戏');
+            $flag = $couponObj->send($user_id,[['coupon_id'=>$couponId, 'coupon_num'=>1]],'2018用户小游戏');
         }
         
         //标记优惠券发送状态
@@ -196,12 +188,18 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
             $userGameAwardObj->update(['status'=>3], ['AND'=>['id'=>$id, 'user_id'=>$user_id, 'status'=>2]]);
         }
         
-        $this->echoJson(200, '成功');
+        //处理几个返回的数据
+        $ret = ['goldNum'=>$goldNum,'totalgold'=>intval($userGameRet['total_gold_num']),'defeat'=>0,'gameNum'=>intval($userGameRet['remain_num']),'awardId'=>$couponId];
+        $lessCount = $userGameResObj->count(['AND'=>['total_gold_num[<]'=>$userGameRet['total_gold_num']]]);
+        $allCount = $userGameResObj->count([]);
+        $ret['defeat'] = round(($lessCount/$allCount)*100);
+        
+        $this->echoJson(200, '成功', $ret);
 
     }
     
     
-   /**
+    /**
      * 小游戏助力接口
      */
     public function helpUserAction(){
@@ -218,34 +216,61 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
         if (!($isStart || in_array($helpUserId, $userGameConf['whiteList']))) {
             $this->echoJson(504, '现在不在活动期间');
         }
+        
+        //获取用户信息
+        $helpShareToken = \App\Library\StringEncrypt::encode($helpUserId);
+        $userApi = new \App\Library\UserCenter\User();
+        $helpUserInfo   = $userApi->getUserFieldsByUserId($helpUserId, ['name', 'cellphone', 'city']);
+        if (empty($helpUserInfo)) {
+            $this->echoJson(500, '用户信息为空');
+        }
+        $helpUserGameRet = [];
+        $userGameResObj = new \App\Models\Once\ActivityUserGameResources();
+        $helpUserGameRet = $userGameResObj->find($helpUserId);
+        if (empty($helpUserGameRet)) {
+            $helpUserGameRet['remain_num'] = 1;
+            $insertResData = [
+                'user_id' => $helpUserId,
+                'name'    => $helpUserInfo['name'],
+                'cellphone'=> $helpUserInfo['cellphone'],
+                'location'=> $helpUserInfo['city'],
+                'total_num' => 1,
+                'remain_num' => 1
+            ];
+            $userGameResObj->insert($insertResData);
+        }
+        
 
         //获取客户端传过来的参数
         $shareToken = $this->input->get('shareToken',true);
         $helpedUserId = \App\Library\StringEncrypt::decode($shareToken);
-        $userGameResObj = new \App\Models\Once\ActivityUserGameResources();
+        if ($helpUserId == $helpedUserId){
+            $this->echoJson(603, '自己不能给自己助力',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
+        }
+        
+        
         $helpedUserGameRet = $userGameResObj->find($helpedUserId);
         if (!(!empty($shareToken) && !empty($helpedUserId) && !empty($helpedUserGameRet))) {
-            $this->echoJson(400, 'shareToken参数错误');
+            $this->echoJson(400, 'shareToken参数错误',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
         }
 
         //首先检测助力人当天是否已经助力过操作  (助力者一天只能一次)
         $currentDayTime = strtotime(date('Y-m-d'));
         $userGameHelObj = new \App\Models\Once\ActivityUserGameHelp();
         if ($userGameHelObj->fetchRow(['AND'=>['help_user_id'=>$helpUserId, 'current_day_time'=>$currentDayTime]])) {
-            $this->echoJson(600, '助力次数到达上线');
+            $this->echoJson(600, '助力次数到达上限',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
         }
         
-        //检测被助力人当天被助力次数是否到达上线  (一天限制四次)
+        //检测被助力人当天被助力次数是否到达上限  (一天限制四次)
         $helpedCount = $userGameHelObj->count(['AND'=>['helped_user_id'=>$helpedUserId, 'current_day_time'=>$currentDayTime]]);
         if ($helpedCount >= 4) {
-            $this->echoJson(601, '被助力次数到达上线');
+            $this->echoJson(601, '被助力次数到达上限',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
         }
 
-        $userApi = new \App\Library\UserCenter\User();
-        $helpUserInfo   = $userApi->getUserFieldsByUserId($helpUserId, ['name', 'cellphone', 'city']);
+        
         $helpedUserInfo = $userApi->getUserFieldsByUserId($helpedUserId, ['name', 'cellphone', 'city']);
-        if (!(!empty($helpUserInfo) && !empty($helpedUserInfo))) {
-            $this->echoJson(500, '用户信息为空');
+        if (empty($helpedUserInfo)) {
+            $this->echoJson(500, '用户信息为空',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
         }
 
         $insertHelpData = [
@@ -259,39 +284,37 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
             'current_day_time' => $currentDayTime,
         ];
         if (!$userGameHelObj->insert($insertHelpData)){
-            $this->echoJson(503, '服务器正在偷懒，请稍后重试');
+            $this->echoJson(503, '服务器正在偷懒，请稍后重试',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
         }
         
         //更新助力者和被助力者游戏机会数
         if (!$userGameResObj->update(['total_num[+]'=>1,'remain_num[+]'=>1], ['AND'=>['user_id' => $helpedUserId]])){
-            $this->echoJson(503, '服务器正在偷懒，请稍后重试');
+            $this->echoJson(503, '服务器正在偷懒，请稍后重试',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
         }
         
-        $helpUserGameRet = [];
-        $helpUserGameRet = $userGameResObj->find($helpUserId);
-        if ($helpUserGameRet){
-            $helpUserGameRet['remain_num'] += 1;
-            if (!$userGameResObj->update(['total_num[+]'=>1,'remain_num[+]'=>1], ['AND'=>['user_id' => $helpUserId]])){
-                $this->echoJson(503, '服务器正在偷懒，请稍后重试');
-            }
-        } else {
-            $helpUserGameRet['remain_num'] = 2;
-            $insertResData = [
-                'user_id' => $helpUserId,
-                'name'    => $helpUserInfo['name'],
-                'cellphone'=> $helpUserInfo['cellphone'],
-                'location'=> $helpUserInfo['city'],
-                'total_num' => 2,
-                'remain_num' => 2
-            ];
-            if (!$userGameResObj->insert($insertResData)){
-                $this->echoJson(503, '服务器正在偷懒，请稍后重试');
-            }
+        
+        $helpUserGameRet['remain_num'] += 1;
+        if (!$userGameResObj->update(['total_num[+]'=>1,'remain_num[+]'=>1], ['AND'=>['user_id' => $helpUserId]])){
+            $this->echoJson(503, '服务器正在偷懒，请稍后重试',['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
         }
         
-        $helpShareToken = \App\Library\StringEncrypt::encode($helpUserId);
         $this->echoJson(200, '助力成功', ['gameNum'=>$helpUserGameRet['remain_num'], 'shareToken'=>$helpShareToken]);
 
+    }
+    
+    //获取用户中奖记录数据
+    public function getAwardListAction(){
+        //验证用户是否登陆
+        $user_id = $this->_checkUser();
+        if (empty($user_id)) {
+            $this->echoJson(403, '用户未登录');
+        }
+        
+        $awardList = [];
+        $userGameAwardObj = new \App\Models\Once\ActivityUserGameAward();
+        $awardList = $userGameAwardObj->fetchAll(['AND'=>['user_id'=>$user_id, 'awardId[!]'=>'', 'status'=>3]], ['awardId']);
+        
+        $this->echoJson(200, '成功', $awardList);
     }
 
     //检查用户登录

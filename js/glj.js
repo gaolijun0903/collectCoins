@@ -58,13 +58,13 @@ function shareFn() {
 		$('#sharearrow').show();
 	}
 } 
-var wShare = {};
+/*var wShare = {};
 wShare.shareImg = 'http://i3.yongche.name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png';
 wShare.shareTitle = '快来参加易到金币大作战';
 wShare.shareContent = '参与游戏赢用车券啦';
 wShare.shareUrl = 'http://www.yongche.com/cms/page/glj.html?shareToken=';
 
-        
+        */
 window.onresize = function(){
  //alert('change')
 }
@@ -83,6 +83,10 @@ function getCommon(isagin){
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
         dataType:'jsonp',
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         success:function(data) {
             alert('getCommon'+data.code);
             if(data.code==200){
@@ -125,6 +129,10 @@ function getMyPrizelist(){
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/getAwardList',
         dataType:'jsonp',
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         success:function(data) {
             alert('getMyPrizelist'+data.code);
             if(data.code==200){
@@ -144,6 +152,10 @@ function startGame(){//开始游戏
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/startGame',
         dataType:'jsonp',
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         success:function(data) {
             alert('startGame'+data.code);
             if(data.code==200){
@@ -169,6 +181,10 @@ function endGame(gameToken,goldNum){//游戏结束
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/endGame?gameToken='+gameToken+'&goldNum='+goldNum,
         dataType:'jsonp',
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         success:function(data) {
             //alert('endGame'+data.code);
             if(data.code==200){
@@ -212,6 +228,10 @@ loginBtn.click(function() {
         url: httpHead + '/activity/Webuser/Login?cellphone='+cellphone+'&code='+msgcode+'&captcha='+captcha,
         type:'get',
         dataType:'jsonp',
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         success:function(data) {
             alert('Login'+data.code);
             if(data.code==200){
@@ -237,6 +257,10 @@ function helphimFn() { //助力
         url: httpHead + '/Miscellaneous/Activityusergame/helpUser?shareToken=' +shareToken1,
         type:'get',
         dataType:'jsonp',
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         success:function(data) {
         	alert('help'+data.code);
         	if(data.code==200){
