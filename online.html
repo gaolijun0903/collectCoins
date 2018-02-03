@@ -132,7 +132,7 @@ input{
 }
 
 #sharearrow .arrowbg{
-	margin: 10.0rem auto;
+	margin: 2.0rem auto;
 	width: 8.0rem;
 	height: 2.0rem;
 	background: url(<{asset:media/g2/M04/1B/3F/rBEBJVpu1QuIGeKBAAAPO8ZBMjgAAK5AwP7dDcAAA9T083.png}>) no-repeat;
@@ -413,7 +413,6 @@ function ajaxShare(obj){
         var shareTitle = oParam.shareTitle;
         var shareContent = oParam.shareContent;
         var shareUrl = oParam.shareUrl;
-        alert('$.fn.wxShare--shareUrl:'+shareUrl)
         $.ajax({
             url:"//weixin.yongche.com/wechat/jssdk/config?url="+encodeURIComponent(window.location.href),
             method:'get',
@@ -462,14 +461,6 @@ function ajaxShare(obj){
     window.wxShareFn = function(oParam){
         $.fn.wxShare(oParam);
     }
-    
-//  var wShare = {};
-//wShare.shareImg = 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png';
-//wShare.shareTitle = '快来参加易到金币大作战';
-//wShare.shareContent = '参与游戏赢用车券啦';
-//wShare.shareUrl = window.location.href;
-//alert('1shareUrl1:== '+wShare.shareUrl);
-//wxShareFn(wShare);  //微信二次分享  
 
 })(jQuery);
 	
@@ -522,7 +513,6 @@ $("#playagin").click(function(){
 $('#close_over').click(function(){
 	$('.mask').fadeOut(300);
 	getCommon();
-	//game.state.start('created');
 })
 
 //端外分享箭头指引
@@ -567,22 +557,21 @@ function getCommon(isagin){
         success:function(data) {
             alert('getCommon'+data.code);
             if(data.code==403) {//未登录
-                console.log('未登录');
                 isLogin = false;
             }else{
-            	isLogin = true;
-            	if(data.code==200){
+	            	isLogin = true;
+	            	if(data.code==200){
 					gameNum = data.result.gameNum;
 	                if(!isagin){getMyPrizelist();}
 	                if(inApp){
 	                	if(!isagin){
 	                		//端内分享配置
-			                ajaxShare({
-			                    url:'https://www.yongche.com/cms/page/glj.html?shareToken='+data.result.shareToken,
-			                    shareimg:'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
-			                    title:'金币大作战',
-			                    description:'金币大作战'
-			                })
+		                ajaxShare({
+		                    url:'https://www.yongche.com/cms/page/glj.html?shareToken='+data.result.shareToken,
+		                    shareimg:'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
+		                    title:'金币大作战',
+		                    description:'金币大作战'
+		                })
 	                	}
 	                }
 	            }else{
