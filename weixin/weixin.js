@@ -1,20 +1,14 @@
-//<!--端内分享相关-->
-//<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-//document.cookie='_app_token_v3=ZNLbf6_g1Ur4GbsaVVdXwJRkPnJhpbcV84O_Es4ySYI';//TODO
+//端内分享相
 var Tools;
 function ajaxShare(obj){
     // 分享变量设置
     var _protocolLink = "yongche://share?";
     var _protocolLinkFriend = "yongche://shareToFriend?";
     var _protocolLinkTimeline = "yongche://shareToTimeline?";
-
     // 分享地址
-    //var query = encodeURIComponent("&language="+obj.activity_language+"&sendName="+obj.sendName+"&sendMoney="+obj.sendMoney+"&sendIphone="+obj.sendIphone+"&headImg="+obj.headImg);
     var shareRead_link = encodeURIComponent(obj.url);
-
     // 分享的图片
-    var shareRead_pics = encodeURIComponent("http://i3.yongche.Name/media/g2/M01/1A/35/rBEBJVo82ViIBg3PAAAydsM-krwAAKcAAK_ajsAADKO105.jpg");
-
+    var shareRead_pics = encodeURIComponent(obj.shareimg);
     // 分享的标题
     var shareRead_title = encodeURIComponent(obj.title);
     // 分享的内容
@@ -43,18 +37,17 @@ function ajaxShare(obj){
     };
     var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&from=iframe&callback="+shareRead_callback;
     var _tmpOpenLink = _protocolLink + _str;
-    console.log(_tmpOpenLink);
+    //console.log(_tmpOpenLink);
 }
 	
-	
-		
-//<!--微信二次分享-->	       
+//微信二次分享	       
 (function ($) {
     $.fn.wxShare = function (oParam) {
         var shareImg = oParam.shareImg;
         var shareTitle = oParam.shareTitle;
         var shareContent = oParam.shareContent;
         var shareUrl = oParam.shareUrl;
+        alert('$.fn.wxShare--shareUrl:'+shareUrl)
         $.ajax({
             url:"//weixin.yongche.com/wechat/jssdk/config?url="+encodeURIComponent(window.location.href),
             method:'get',
@@ -87,6 +80,7 @@ function ajaxShare(obj){
                         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                         success: function () {
                             // 用户确认分享后执行的回调函数
+                            alert('wx.ready-success--shareUrl'+shareUrl);
                         },
                         cancel: function () {
                             // 用户取消分享后执行的回调函数
@@ -95,7 +89,6 @@ function ajaxShare(obj){
                 wx.onMenuShareAppMessage(shareData);
                 wx.onMenuShareTimeline(shareData);
                 wx.onMenuShareQQ(shareData);
-                //alert('ok');
             });
         }
     }
@@ -106,15 +99,7 @@ function ajaxShare(obj){
 
 })(jQuery);
 	
-var wShare = {};
-wShare.shareImg     = 'http://i2.yongche.Name/media/g2/M03/1A/35/rBEBJVo84_iIZPtgAAAydsM-krwAAKcBQLESpgAADKO907.jpg';
-wShare.shareTitle   = '金币大作战';
-wShare.shareContent = '金币大作战';
-wShare.shareUrl = window.location.href;
-wxShareFn(wShare);
-        
-        
-//<!--GA-->
+//GA
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-18761483-4', 'auto');  ga('send', 'pageview');
+ga('create', 'UA-18761483-4', 'auto');  ga('send', 'pageview');
   

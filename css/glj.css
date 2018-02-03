@@ -5,7 +5,7 @@
 }
 html,
 body{
-	width: 10.0rem;
+	width: 100%;
 	height: 100%;
 	position: relative;
 }
@@ -18,19 +18,19 @@ input{
     -webkit-appearance: none;
 }
 .wrapper{
-	width: 10.0rem;
+	width: 100%;
 	height: 100%;
-	/*background: url(../assets/3.png);*/
 }
 .mask{
-	position: absolute;
+	position: fixed;
+	left: 0;
 	top: 0;
 	right: 0;
-	width: 10.0rem;
+	bottom: 0;
+	width: 100%;
 	height: 100%;
 	line-height:  0.67rem;
 	font-size: 30px;
-	
 	background:rgba(0,0,0,0.4);
 	display: none;
 }
@@ -38,7 +38,7 @@ input{
 	margin: 1.70rem auto 0;
 	width: 7.76rem;
 	height: 12.0rem;
-	background: url(../images/maskcontainbg.jpg) ;
+	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg) ;
 	border: 0.08rem solid #fcd315;
 	border-radius: 0.2rem;
 	position: relative;
@@ -60,9 +60,9 @@ input{
 }
 .mask .close_btn{
 	margin: 0.2rem auto;
-	width: 0.907rem;
-	height: 0.907rem;
-	background: url(../images/closebtn.png) no-repeat;
+	width:37px;
+	height: 37px;
+	background: url(http://i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IdibaAAAK4o2vF1QAAK3pwDnPOsAAAr6941.png) no-repeat;
 	background-size: 100%;
 }
 #rule .rule-contain{
@@ -81,7 +81,15 @@ input{
 	height: 11.0rem;
 	overflow: scroll;
 }
-
+#prize .prize-contain .noprize{
+	font-size: 0.6rem;
+    text-align: center;
+    line-height: 1.3rem;
+    padding-top: 2rem;
+}
+#prize .prize-contain .prizelist{
+	display: none;
+}
 #prize .prize-contain .prizeitem{
 	margin:0.8rem auto;
 	width:5.906667rem;
@@ -91,15 +99,15 @@ input{
 }
 
 #prize .prize-contain .prize95{
-	background: url(../images/prize9.5.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M02/1C/02/rBEBP1pwO-2IL5IQAAAS2l_y62AAAK6DwP91GAAABLy197.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prize90{
-	background: url(../images/prize9.0.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M01/1C/02/rBEBP1pwO-2IIFweAAAPzJjH1aIAAK6EgMPauAAAA_k547.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prize85{
-	background: url(../images/prize8.5.png) no-repeat;
+	background: url(http://i2.yongche.name/media/g2/M01/1C/02/rBEBJVpwO-yIfxG0AAATOlAQekEAAK6EgMPV44AABNS668.png) no-repeat;
 	background-size: 100% 100%;
 }
 #prize .prize-contain .prizeitem-owner{
@@ -111,13 +119,16 @@ input{
 	vertical-align: top;
 }
 
-
-
-
-
+#sharearrow .arrowbg{
+	margin: 10.0rem auto;
+	width: 8.0rem;
+	height: 2.0rem;
+	background: url(http://i1.yongche.name/media/g2/M04/1B/3F/rBEBJVpu1QuIGeKBAAAPO8ZBMjgAAK5AwP7dDcAAA9T083.png) no-repeat;
+	background-size: 100%;
+}
 
 .leadPage-mask{
-	background: url(../images/leadbg.png);
+	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IRTWKAABMifFwiTgAAK3pwDtJqEAAEyh459.png);
 	background-size: 100%;
 }
 #close_leadPage{
@@ -128,7 +139,7 @@ input{
 
 #over .over-contain .top-contain{
 	margin-bottom: 0.69rem;
-	height: 5.6rem;
+	height: 5.0rem;
 	padding: 0.1px;
 }
 #over .over-contain .winer{
@@ -145,7 +156,7 @@ input{
 	margin: 0.33333rem auto 0;
 	width:6.693333rem;
 	height: 2.36rem;
-	background: url(../images/overbg.jpg);
+	background: url(http://i1.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IRvRVAACt4ep_JkcAAK3pwDt4esAAK35479.jpg);
 	background-size: 100%;
 }
 #over .over-contain .discount{
@@ -155,18 +166,17 @@ input{
 	padding:0.5rem 0 0 3.2rem;
 }
 #over .over-contain  .discount95{
-	background: url(../images/prize9.5.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M02/1C/02/rBEBP1pwO-2IL5IQAAAS2l_y62AAAK6DwP91GAAABLy197.png) no-repeat;
 	background-size: 100% 100%;
 }
 #over .over-contain  .discount90{
-	background: url(../images/prize9.0.png) no-repeat;
+	background: url(http://i1.yongche.name/media/g2/M01/1C/02/rBEBP1pwO-2IIFweAAAPzJjH1aIAAK6EgMPauAAAA_k547.png) no-repeat;
 	background-size: 100% 100%;
 }
 #over .over-contain  .discount85{
-	background: url(../images/prize8.5.png) no-repeat;
+	background: url(http://i2.yongche.name/media/g2/M01/1C/02/rBEBJVpwO-yIfxG0AAATOlAQekEAAK6EgMPV44AABNS668.png) no-repeat;
 	background-size: 100% 100%;
 }
-
 #over .over-contain .line{
 	font-size: 0.453333rem;
 	color: #a8a381;
@@ -182,7 +192,7 @@ input{
 	border-radius: 0.49rem;
 	text-align: center;
 	line-height: 0.986rem;
-	font-size: 0.45rem;
+	font-size: 0.40rem;
 	color: #f5f5f5;
 	background: #ff5b5b;
 }
@@ -197,51 +207,49 @@ input{
 	text-align: center;
 	font-size: 0.45rem;
 	color: #ff5b5b;
-	border-bottom: 1px solid #FF5B5B;
 }
-
-
-
 #loginMask .login-contain{
-	padding: 0.8rem;
-	text-align: left;
+	margin: 30% auto 0;
+	width: 80%;
+	height: auto;
+	border-radius: 0.2rem;
+	position: relative;
+	color: #eca205;
+	/*font-size: 0.346667rem;*/
+	padding: 30px;
+	/*text-align: left;*/
 	background: #FFFFFF;
-	border: none;
-	height:auto;
-	margin-top: 3.0rem;
 }
 .login-contain .login-title{
-	font-size: 0.5rem;
-	line-height: 1.3rem;
+	font-size: 22px;
+	line-height: 54px;
 }		
-        
 .login-contain  .login-input{
-	margin-bottom: 0.3rem;
+	margin-bottom: 12px;
     display: inline-block;
-    width:6.2rem;
-    height:1.067rem;
+    width:95%;
+    height:45px;
     border:1px solid #ccc;
-    border-radius: 0.5rem;
-    font-size: 0.373333rem;
-	padding-left: 0.33333rem;
+    border-radius: 23px;
+    font-size: 16px;
+	padding-left: 12px;
 }
-
 .login-contain .login-input-short{
-	width:3.3rem;
+	width:50%;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 0.1rem;
+	margin-right: 5px;
 }
 .login-contain .login-code{
-	width:2.5rem;
-	height:1.067rem;
-    font-size: 0.373333rem;
+	width:40%;
+	height:45px;
+    font-size: 16px;
 	display: inline-block;
 }
 .login-contain .login-getmsgcode{
 	color: #FFFFFF;
 	background: #E92C2A;
-    border-radius: 0.5rem;
+    border-radius: 23px;
 }
 .login-contain .login-captchacode{
 	background: #CCCCCC;
@@ -250,7 +258,7 @@ input{
 	display: none;
 }
 .login-contain .login-btn{
-	width:6.2rem;
+	width:95%;
     height:1.067rem;
     color: #FFFFFF;
     background: #E92C2A;
@@ -259,3 +267,5 @@ input{
     text-align: center;
     line-height: 1.067rem;
 }
+/*错误提示吐司*/
+.toast{ position: fixed; bottom : 35%; left: 10%; width: 80%; height: 40px; line-height: 40px; background: rgba(0,0,0,0.5); color: #fff; z-index: 30; text-align: center; border-radius: 10px;font-size: 18px;display: none;}	

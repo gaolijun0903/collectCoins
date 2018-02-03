@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta https-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no, initial-scale=1">
+	    <meta name = "format-detection" content = "telephone=no"><!--防止iOS网页中的数字被识别为电话号码-->
+		<meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
+		<meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
+		<title>33</title>
+		<script type="text/javascript">
+	        var screenWidth=window.screen.width;
+	        document.getElementsByTagName('html')[0].style.fontSize=screenWidth/10+'px';
+	    </script>
+		<style type="text/css">
+		 * { padding:0; margin:0;-webkit-tap-highlight-color: rgba(0,0,0,0); box-sizing: border-box;}
+		HTML ,body { font-size:12px;height:100%;width:100%; font-family: "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;}
+		li { list-style-type:none;}
+		input, input[type="button"], input[type="submit"], input[type="reset"] {-webkit-appearance: none; color:slateblue; border:none; outline: none; background:transparent; width: 100%;color:#deae75; font-size: 0.4rem;}
+		body{background-color: #c11e1a;}
+		.wrapper{ width: 10.0rem;min-height: 100%;}
+		.border{ height: 100%; margin: 0 0.4rem; border:1px solid #f7dab0; }
+		
+		
+		/*弹层公共样式*/
+		.mask-wrapper{ position: fixed; top: 0; left: 0;  width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 20; }
+		.mask-wrapper .mask-inner{ position: absolute; top: 2.0rem; left: 0.5rem; width: 9.0rem; height: 9.16rem; border-radius: 0.4rem; color:#f7dab0; background: #e92c2a; padding: 0.3rem; text-align: center;}
+		.mask-wrapper .mask-inner .mask-border{height: 100%; border:1px solid #f7dab0; border-radius: 0.4rem; overflow: hidden;}
+		.mask-wrapper .mask-inner .mask-btn{ margin: 0 auto; width: 6.0rem; height: 1.0rem; background: #deae75; color: #c01d18; line-height: 1.0rem; font-size: 0.5rem; border-radius: 0.2rem;  }
+		.mask-wrapper .mask-inner .mask-btn-close{ position: absolute; bottom: -1.5rem; left: 3.9rem; width: 1.2rem; height: 1.2rem; background: url(http://i1.Yongche.name/media/g2/M02/1A/32/rBEBJVo7J2WITLRfAAAFrYybSgoAAKa2wP_-a0AAAZT422.png); background-size: 100%; }
+		/*非端内打开*/
+		.mask-wrapper .mask-notapp .mask-notapp-star{ width: 4.213333rem; height:1.373333rem; margin: 0.97rem auto 0; }
+		.mask-wrapper .mask-notapp .mask-notapp-phone{margin: -0.5rem auto 0; width: 2.4rem;height: 2.4rem; }
+		.mask-wrapper .mask-notapp .mask-notapp-text{ line-height: 2.5rem; font-size: 0.5rem; }
+		
+		/*未登录提示*/
+		.mask-wrapper .mask-login {top: 2.5rem;}
+		.mask-wrapper .mask-login .mask-login-logo{ width: 5.0rem; margin: 0.5rem auto; }
+		.mask-wrapper .mask-login .mask-login-notice{ font-size: 0.45rem; }
+		.mask-wrapper .mask-login .mask-login-info{margin: 0.3rem auto 0.6rem; width: 7.0rem; height: 2.0rem; line-height: 0.93rem; font-size: 0.35rem;}
+		.mask-wrapper .mask-login .mask-login-info-cell{height: 0.95rem; background: #fff; }
+		.mask-wrapper .mask-login .mask-login-tel{ border-radius: 0.3rem 0.3rem 0 0;  border-bottom: 1px solid #e92c2a}
+		.mask-wrapper .mask-login .mask-login-id{ border-radius: 0 0 0.3rem 0.3rem ; }
+		.mask-wrapper .mask-login .cell-left{ display: inline-block; width: 2.3rem; color: #c01d18; }
+		.mask-wrapper .mask-login .cell-right{ display: inline-block; width: 4.5rem; }
+		.mask-wrapper .mask-login .mask-btn{ width:7.0rem; letter-spacing: 10px;font-weight: 700; }
+		/*中奖弹层和我的奖品*/
+		.mask-wrapper .mask-prize{ height: 12.9rem; background: none;}
+		.mask-wrapper .mask-prize .mask-prize-head{ margin: 0 auto; width: 8.2rem; height: 3.4rem; font-size: 0.45rem; line-height: 0.7rem; padding-top: 0.2rem; border-radius:3.4rem 3.4rem 0 0;background: #9b0e0b; }
+		.mask-wrapper .mask-prize .mask-prize-box{margin-top: -0.5rem; height: 8.0rem; padding: 0.2rem; border-radius:0.4rem; background: #b5130f; }
+		.mask-prize-pic{ width: 7rem; margin: 0.2rem auto; }
+		.mask-wrapper .mask-prize .mask-btn-close{ bottom: 0; }
+		/*活动规则*/		
+		.mask-wrapper .mask-rule{ height: auto; bottom: 2.0rem; }
+		.mask-wrapper .mask-rule .mask-rule-title{margin: 0.5rem auto 0;padding: 0.1rem; width: 6.0rem;height:1.6rem; background: #f7dab0;  line-height: 1.4rem; font-size: 0.5rem;color: #c01d18; }
+		.mask-wrapper .mask-rule .mask-rule-title-border{ border: 1px solid #c01d18;}
+		.mask-wrapper .mask-rule .ruletext{padding: 0.3rem; line-height: 0.6rem; font-size: 0.4rem; text-align: left;}
+		.mask-wrapper .rule-container{height: 100%;overflow: scroll;}
+		
+		/*错误提示吐司*/
+		.toast{ position: fixed; top: 35%; left: 10%; width: 80%; height: 40px; line-height: 40px; background: rgba(0,0,0,0.5); color: #fff; z-index: 30; text-align: center; border-radius: 10px;font-size: 18px;}
+		/*弹层动画*/
+		.slide-fade-enter-active { transition: all .3s ease; }
+		.slide-fade-leave-active { transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+		.slide-fade-enter , .slide-fade-leave-to { transform: translateY(-100px); opacity: 0; }
+		.slide-up-fade-enter-active { transition: all .3s ease; }
+		.slide-up-fade-leave-active { transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+		.slide-up-fade-enter , .slide-up-fade-leave-to { transform: translateY(100px); opacity: 0; }
+		.bounce-enter-active { animation: bounce-in .5s; }
+		.bounce-leave-active { animation: bounce-in .5s reverse; }
+		@keyframes bounce-in {
+		  0% {
+		    transform: scale(0);
+		  }
+		  80% {
+		    transform: scale(1.1);
+		  }
+		  100% {
+		    transform: scale(1);
+		  }
+		}
+		@-webkit-keyframes bounce-in {
+		  0% {
+		    transform: scale(0);
+		  }
+		  80% {
+		    transform: scale(1.1);
+		  }
+		  100% {
+		    transform: scale(1);
+		  }
+		}
+		
+		[v-cloak] {
+            display: none;
+        }
+		</style>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<div class="wrapper" v-if="inApp"><!--APP中打开-->
+				<div class="head">
+					<div class="border">
+						<div class="head-btn myprize-btn" @click="showMyPrize">
+							<div class="head-btn-border">我的福利</div>
+						</div>  
+						<div class="head-btn rule-btn" @click=showRule>
+							<div class="head-btn-border">活动规则</div>
+						</div>
+						<div class="order-num"  v-html="orderNums"></div>
+					</div>
+				</div>
+				
+				
+				
+				<transition name="slide-fade"><!--请登录-->
+					<div class="mask-wrapper" v-show="showMask && !isLogin&&(!isShowRule)&&(!isShowPrize)">
+						<div class="mask-inner mask-login">
+							<div class="mask-border">
+								<div class="mask-login-logo">
+									<img src="http://i2.Yongche.name/media/g2/M01/1A/32/rBEBP1o7JquIWylxAAAHs8KqnPMAAKa9QO-2-4AAAfL856.png" width="100%"/>
+								</div>
+								<div class="mask-login-notice">请登录后再来</div>
+								<div class="mask-login-info">
+									<div class="mask-login-info-cell mask-login-tel">
+										<div class="cell-left">手机号 +86 </div>
+										<div class="cell-right">
+											<input id="tel" type="number" name="tel" placeholder="请输入手机号" oninput="if(value.length>11);value=value.slice(0,11)" v-model="telNum" />
+										</div>
+									</div>
+									<div class="mask-login-info-cell mask-login-id">
+										<div class="cell-left">身份证号 </div>
+										<div class="cell-right">
+											<input id="idcard" type="number" name="idcard" placeholder="请输入身份证后四位" oninput="if(value.length>4);value=value.slice(0,4)" v-model="idCard" />
+										</div>
+									</div>
+								</div>
+								<div class="mask-btn" @click=login>登  录</div>
+							</div>
+						</div>
+					</div>
+				</transition>
+				
+				<transition name="slide-fade"><!--活动规则-->
+				    <div class="mask-wrapper" v-show="showMask&&isLogin&&isShowRule&&(!isShowPrize)">
+						<div class="mask-inner mask-rule">
+							<div class="mask-border">
+								<div class="rule-container">
+									<div class="mask-rule-title">
+										<div class="mask-rule-title-border">活动规则：</div>
+									</div>
+									<div class="ruletext">
+										<div class="rule-item" v-for="item in ruleList" v-html="item"></div>
+									</div>
+								</div>
+								<div class="mask-btn-close" @click.stop="closeMask"></div>
+							</div>
+						</div>
+					</div>
+				</transition>
+				<transition name="slide-up-fade">
+					<div class="toast" v-show="showToast" v-html="toastMsg"></div>
+				</transition>
+			</div>
+			<div v-if="!inApp" ><!--分享后不是在APP中打开-->
+				<div class="mask-wrapper" >
+					<div class="mask-inner mask-notapp">
+						<div class="mask-border">
+							<div class="mask-notapp-star">
+								<img src="http://i2.Yongche.name/media/g2/M01/1A/2B/rBEBJVozJImIHLduAAALcKNibAQAAKYNwNjW7kAAAuI916.png" width="100%" height="100%"/>
+							</div>
+							<div class="mask-notapp-phone">
+								<img src="http://i1.Yongche.name/media/g2/M01/1A/2B/rBEBJVozJImIQxq_AAA6N3G0LAcAAKYNwNjIWoAADpP284.png" width="100%" height="100%"/>
+							</div>
+							<div class="mask-notapp-text">请在易到APP内打开</div>
+							<div class="mask-btn" onclick="WeixinJSBridge.call('closeWindow');">确定</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+		</div>
+		<script src="js/phaser.min.js"></script>
+		<!--<script src="js/jquery-3.0.0.min.js"></script>-->
+		<script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+		<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="https://i3.Yongche.name/s/js/201711/vue.min.js?1478153218"></script>
+        <script src="https://i1.Yongche.name/s/js/201711/jsonp.js?1478153218"></script>
+        <script src="https://i2.Yongche.name/s/js/201712/flexible.js?1478153218"></script>
+<script type="text/javascript">
+ 	
+new Vue({
+  el: '#app',
+  data:{
+    http: 'https://testing2-market.yongche.org/Miscellaneous/Activityusergame/', //线下接口
+    http:"//market.Yongche.com",
+    inApp:true,//是否APP内打开
+  	isLogin:1,//是否登录
+  	isClick:0,//是否可抽奖
+	
+  	ruleList:['1.  每位用户第一次进入游戏时获得一次免费游戏机会；',
+		'2.  用户每打一次车，会获得一次游戏机会，邀请好友参加游戏后，双方各获得一次游戏机会，每个用户每天最多获得4次通过邀请得到的游戏机会，且每位用户只能在一天内被邀请一次；',
+		'3.  当游戏开始后，在60秒内，左右滑动汽车，每得到一个金币加100分，撞到障碍物游戏结束；',
+		'4.  游戏结束后，可根据所获得金币数所对应的积分获取奖励，所获奖品请在“我的奖品”页面查看；',
+		'5.  奖品对应积分为：3000分可获得——9.5折优惠券一张，5000分可获得——9折优惠券一张，7000分以上可获得——8.5折优惠券一张，所获优惠券可用于用车费的部分抵扣，优惠券使用规则请参见易到App个人中心优惠券页面。'
+		]
+ 	
+  },
+  computed:{
+  	
+  },
+  mounted: function(){
+  	var isYidao = document.cookie.indexOf("invite_code");
+  	//isYidao = 1; //TODO
+  	if(isYidao===-1){
+		this.inApp = false;
+	}else{
+		this.inApp = true;
+		this.initData();
+	}
+  },
+  methods:{
+  	initData:function (){// 获取随叫随到订单数
+  		var vm = this;
+  		JSONP.init({
+  			error:function(ex){
+  				alert("Failed to load:" + ex.url);
+  			}
+  		})
+		JSONP.get(vm.http+"/miscellaneous/Driverwarmwinter/getInitPage?driver_id="+vm.driver_id, function (data) {
+   			if(data.code==200){
+         		console.log(data)
+         		vm.isLogin = data.result.isLogin;
+          		if(vm.isLogin==0){
+           			vm.showMask=true;
+          		}
+         		
+				
+            }else{
+            	vm.toastMsgFn(data.code);
+            }
+ 		});
+	},
+	login:function(){//登录，传手机号和身份证后四位
+  		var vm = this;
+		if(!vm.telNum || !vm.idCard){
+			vm.showToast = true;
+     		vm.toastMsg="手机号或身份证不能为空";
+     		setTimeout(function(){
+     			vm.showToast = false;
+     		},2000)
+     		return
+		}
+		JSONP.init({
+  			error:function(ex){
+  				alert("Failed to load:" + ex.url);
+  			}
+  		})
+		JSONP.get(vm.http+"/miscellaneous/Driverwarmwinter/login?cellphone="+vm.telNum+"&id_card="+vm.idCard, function (data) {
+   			if(data.code==200 &&data.result.status==1){
+         		vm.showMask=false;
+         		vm.driver_id = data.result.driver_id;
+         		vm.initData();//刷新页面
+            }else{//登录信息错误不可抽奖
+            	vm.toastMsgFn(data.msg);
+            }
+ 		});
+  	},
+	getResult:function(){//点击抽奖
+		if(this.isClick<=0){//不可以抽奖
+			return
+		}
+		this.isClick=0;
+		var vm = this;
+		JSONP.init({
+  			error:function(ex){
+  				alert("Failed to load:" + ex.url);
+  			}
+  		})
+		JSONP.get(vm.http+"/miscellaneous/Driverwarmwinter/getResult?driver_id="+vm.driver_id, function (data) {
+   			if(data.code==200){//中奖
+   				vm.is_award=1;
+				vm.award_type=data.result.award_type;
+         		vm.rotatePrize(data.result.award_type);//开始轮播
+         	}else{
+         		vm.toastMsgFn(data.code);
+         	}
+ 		});
+	},
+	
+	showRule:function(){//活动规则
+		this.showMask=true;
+		this.isShowRule=true;
+		this.isShowPrize=false;
+	},
+	showMyPrize:function(){//我的奖品
+		console.log(this.award_type)
+		this.showMask=true;
+		this.isShowRule=false;
+		this.isShowPrize=true;
+	},
+	closeMask:function(){
+		this.showMask=false;
+		if(this.isShowRule){
+			this.isShowRule=false;
+			return;
+		}
+		if(this.isShowPrize){
+			this.isShowPrize=false;
+			this.initData();
+			return;
+		}
+	},
+	toastMsgFn:function(msg){
+		var vm = this;
+		vm.showToast = true;
+ 		vm.toastMsg=msg;
+ 		setTimeout(function(){
+ 			vm.showToast = false;
+ 		},2000)
+	},
+	
+ }
+})
+
+
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-18761483-4', 'auto');  ga('send', 'pageview');
+</script>
+	</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
+    <title>易到圣诞送豪礼</title>
+    <script>
+        if (/Android (\d+\.\d+)/.test(navigator.userAgent)){//安卓
+            var  version = parseFloat(RegExp.$1);
+            if (version>2.3){
+                var  phoneScale = parseInt(window.screen.width)/750;
+                document.write( '<meta name="viewport" content="width=750, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ',user-scalable=no">' );
+            } else {
+                document.write( '<meta name="viewport" content="width=750,user-scalable=no">' );
+            }
+        } else {
+            document.write('<meta name="viewport" content="width=750, user-scalable=no">');
+        }
+    </script>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        input{
+            outline: none;
+            border:none;
+            -webkit-appearance: none;
+        }
+        img{
+            display: block;
+        }
+        html,body{
+            width: 100%;
+            height:100%;
+            position: relative;
+        }
+        .bg{
+            width: 100%;
+            height:auto;
+            position: relative;
+        }
+        .bg img{
+            width:100%;
+            height:100%;
+        }
+        .btn{
+            width:200px;
+            height:200px;
+            position: absolute;
+            top:416px;
+            left:277px;
+            z-index:99;
+        }
+        .btn_down{
+            display: none;
+            z-index:9999;
+            background: url("<{asset:media/g2/M03/1A/37/rBEBJVo-IZKIUgQoAAA7R-NAAJQAAKc-AH94K8AADtf546.png}>") no-repeat center;
+        }
+        .logined_zhuli{
+            z-index:9999;
+            background: url('<{asset:media/g2/M04/1A/38/rBEBJVo_RMmINNBXAAA2hm1b4-EAAKddQICSwIAADae912.png}>') no-repeat center;
+            display: none;
+        }
+        .login{
+            width:580px;
+            height:auto;
+            background: #fff;
+            z-index: -999;
+            position: absolute;
+            top:392px;
+            left:84px;
+            border-radius: 20px;
+            /*display: none;*/
+            opacity: 0;
+        }
+        .login-head{
+            width:161px;
+            height:161px;
+            position: absolute;
+            left:212px;
+            top:-80px;
+            border-radius: 50%;
+            background: url("<{asset:media/g2/M04/1A/34/rBEBJVo8eOWIJ18ZAAAhVfhXSc0AAKbqgP7T88AACFt226.png}>") no-repeat center;
+        }
+        .login-input{
+            display: inline-block;
+            width:440px;
+            height:80px;
+            background: #ccc;
+            margin:0 0 40px 50px;
+            border-radius: 10px;
+            font-size:28px;
+            padding-left:40px;
+        }
+        .login-tel{
+            margin-top:100px;
+        }
+        .login-btn{
+            width:100%;
+            height:88px;
+            background: #ff3333;
+            border-radius:0 0 20px 20px;
+            color: #fff;
+            font-size:32px;
+            text-align: center;
+            line-height: 88px;
+        }
+        .login-getcode{
+            display: block;
+            width:160px;
+            height:100%;
+            background: #009999;
+            float: left;
+            border-radius: 0 10px 10px 0;
+            font-size:28px;
+            text-align: center;
+            line-height:80px;
+            color: #fff;
+        }
+        .login-code{
+            display: block;
+            float: left;
+            width:280px;
+            height:100%;
+            background: #ccc;
+            font-size:28px;
+        }
+        .login-imgcode{
+            display: none;
+        }
+        .bg1{
+            /*display: none;*/
+        }
+        .bg2{
+            display: none;
+        }
+        .zindex999{
+            z-index:999;
+        }
+        .show2{
+            animation: slowshow 1s;
+            -webkit-animation: slowshow 1s;
+            animation-fill-mode:forwards;
+            -webkit-animation-fill-mode:forwards;
+        }
+        .hide2{
+            animation: slowhide 1s;
+            -webkit-animation: slowhide 1s;
+            animation-fill-mode:forwards;
+            -webkit-animation-fill-mode:forwards;
+        }
+        @keyframes slowshow {
+            form{
+                opacity:0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+        @-webkit-keyframes slowshow {
+            form{
+                opacity:0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+        @keyframes slowhide {
+            form{
+                opacity: 1;
+            }
+            to{
+                opacity: 0;
+            }
+        }
+        @-webkit-keyframes slowhide {
+            form{
+                opacity: 1;
+            }
+            to{
+                opacity: 0;
+            }
+        }
+        .circle{
+            animation: turncircle 0.8s linear infinite;
+            -webkit-animation: turncircle 0.8s linear infinite;
+        }
+        @keyframes turncircle {
+            from {-webkit-transform:rotate(0deg);}
+            to {-webkit-transform:rotate(360deg);}
+        }
+        @-webkit-keyframes turncircle {
+            from {-webkit-transform:rotate(0deg);}
+            to {-webkit-transform:rotate(360deg);}
+        }
+        .btn_rule{z-index:9999;width:108px;height:290px;position: absolute; top:0; left:28px; background: url('<{asset:media/g2/M03/1A/37/rBEBJVo-H9KIa5sJAAAgXhehiEQAAKc-AEI-F4AACB2370.png}>') no-repeat center;}
+        .rule{
+            width:100%;
+            height:auto;
+            position: fixed;
+            top:0;
+            left:0;
+            z-index:-99;
+            /*display: none;*/
+            opacity: 0;
+        }
+        .bounce-in{
+            z-index:9999;
+            animation: bounce-in 0.5s ease;
+            -webkit-animation: bounce-in 0.5s ease;
+            animation-fill-mode:forwards;
+            -webkit-animation-fill-mode:forwards;
+        }
+        @keyframes bounce-in {
+            form{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+        @-webkit-keyframes bounce-in {
+            form{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+
+        .rule img{width:100%; height:100%;}
+        .close-rule{width:96px;height:96px;position: absolute;bottom:50px;left:327px;background: url("<{asset:media/g2/M03/1A/29/rBEBP1o84A2IW_MnAAAEunnuJDgAAKXgQP_-yYAAATa466.png}>") no-repeat center}
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <img class="bg1 show1" src="<{asset:media/g2/M02/1A/37/rBEBJVo-IHCIXCdFAAXqsopgQwsAAKc-QCC6dYABerK475.png}>">
+        <img class="bg2" src="<{asset:media/g2/M03/1A/34/rBEBJVo8d2iIDeSKAACXlFnLhNwAAKbqQKRIeEAAJes156.jpg}>">
+        <div class="btn btn_join"></div>
+        <div class="btn btn_down"></div>
+        <div class="btn logined_zhuli"></div>
+        <div class="btn_rule"></div>
+        <div class="rule">
+            <img src="<{asset:media/g2/M03/1A/35/rBEBJVo83oiIbh_VAAHHcwCRtt4AAKcAQP-LR4AAceL034.jpg}>">
+            <div class="close-rule"></div>
+        </div>
+        <div class="login">
+            <div class="login-head"></div>
+            <input type="tel" class="login-input login-tel" placeholder="请输入手机号" maxlength="11">
+            <div class="login-input login-imgcode">
+                <input class="login-code captcha" type="text" placeholder="请输入图形验证码" maxlength="4">
+                <span class="login-getcode get-imgcode"><img class="imgcode" src="https://market.yongche.com/activity/Webuser/getCaptcha"></span>
+            </div>
+            <div class="login-input login-msgcode">
+                <input class="login-code msgcode" type="tel" placeholder="请输入短信验证码" maxlength="6">
+                <input type="button" class="login-getcode get-msgcode" value="获取验证码">
+            </div>
+            <div class="login-btn">登录</div>
+        </div>
+    </div>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!--<script src="js/jquery-3.2.1.min.js"></script>-->
+<script>
+    $(function() {
+        var login = $(".login");
+        var bg1   = $(".bg1");
+        var bg2   = $(".bg2");
+        var btn   = $(".btn_join");
+        var loginbtn = $(".login-btn");
+        var get_imgcode = $(".get-imgcode");
+        var get_msgcode = $(".get-msgcode");
+        var btn_down = $(".btn_down");
+        var btn_rule = $(".btn_rule");
+        var close_rule = $(".close-rule");
+        var logined = $(".logined_zhuli");
+        var need_imgcode = 0;
+        var cellphone;
+        var captcha;
+        var msgcode;
+        $.ajax({
+            type:'get',
+            url:'https://market.yongche.com/miscellaneous/Activitychristmasuser/checkNow',
+            dataType:'jsonp',
+            success:function(data) {
+                console.log(data);
+                if(data.code==200){
+                    logined.show();
+//                    alert('已登录');
+
+                    btn_down.show();
+                } else if(data.code==201) {
+                    alert('活动已结束');
+                    btn_down.show();
+                }
+            },
+            error:function(err){
+                alert(err.msg)
+            }
+        });
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+        var invite = GetQueryString('invite');
+        logined.click(function() {
+            $.ajax({
+                url:'https://market.yongche.com/miscellaneous/Activitychristmasuser/helpUser?invite='+invite,
+                type:'get',
+                dataType:'jsonp',
+                success:function(data) {
+                    console.log(data);
+                    alert('您已为好友增加抽奖次数，赶快来参与活动吧！');
+                    login.hide();
+                    bg2.hide();
+                    bg1.show();
+                    btn_down.show();
+                    btn_rule.show();
+                },
+                error:function(err){
+                    alert(err.msg)
+                }
+            });
+            logined.hide();
+            btn_down.show();
+        });
+        btn.click(function() {
+//            login.show();
+            login.addClass('show2');
+            login.addClass('zindex999');
+            btn_rule.hide();
+            bg2.show();
+            bg1.hide();
+        });
+        bg2.click(function() {
+//            login.hide();
+            login.removeClass('show2');
+            login.removeClass('zindex999');
+//            login.addClass('hide2');
+            btn_rule.show();
+            bg2.hide();
+            bg1.show();
+        });
+        function checkMobile(number){//检查手机号
+            if(!(/^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9]|6[8])\d{8}$/.test(cellphone))){
+                return false;
+            }
+            return true;
+        }
+        get_imgcode.click(function() {//获取图形验证码
+            $(".imgcode").attr('src','https://market.yongche.com/activity/Webuser/getCaptcha?t='+new Date().getTime());
+        });
+
+        function checkCode() {
+            cellphone = $(".login-tel").val();
+            captcha = $(".captcha").val();
+            $.ajax({
+                type:'get',
+                url:'https://market.yongche.com/activity/Webuser/getCode?cellphone='+cellphone+'&captcha='+captcha,
+                dataType:'jsonp',
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success:function(data) {
+                    console.log(data);
+                    if(data.code==401){
+                        need_imgcode = 1;
+                        $(".login-imgcode").show();
+                    } else if(data.code == 200){
+                        var count = 59;
+                        var countdown = setInterval(CountDown, 1000);
+                        function CountDown() {
+                            get_msgcode.attr("disabled", true);
+                            get_msgcode.css("background","#999");
+                            get_msgcode.val(count + "s");
+                            if (count == 0) {
+                                get_msgcode.val("获取验证码").removeAttr("disabled");
+                                get_msgcode.css("background","#F04632");
+                                clearInterval(countdown);
+                            }
+                            count--;
+                        }
+                    } else if(data.code == 429) {
+                        if(need_imgcode==1){
+                            $(".imgcode").attr('src','https://market.yongche.com/activity/Webuser/getCaptcha?t='+new Date().getTime());
+                        }
+                        alert('请求次数过多,请稍后重试')
+                    } else if(data.code == 400){
+                        alert('图形验证码错误');
+                        if(data.isUpdate == 1){
+                            $(".imgcode").attr('src','https://market.yongche.com/activity/Webuser/getCaptcha?t='+new Date().getTime());
+                        }
+                    } else if(data.code == 449) {
+                        alert('请求太频繁');
+                        if(need_imgcode==1){
+                            $(".imgcode").attr('src','https://market.yongche.com/activity/Webuser/getCaptcha?t='+new Date().getTime());
+                        }
+                    }
+                },
+                error:function(err){
+                    alert(err.msg)
+                }
+            })
+        }
+        get_msgcode.click(function() {//获取短信验证码
+            cellphone = $(".login-tel").val();
+            captcha = $(".captcha").val();
+            if(!(/^1[3|4|5|6|7|8][0-9]\d{4,8}$/.test(cellphone))){
+                alert('请输入正确的手机号');
+                return false;
+            }
+            console.log(need_imgcode);
+            if(need_imgcode == 1){//需要图形验证码
+                console.log(captcha);
+                if(!captcha){
+                    alert('请输入图形验证码');
+                    return false;
+                }
+                if(checkMobile(cellphone)){
+                    checkCode();
+                } else{
+                    alert('请输入正确手机号')
+                }
+            }
+
+            if(need_imgcode == 0){//不需要图形验证码
+                if(checkMobile(cellphone)){
+                    checkCode();
+                } else{
+                    alert('请输入正确手机号')
+                }
+            }
+        });
+        //点击登录按钮
+        loginbtn.click(function() {
+            cellphone   = $(".login-tel").val();
+            msgcode = $(".msgcode").val();
+            captcha = $(".captcha").val();
+            if(!checkMobile(cellphone)){
+                alert('请输入正确手机号');
+                return fasle;
+            }
+            if(need_imgcode==1){
+                if(!captcha){
+                    alert('请输入图形验证码');
+                    return false;
+                }
+            }
+            if(!msgcode){
+                alert('请输入短信验证码');
+                return false;
+            }
+            $(".login-head").addClass('circle');
+            $.ajax({
+                url:'https://market.yongche.com/activity/Webuser/Login?cellphone='+cellphone+'&code='+msgcode,
+                type:'get',
+                dataType:'jsonp',
+                success:function(data) {
+                    console.log(data);
+                    $(".login-head").removeClass('circle');
+                    if(data.code==200){
+//                        alert('登录成功');
+                        if(invite){
+                            $.ajax({
+                                url:'https://market.yongche.com/miscellaneous/Activitychristmasuser/helpUser?invite='+invite,
+                                type:'get',
+                                dataType:'jsonp',
+                                success:function(data) {
+                                    console.log(data);
+//                                    if(data.code==200){
+                                        alert('您已为好友增加抽奖次数，赶快来参与活动吧！');
+                                        login.hide();
+                                        bg2.hide();
+                                        bg1.show();
+                                        btn_down.show();
+                                        btn_rule.show();
+//                                    } else{
+//                                        alert(data.msg)
+//                                    }
+                                },
+                                error:function(err){
+                                    alert(err.msg)
+                                }
+                            })
+                        } else{
+                            alert('邀请人未参与该活动');
+                            login.hide();
+                            bg2.hide();
+                            bg1.show();
+                            btn_down.show();
+                            btn_rule.show();
+                        }
+
+                    } else{
+                        $(".login-head").removeClass('circle');
+                        alert(data.msg)
+                    }
+                },
+                error:function(err){
+                    alert(data.msg)
+                }
+            })
+        });
+       
+
+		// 微信二次分享
+        var wShare = {};
+        wShare.shareImg     = 'http://i2.yongche.Name/media/g2/M03/1A/35/rBEBJVo84_iIZPtgAAAydsM-krwAAKcBQLESpgAADKO907.jpg';
+        wShare.shareTitle   = '来自易到的圣诞邀请';
+        wShare.shareContent = '双人游，iPhone X等大奖送不停！';
+        wShare.shareUrl = window.location.href;
+        wxShareFn(wShare);
+
+    })
+</script>
+
+    <script>
+        (function ($) {
+            $.fn.wxShare = function (oParam) {
+                var shareImg = oParam.shareImg;
+                var shareTitle = oParam.shareTitle;
+                var shareContent = oParam.shareContent;
+                var shareUrl = oParam.shareUrl;
+                $.ajax({
+                    url:"//weixin.yongche.com/wechat/jssdk/config?url="+encodeURIComponent(window.location.href),
+                    method:'get',
+                    dataType:'jsonp'
+                }).done(function(data){
+                    console.log(data);
+                    if(data.code==200){
+                        wx_share(data.result);
+                    }
+                }).fail(function(error){
+                    //console.log(error)
+                });
+                function wx_share(jsData) {
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: jsData.appId, // 必填，公众号的唯一标识
+                        timestamp: jsData.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: jsData.nonceStr, // 必填，生成签名的随机串
+                        signature: jsData.signature,// 必填，签名，见附录1
+                        jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                    });
+                    wx.ready(function(){
+                        var shareData =
+                            {
+                                link:shareUrl,
+                                imgUrl:shareImg,
+                                title:shareTitle,
+                                desc:shareContent,
+                                type: '', // 分享类型,music、video或link，不填默认为link
+                                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            };
+                        wx.onMenuShareAppMessage(shareData);
+                        wx.onMenuShareTimeline(shareData);
+                        wx.onMenuShareQQ(shareData);
+                        //alert('ok');
+                    });
+                }
+            }
+
+            window.wxShareFn = function(oParam){
+                $.fn.wxShare(oParam);
+            }
+
+        })(jQuery);
+    </script>
+<!-- GA: -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-18761483-4', 'auto');
+    ga('send', 'pageview');
+</script>
+</body>
+</html>
