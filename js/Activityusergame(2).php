@@ -329,3 +329,16 @@ class ActivityusergameController extends \App\Library\ControllerAbstract {
         return $user_id;
     }
 }
+
+
+获取手机短信验证码可能的状态码：
+	$ret = ['code'=>200, 'msg'=>'请输入图片验证码'];
+	$ret = ['code'=>401, 'msg'=>'请输入图片验证码'];
+	$ret = ['code'=>400, 'msg'=>'图片验证码错误','isUpdate'=>$isUpdate];
+	$ret = ['code'=>402, 'msg'=>'服务器忙，请重试','isUpdate'=>$isUpdate];
+
+
+登录可能的状态码:
+	$ret = ['code'=>200,'msg'=>'OK','result'=>[]];
+	$ret = ['code'=>400,'msg'=>'登录失败','result'=>[]];
+	$ret = ['code'=>404,'msg'=>'验证码错误','result'=>[]];
