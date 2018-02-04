@@ -4,11 +4,143 @@
 //生成障碍和金币的方法合二为一
 var width = window.innerWidth;  
 var height = window.innerHeight; 
-var spicJson = {"frames":[{"filename":"coinbg","frame":{"x":2,"y":201,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"crash","frame":{"x":2,"y":244,"w":93,"h":76},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":93,"h":76},"sourceSize":{"w":93,"h":76}},{"filename":"garbagecan","frame":{"x":170,"y":174,"w":81,"h":61},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":12,"w":81,"h":61},"sourceSize":{"w":81,"h":81}},{"filename":"loadingbar","frame":{"x":2,"y":66,"w":176,"h":12},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":176,"h":12},"sourceSize":{"w":176,"h":12}},{"filename":"loadingbg","frame":{"x":2,"y":2,"w":188,"h":62},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":188,"h":62},"sourceSize":{"w":188,"h":62}},{"filename":"myprizebtn","frame":{"x":180,"y":79,"w":65,"h":48},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":65,"h":48},"sourceSize":{"w":65,"h":48}},{"filename":"one","frame":{"x":2,"y":322,"w":36,"h":74},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":9,"y":0,"w":36,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"playcount","frame":{"x":170,"y":298,"w":49,"h":49},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":49,"h":49},"sourceSize":{"w":49,"h":49}},{"filename":"plus100","frame":{"x":97,"y":310,"w":45,"h":13},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":13},"sourceSize":{"w":45,"h":13}},{"filename":"roadblock","frame":{"x":192,"y":2,"w":59,"h":75},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":12,"y":2,"w":59,"h":75},"sourceSize":{"w":81,"h":81}},{"filename":"rulesbtn","frame":{"x":177,"y":129,"w":58,"h":43},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":58,"h":43},"sourceSize":{"w":58,"h":43}},{"filename":"sharebtn","frame":{"x":2,"y":80,"w":173,"h":39},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":39},"sourceSize":{"w":173,"h":39}},{"filename":"startbtn","frame":{"x":2,"y":121,"w":173,"h":35},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":173,"h":35},"sourceSize":{"w":173,"h":35}},{"filename":"stone","frame":{"x":170,"y":237,"w":81,"h":59},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":11,"w":81,"h":59},"sourceSize":{"w":81,"h":81}},{"filename":"three","frame":{"x":116,"y":234,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}},{"filename":"timerbg","frame":{"x":2,"y":158,"w":112,"h":41},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":112,"h":41},"sourceSize":{"w":112,"h":41}},{"filename":"two","frame":{"x":116,"y":158,"w":52,"h":74},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":52,"h":74},"sourceSize":{"w":52,"h":74}}],"meta":{"app":"http://www.texturepacker.com","version":"1.0","image":"littlepic.png","format":"RGBA8888","size":{"w":256,"h":512},"scale":"1","smartupdate":"$TexturePacker:SmartUpdate:58acf86a3872a15ce4999f79014e07a7$"}};
+var spicJson = {"frames": [
+
+{
+	"filename": "coinbg",
+	"frame": {"x":2,"y":246,"w":225,"h":82},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":225,"h":82},
+	"sourceSize": {"w":225,"h":82}
+},
+{
+	"filename": "crash",
+	"frame": {"x":310,"y":514,"w":186,"h":153},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":153},
+	"sourceSize": {"w":186,"h":153}
+},
+{
+	"filename": "garbagecan",
+	"frame": {"x":342,"y":404,"w":148,"h":108},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":29,"w":148,"h":108},
+	"sourceSize": {"w":162,"h":162}
+},
+{
+	"filename": "myprizebtn",
+	"frame": {"x":210,"y":382,"w":130,"h":95},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":130,"h":95},
+	"sourceSize": {"w":130,"h":95}
+},
+{
+	"filename": "one",
+	"frame": {"x":210,"y":579,"w":84,"h":290},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":62,"y":4,"w":84,"h":290},
+	"sourceSize": {"w":208,"h":298}
+},
+{
+	"filename": "playcount",
+	"frame": {"x":210,"y":479,"w":98,"h":98},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":98,"h":98},
+	"sourceSize": {"w":98,"h":98}
+},
+{
+	"filename": "plus100",
+	"frame": {"x":2,"y":871,"w":45,"h":13},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":45,"h":13},
+	"sourceSize": {"w":45,"h":13}
+},
+{
+	"filename": "roadblock",
+	"frame": {"x":229,"y":250,"w":104,"h":130},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":29,"y":15,"w":104,"h":130},
+	"sourceSize": {"w":162,"h":162}
+},
+{
+	"filename": "rulesbtn",
+	"frame": {"x":229,"y":162,"w":117,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":117,"h":86},
+	"sourceSize": {"w":117,"h":86}
+},
+{
+	"filename": "sharebtn",
+	"frame": {"x":2,"y":82,"w":346,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":346,"h":78},
+	"sourceSize": {"w":346,"h":78}
+},
+{
+	"filename": "startbtn",
+	"frame": {"x":2,"y":2,"w":346,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":346,"h":78},
+	"sourceSize": {"w":346,"h":78}
+},
+{
+	"filename": "stone",
+	"frame": {"x":350,"y":2,"w":160,"h":100},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":32,"w":160,"h":100},
+	"sourceSize": {"w":162,"h":162}
+},
+{
+	"filename": "three",
+	"frame": {"x":350,"y":104,"w":158,"h":298},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":0,"w":158,"h":298},
+	"sourceSize": {"w":208,"h":298}
+},
+{
+	"filename": "timerbg",
+	"frame": {"x":2,"y":162,"w":225,"h":82},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":225,"h":82},
+	"sourceSize": {"w":225,"h":82}
+},
+{
+	"filename": "two",
+	"frame": {"x":2,"y":330,"w":206,"h":298},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":206,"h":298},
+	"sourceSize": {"w":208,"h":298}
+}],
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "spic.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e9fd54ef0410952a79f755f7ac852be3$"
+}
+}
+
 
 // 创建游戏实例
 var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game',true);
-
+//game.resolution = window.devicePixelRatio;
 // 定义场景
 var states = {
 	// boot场景
@@ -40,15 +172,18 @@ var states = {
 	        // 加载游戏资源
 	        game.load.image('homepagebg', '//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IHjdVAAUk18WQAk8AAK3pwDoAbIABSTv734.png');//首页-背景
 	        game.load.image('playbg', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IRIH5AAwuu5PgIhoAAK3pwF50ssADC7T160.png');//游戏页-背景
-	        game.load.spritesheet('dude', '//i2.yongche.name/media/g2/M04/1B/3F/rBEBP1pu2gyIW3vsAAAltAReuR4AAK5CwM909gAACXM672.png', 66, 105); //游戏页-游戏主角
+	        //game.load.spritesheet('dude', '//i2.yongche.name/media/g2/M04/1B/3F/rBEBP1pu2gyIW3vsAAAltAReuR4AAK5CwM909gAACXM672.png', 66, 105); //游戏页-游戏主角
+	        game.load.spritesheet('dude','//i2.yongche.name/media/g2/M04/1C/0A/rBEBP1p1XeaINgTsAAQ_1WywasIAAK9SgIGR0QABD_t853.png', 187, 299); //游戏页-游戏主角--newnew
+	       
 	        game.load.spritesheet('coin', '//i2.yongche.name/media/g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
 	        game.load.spritesheet('mute-play', '//i3.yongche.name/media/g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
 	        game.load.audio('bgMusic', 'audio/bgMusic.mp3');  //游戏页-背景音乐
 	        game.load.audio('scoreMusic', 'audio/addscore.mp3');  //游戏页-加分音乐
             game.load.audio('bombMusic', 'audio/boom.mp3');  //游戏页-爆炸音乐
-            //game.sound.usingWebAudio = false;
-			//game.sound.usingAudioTag = true;
-            game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
+            //game.load.atlas("spic", "//i1.yongche.name/media/g2/M02/1B/3C/rBEBJVpshD-IM3RqAAEK2zr4or4AAK3pwGGQR4AAQrz533.png", null,spicJson);//精灵图
+
+game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAAHlhv6pJOQAAK9dwHKeuoAAeWe249.png", null,spicJson);//精灵图
+
 
             // 监听加载完毕事件
             game.load.onLoadComplete.add(onLoad);
@@ -74,11 +209,15 @@ var states = {
 	        bg.height = game.world.height;
 	        // 添加"活动规则"按钮
 	        ruleButton = game.add.button(game.world.width -60-9 , 20,'spic',  showRules, this, 'rulesbtn','rulesbtn', 'rulesbtn');
+	        ruleButton.width /=2;
+	        ruleButton.height/=2;
 	        function showRules(){
 	        	$('#rule').fadeIn(100);
 	        }
 	        // 添加"我的奖品"按钮
 	        prizeButton = game.add.button(16, 16,'spic', showPrizes, this, 'myprizebtn', 'myprizebtn', 'myprizebtn');
+	        prizeButton.width/=2;
+	        prizeButton.height/=2;
 	        function showPrizes(){
 	        	if(!isLogin){//未登录
 	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
@@ -99,6 +238,8 @@ var states = {
             
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
+	        startButton.width/=2;
+	        startButton.height/=2;
 	        startButton.anchor.setTo(0.5, 1);
 	        function onStart(){
 	        	if(!isLogin){//未登录
@@ -122,6 +263,8 @@ var states = {
 	        
 	        // 添加"分享 "按钮
 	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'spic', onShare, this, 'sharebtn', 'sharebtn', 'sharebtn');
+	        shareButton.width/=2;
+	        shareButton.height/=2;
 	        shareButton.anchor.setTo(0.5, 1);
 	        function onShare(){
 	        	if(!isLogin){//未登录
@@ -202,7 +345,7 @@ var states = {
           	this.car.height= 157.5;
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
-          	this.car.body.setSize(40,73,13,5);  
+          	this.car.body.setSize(123,210,32,13);   
 	        // 创建动画
 	    	this.car.animations.add('left', [4], 10, true);
 	    	this.car.animations.add('center', [0,1,2,3], 10, true);
@@ -216,14 +359,18 @@ var states = {
 	       
 	       	// 添加时间背景
 	        var timerbg = game.add.image(19, 16,'spic', 'timerbg');
+	        timerbg.width /=2;
+	        timerbg.height /=2;
 	        // 添加时间
 			this.remainTime = 60;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
-	        this.remainTimeText = this.game.add.text(62, 25, "01：00", style);
+	        this.remainTimeText = this.game.add.text(62, 25, "01:00", style);
 			
 			// 添加次数背景
-	        var timerbg = game.add.image(game.world.centerX, 42, 'spic','playcount');
-	        timerbg.anchor.setTo(0.5, 0.5);
+	        var countbg = game.add.image(game.world.centerX, 42, 'spic','playcount');
+	        countbg.width /=2;
+	        countbg.height /=2;
+	        countbg.anchor.setTo(0.5, 0.5);
 	        // 添加次数
 	        var style = { font: "22px Arial", fill: "#ffffff" };
 	        this.remainCountText = this.game.add.text(game.world.centerX, 42, gameNum, style);
@@ -231,6 +378,8 @@ var states = {
 	        
 			// 添加分数背景
 	        var coinbg = game.add.image(game.world.width-19-112, 16, 'spic','coinbg');
+	        coinbg.width /=2;
+	        coinbg.height /=2;
 			// 添加分数
 			this.score = 0;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
@@ -390,17 +539,19 @@ var states = {
 			    	obstacle.animations.add('jump', [0, 1,2,3], 8, true);
 			  		obstacle.animations.play('jump');
 			  		y = (70)*(n-i-1);
+			  		obstacle.body.setSize(63,50,10,5);
 		        }else{
 		        	obstacle = this.obstacles.create(0, 0,'spic', type);
 		        	y = 0;
+		        	obstacle.body.setSize(140,130,10,10);
 		        }
-		        var x = grassBeltWidth+ halfRoadWidth*(num*2+1)-obstacle.width/2;
+		        var x = grassBeltWidth+ halfRoadWidth*(num*2+1);
 		  		// 重新设置位置
 		        obstacle.reset(x, y);
 		  		obstacle.type = type;
 		  		obstacle.width = 70;
 	        	obstacle.height= 70;
-	        	obstacle.body.setSize(63,50,10,10);
+	        	obstacle.anchor.setTo(0.5, 0.5);
 	        	// kill超出边界的障碍物
 		        obstacle.checkWorldBounds = true;
 		        obstacle.outOfBoundsKill = true;
@@ -470,6 +621,7 @@ var states = {
 	    	
 	    	// 添加得分或碰撞图片
 		    var goal = game.add.image(obstacle.x, obstacle.y,'spic', imageName);
+		    goal.anchor.setTo(0.5, 0.5);
 		    goal.alpha = 0;
 		    // 添加过渡效果
 		    var showTween = game.add.tween(goal).to({

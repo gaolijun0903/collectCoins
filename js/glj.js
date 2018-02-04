@@ -1,8 +1,9 @@
 var gameNum = '- -', //游戏次数 -初始化值， 
 	gameToken = '', //游戏token -初始值， 
-	isLogin = false,
+	isLogin = false, //是否登录
+	isRightTime = false, //是否在活动期间
 	inApp = navigator.userAgent.indexOf("YongChe")<=0 ? false : true;
-
+var shareToken1 = GetQueryString('shareToken');
 var telInput = $('#login-tel'),   //手机号输入框
 	msgInput = $('#login-msgcode'),   //短信验证码输入框
 	captchaInput = $('#login-captchacode'),  //图片验证码输入框
@@ -11,9 +12,8 @@ var telInput = $('#login-tel'),   //手机号输入框
 	loginBtn = 	$('#login-btn'),  //登录按钮
 	need_imgcode = 0,
 	cellphone,
-	captcha,
-	msgcode;
-
+	msgcode,
+	captcha;
 
 //document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';    //16800120011
 // kKtwZA2vYwxbJBA5P-eiivWuFrHLWLBF-ECli2a-5WA
@@ -23,11 +23,22 @@ var httpHead = 'https://testing-market.Yongche.org'; //线下接口
 //活动规则页\我的奖励页\引导页\登录页---  “关闭按钮”
 $(".close_btn").click(function(){
 	$('.mask').fadeOut(300);
+	console.log($(this));
+	console.log($('#close_login'));
+	console.log($(this)==$('#close_login'));
+	
+	if($(this)==$('#close_login')){ //TODO
+		telInput.val('');
+	    msgInput.val('');
+	    captchaInput.val('');
+	}
 })
+
 
 //“再玩一次”
 $("#playagin").click(function(){
 	if(gameNum<=0){
+		toastMsg('分享可得游戏次数');
 		return 
 	}
 	$('#over').hide();
@@ -41,7 +52,6 @@ $("#playagin").click(function(){
 $('#close_over').click(function(){
 	$('.mask').fadeOut(300);
 	getCommon();
-	//game.state.start('created');
 })
 
 //端外分享箭头指引
@@ -58,69 +68,69 @@ function shareFn() {
 		$('#sharearrow').show();
 	}
 } 
-/*var wShare = {};
-wShare.shareImg = 'http://i3.yongche.name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png';
-wShare.shareTitle = '快来参加易到金币大作战';
-wShare.shareContent = '参与游戏赢用车券啦';
-wShare.shareUrl = 'http://www.yongche.com/cms/page/glj.html?shareToken=';
 
-        */
 window.onresize = function(){
  //alert('change')
 }
 
-var shareToken1 = GetQueryString('shareToken');
-function initData(){
-	if(shareToken1){
-        helphimFn();
-    } else{
-        getCommon();
-    }
-            
+if(!inApp){//端wai分享
+	wxShareFn({
+		shareImg: 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
+	    shareUrl: window.location.href,
+		shareTitle: '快来参加易到金币大作战',
+		shareContent: '参与游戏赢用车券啦'
+	});
 }
+
 function getCommon(isagin){
 	$.ajax({
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
         dataType:'jsonp',
+        jsonp:'callback',
         xhrFields: {
             withCredentials: true
         },
         crossDomain: true,
         success:function(data) {
-            alert('getCommon'+data.code);
-            if(data.code==200){
-                isLogin = true;
+            //alert('getCommon'+data.code);
+        	if(data.code==200){
+        		isLogin = true;
+        		isRightTime=true;
 				gameNum = data.result.gameNum;
                 if(!isagin){getMyPrizelist();}
-                if(inApp){
+                if(inApp){//端内
                 	if(!isagin){
                 		//端内分享配置
 		                ajaxShare({
-		                    url:'http://www.yongche.com/cms/page/glj.html?shareToken='+data.result.shareToken,
-		                    shareimg:'http://i3.yongche.name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
-		                    title:'金币大作战',
-		                    description:'金币大作战'
+		                    url:'https://www.yongche.com/cms/page/glj.html?shareToken='+data.result.shareToken,
+		                    shareimg:'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
+		                    title:'快来参加易到金币大作战',
+		                    description:'参与游戏赢用车券啦'
 		                })
                 	}
+                }else{//端外
+                	if(shareToken1){//给他人助力
+			       		helphimFn();
+				    } else{
+				        wxShareFn({
+			           		shareImg: 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
+				            shareUrl:'https://www.yongche.com/cms/page/glj.html?shareToken='+ data.result.shareToken,
+							shareTitle: '快来参加易到金币大作战',
+							shareContent: '参与游戏赢用车券啦'
+			           	});
+				    }
                 }
-            }else if(data.code==403) {//未登录
-                console.log('未登录');
-                isLogin = false;
-            }else if(data.code==504) {//不在活动期间
-                console.log('不在活动期间');
-                
-            }else if(data.code==500) {//用户信息为空
-                console.log('用户信息为空');
-                
-            }else if(data.code==507) {//访问频率过快
-                console.log('访问频率过快');
-                
-            } 
+            }else if(data.code==403){//未登录
+            	isLogin = false;
+            }else{//现在不在活动期间 || 用户信息为空
+            	isLogin = true;
+            	isRightTime=false;
+            }
             if(!isagin){game.state.start('created');}
         },
         error:function(err){
-            console.log(err.msg)
+           toastMsg(err.msg)
         }
 	});
 }
@@ -134,11 +144,11 @@ function getMyPrizelist(){
         },
         crossDomain: true,
         success:function(data) {
-            alert('getMyPrizelist'+data.code);
             if(data.code==200){
+            	isLogin = true;
                 updateMyPrizelist(data.result);//更新我的奖品列表  
-            }else if(data.code==403) {//未登录
-                toastMsg('未登录');
+            }else {//未登录
+                isLogin = false;
             }
         },
         error:function(err){
@@ -157,18 +167,18 @@ function startGame(){//开始游戏
         },
         crossDomain: true,
         success:function(data) {
-            alert('startGame'+data.code);
             if(data.code==200){
+            	isLogin = true;
 				gameToken = data.result.gameToken;
+				gameNum-=1;
+				game.state.start('play');
             }else if(data.code==403) {//未登录
-                console.log('未登录');
-            }else if(data.code==504) {//不在活动期间
-                console.log('不在活动期间');
-            }else if(data.code==500) {//用户信息为空
-                console.log('用户信息为空');
-            }else if(data.code==507) {//访问频率过快
-                console.log('访问频率过快');
-            } 
+            	isLogin = false;
+                toastMsg(data.msg);
+            }else {
+            	isLogin = true;
+            	toastMsg(data.msg);
+            }
         },
         error:function(err){
             console.log(err.msg)
@@ -186,20 +196,17 @@ function endGame(gameToken,goldNum){//游戏结束
         },
         crossDomain: true,
         success:function(data) {
-            //alert('endGame'+data.code);
             if(data.code==200){
+            	isLogin = true;
+            	gameNum = data.result.gameNum;
 				updateoverData(data.result)
-            }else if(data.code==400) {//参数不正确
-                console.log('参数不正确');
-            }else if(data.code==401) {//请从正常渠道参与游戏
-                console.log('请从正常渠道参与游戏');
-            }else if(data.code==504) {//不在活动期间
-                console.log('不在活动期间');
-            }else if(data.code==500) {//用户信息为空
-                console.log('用户信息为空');
-            }else if(data.code==503) {//访问频率过快
-                console.log('服务器正在偷懒，请稍后重试');
-            } 
+            }else if(data.code==403) {//未登录
+                toastMsg(data.msg);
+                isLogin = false;
+            }else {
+            	toastMsg(data.msg);
+            	isLogin = true;
+            }
         },
         error:function(err){
             console.log(err.msg)
@@ -209,9 +216,9 @@ function endGame(gameToken,goldNum){//游戏结束
 
 //点击登录按钮
 loginBtn.click(function() {
-    cellphone = telInput.val();
-    msgcode = msgInput.val();
-    captcha = captchaInput.val();
+    cellphone = telInput.val(),
+	msgcode = msgInput.val(),
+	captcha = captchaInput.val();
     if(!checkMobile(cellphone)){
         toastMsg('请输入正确手机号');
         return false;
@@ -233,18 +240,20 @@ loginBtn.click(function() {
         },
         crossDomain: true,
         success:function(data) {
-            alert('Login'+data.code);
-            if(data.code==200){
+            //alert('Login'+data.code);
+            if(data.code==200){//登录成功
 				$('#loginMask').hide();
 				isLogin = true;
                 if(shareToken1){
-                    helphimFn();
-                }else{
-                	game.state.start('created');
-                }
-            } else{
-                toastMsg('Login'+data.code,data.msg);
+			        helphimFn();
+			    } else{
+			        getCommon();
+			    }
+            }else{
+            	isLogin = false ;
+                toastMsg(data.msg);
             }
+            
         },
         error:function(err){
             console.log(data.msg)
@@ -262,19 +271,27 @@ function helphimFn() { //助力
         },
         crossDomain: true,
         success:function(data) {
-        	alert('help'+data.code);
-        	if(data.code==200){
-        		toastMsg('您已为好友增加抽奖次数，赶快来参与活动吧！');
-        		isLogin = true;
-	            gameNum = data.result.gameNum;
-	            wShare.shareUrl = 'http://www.yongche.com/cms/page/glj.html?shareToken='+ data.result.shareToken;
-	            alert('shareUrl: '+wShare.shareUrl);
-	            wxShareFn(wShare);  //微信二次分享
+        	//alert('help'+data.code);
+        	if(data.code==403) {//未登录
+                toastMsg(data.msg);
+                isLogin = false;
+            }else if(data.code==504||data.code==500){
+            	isLogin = true ;
+            	toastMsg(data.msg);
+            }else{
+            	isLogin = true ;
+            	gameNum = data.result.gameNum;
 	            game.state.start('created');
 	            getMyPrizelist();
-        	}else{
-        		isLogin = false;
-        	}
+	            toastMsg(data.msg);
+	            //微信二次分享 //TODO
+	           	wxShareFn({
+	           		shareImg : 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
+					shareTitle : '快来参加易到金币大作战',
+					shareContent : '参与游戏赢用车券啦',
+		            shareUrl : 'https://www.yongche.com/cms/page/glj.html?shareToken='+ data.result.shareToken
+	           	});
+            }
         	game.state.start('created');
         },
         error:function(err){
@@ -314,8 +331,8 @@ function getMsgCode(cellphone,captcha) {//获取短信验证码接口
         },
         crossDomain: true,
         success:function(data) {
-            alert('getMsgCode'+data.code);
-            if(data.code==401){
+            //alert('getMsgCode'+data.code);
+            if(data.code==401){//请输入图片验证码
                 need_imgcode = 1;
                 $(".login-captchacode-wrapper").show();
             } else if(data.code == 200){
@@ -367,10 +384,8 @@ function GetQueryString(name) {
 }
 
 function checkMobile(number){//检查手机号
-    if(!(/^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9]|6[8])\d{8}$/.test(cellphone))){
-        return false;
-    }
-    return true;
+	var res = /^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9]|6[8])\d{8}$/.test(number);
+	return res ? true :false;
 }
 
 //over页面展示
@@ -382,8 +397,8 @@ function updateoverData(data){
 	$('.winer').children('.discount').remove();
 	$('#totalscore').text(data.goldNum); //游戏总分
 	$('#defeat').text(data.defeat); //击败多少人
-	$('#gameNum').text(data.gamenum);//游戏次数
-	if(data.gamenum<=0){
+	$('#gameNum').text(data.gameNum);//游戏次数
+	if(data.gameNum<=0){
 		$('.playagin').addClass('noagin');
 	}
 	if(data.awardId==''){//优惠券等级
@@ -405,14 +420,12 @@ function updateoverData(data){
 }
 
 function updateMyPrizelist(prizelist){
-	alert('prizelist.length=='+prizelist.length)
 	var str = '', levelclass = '';
 	if(prizelist.length<=0){
 		$('.prizelist').hide();
 		$('.noprize').show();
 		return;
 	}
-	console.log(prizelist.length)
 	$('.noprize').hide();
 	$('.prizelist').children('.prizeitem').remove();
 	prizelist.forEach(function(item){
