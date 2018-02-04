@@ -209,15 +209,13 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 	        bg.height = game.world.height;
 	        // 添加"活动规则"按钮
 	        ruleButton = game.add.button(game.world.width -60-9 , 20,'spic',  showRules, this, 'rulesbtn','rulesbtn', 'rulesbtn');
-	        ruleButton.width /=2;
-	        ruleButton.height/=2;
+	        ruleButton.scale.set(0.5);
 	        function showRules(){
 	        	$('#rule').fadeIn(100);
 	        }
 	        // 添加"我的奖品"按钮
 	        prizeButton = game.add.button(16, 16,'spic', showPrizes, this, 'myprizebtn', 'myprizebtn', 'myprizebtn');
-	        prizeButton.width/=2;
-	        prizeButton.height/=2;
+	        prizeButton.scale.set(0.5);
 	        function showPrizes(){
 	        	if(!isLogin){//未登录
 	        		//我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
@@ -238,8 +236,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
             
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
-	        startButton.width/=2;
-	        startButton.height/=2;
+	        startButton.scale.set(0.5);
 	        startButton.anchor.setTo(0.5, 1);
 	        function onStart(){
 	        	if(!isLogin){//未登录
@@ -263,8 +260,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 	        
 	        // 添加"分享 "按钮
 	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'spic', onShare, this, 'sharebtn', 'sharebtn', 'sharebtn');
-	        shareButton.width/=2;
-	        shareButton.height/=2;
+	        shareButton.scale.set(0.5);	 
 	        shareButton.anchor.setTo(0.5, 1);
 	        function onShare(){
 	        	if(!isLogin){//未登录
@@ -341,14 +337,13 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
     		
 	    	//添加主角
 	        this.car = this.game.add.sprite(game.world.centerX, game.world.height - 100, 'dude');
-	        this.car.width = 99;
-          	this.car.height= 157.5;
+	        this.car.scale.set(0.5)
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
           	this.car.body.setSize(123,210,32,13);   
 	        // 创建动画
-	    	this.car.animations.add('left', [4], 10, true);
-	    	this.car.animations.add('center', [0,1,2,3], 10, true);
+		    	this.car.animations.add('left', [4], 10, true);
+		    	this.car.animations.add('center', [0,1,2,3], 10, true);
 	  		this.car.animations.add('right', [5], 10, true);
 	  		this.car.animations.add('over', [6], 10, true);
 	  		this.car.animations.play('center');
@@ -359,8 +354,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 	       
 	       	// 添加时间背景
 	        var timerbg = game.add.image(19, 16,'spic', 'timerbg');
-	        timerbg.width /=2;
-	        timerbg.height /=2;
+	        timerbg.scale.set(0.5)
 	        // 添加时间
 			this.remainTime = 60;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
@@ -368,8 +362,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 			
 			// 添加次数背景
 	        var countbg = game.add.image(game.world.centerX, 42, 'spic','playcount');
-	        countbg.width /=2;
-	        countbg.height /=2;
+	        countbg.scale.set(0.5)
 	        countbg.anchor.setTo(0.5, 0.5);
 	        // 添加次数
 	        var style = { font: "22px Arial", fill: "#ffffff" };
@@ -378,8 +371,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 	        
 			// 添加分数背景
 	        var coinbg = game.add.image(game.world.width-19-112, 16, 'spic','coinbg');
-	        coinbg.width /=2;
-	        coinbg.height /=2;
+	        coinbg.scale.set(0.5)
 			// 添加分数
 			this.score = 0;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
@@ -424,8 +416,9 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 		    game.debug.bodyInfo(this.car, 32, 32);// 在坐标（32，32）位置显示文本debug信息
 		    game.debug.body(this.car);// 绘制矩形body
 		    this.obstacles.forEach(function(item){
-		    	game.debug.body(item);// 绘制矩形body
+		    		game.debug.body(item);// 绘制矩形body
 		    })
+		    game.debug.text("Group size: " + this.obstacles.total, 32, 32);
 		},
     	this.moveCallback = function(pointer, x, y, isTap) {
 			if (isTap || !touching) return
@@ -568,9 +561,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 	        //随着时间进行，速度越来越快
 	        var v = move_velocity + (60-this.remainTime)*20;
 	        this.bg.autoScroll(0, v/(game.world.height / this.bgImg.height));
-	        this.obstacles.forEachAlive(function(item){
-	    		item.body.velocity.y = v;
-	    	});
+	        	this.obstacles.setAll('body.velocity.y',v,true,true);
 
 	        // 结束场景
 	        if(this.remainTime <= 0){ 
@@ -592,9 +583,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 	    	// 移除定时器
         	this.game.time.events.remove(this.reduceTimer);
         	//让星星和障碍停止运动
-	    	this.obstacles.forEach(function(item){
-	    		item.body.velocity.y = 0;
-	    	})
+        	this.obstacles.setAll('body.velocity.y',0,true,true);
 	    	this.isAllStop = true;
 	    	//取消滑动监听，主角不可移动
 	    	this.game.input.deleteMoveCallback(this.moveCallback,this);

@@ -73,14 +73,14 @@ window.onresize = function(){
  //alert('change')
 }
 
-if(!inApp){//端wai分享
+/*if(!inApp){//端wai分享
 	wxShareFn({
 		shareImg: 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
 	    shareUrl: window.location.href,
 		shareTitle: '快来参加易到金币大作战',
 		shareContent: '参与游戏赢用车券啦'
 	});
-}
+}*/
 
 function getCommon(isagin){
 	$.ajax({
