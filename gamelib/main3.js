@@ -561,7 +561,7 @@ game.load.atlas("spic", "//i3.yongche.name/media/g2/M02/1C/0B/rBEBP1p1kY6ICQlTAA
 	        //随着时间进行，速度越来越快
 	        var v = move_velocity + (60-this.remainTime)*20;
 	        this.bg.autoScroll(0, v/(game.world.height / this.bgImg.height));
-	        	this.obstacles.setAll('body.velocity.y',v,true,true);
+	        this.obstacles.setAll('body.velocity.y',v,true,true);
 
 	        // 结束场景
 	        if(this.remainTime <= 0){ 

@@ -15,8 +15,18 @@ html,body{width: 100%;height: 100%;position: relative;}
 ul,li{list-style: none;}
 input{ outline: none; border:none;-webkit-appearance: none;}
 .wrapper{width: 100%;height: 100%;}
-.mask{position: fixed; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; line-height: 0.67rem; font-size: 30px; background:rgba(0,0,0,0.4); display: none;}
-.mask .container{ margin: 1.70rem auto 0; width: 7.76rem; height: 12.0rem; background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg}>) ; border: 0.08rem solid #fcd315; border-radius: 0.2rem; position: relative; color: #eca205; font-size: 0.346667rem;}
+.mask{position: fixed; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; line-height: 0.67rem; font-size: 30px; background:rgba(0,0,0,0.6); display: none;}
+.mask .container{
+	margin: 1.70rem auto 0;
+	width: 7.76rem;
+	height: 12.0rem;
+	background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg}>) ;
+	border: 0.08rem solid #fcd315;
+	border-radius: 0.2rem;
+	position: relative;
+	color: #eca205;
+	font-size: 0.346667rem;
+}
 .mask .container .mask-title{ width:3.933333rem; height: 1.133333rem; font-size: 0.64rem; line-height: 1.0rem; text-align: center; border-radius: 0.24rem; margin: -0.533333rem auto 0; background: #fdd65f; border: 0.08rem solid #fcd315; border-radius: 0.2rem; color: #FFFFFF; }
 .mask .close_btn{ margin: 0.2rem auto; width:37px; height: 37px; background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IdibaAAAK4o2vF1QAAK3pwDnPOsAAAr6941.png}>) no-repeat; background-size: 100%;}
 #rule .rule-contain{ line-height: 0.506667rem; padding: 0 0.506667rem 0 0.8rem;}
@@ -32,7 +42,7 @@ input{ outline: none; border:none;-webkit-appearance: none;}
 #prize .prize-contain .prize85{ background: url(<{asset:media/g2/M01/1C/02/rBEBJVpwO-yIfxG0AAATOlAQekEAAK6EgMPV44AABNS668.png}>) no-repeat; background-size: 100% 100%; }
 #prize .prize-contain .prizeitem-owner{ display: inline-block; max-width: 1.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: top;}
 
-#sharearrow .arrowbg{margin: 2.0rem auto; width: 8.0rem; height: 2.0rem; background: url(<{asset:media/g2/M04/1B/3F/rBEBJVpu1QuIGeKBAAAPO8ZBMjgAAK5AwP7dDcAAA9T083.png}>) no-repeat; background-size: 100%;}
+#sharearrow .arrowbg{margin: 0.5rem auto; width: 8.0rem; height: 2.0rem; background: url(<{asset:media/g2/M04/1B/3F/rBEBJVpu1QuIGeKBAAAPO8ZBMjgAAK5AwP7dDcAAA9T083.png}>) no-repeat; background-size: 100%;}
 
 .leadPage-mask{background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IRTWKAABMifFwiTgAAK3pwDtJqEAAEyh459.png}>); background-size: 100%;}
 #close_leadPage{position: absolute; right: 0.8rem;top: 0.7rem;}
@@ -125,7 +135,7 @@ input{ outline: none; border:none;-webkit-appearance: none;}
 					<div class="line totalscore">本次获得<span id="totalscore"></span>分</div>
 					<div class="line defeat">击败<span id="defeat"></span>%用户</div>
 					<div id="playagin" class="playagin ">再玩一次（剩余<span id="gameNum"></span>次）</div>
-					<div id="sharetofriend" class="sharetofriend">邀好友来玩再得机会  &gt;</div>
+					<div id="sharetofriend" class="sharetofriend">分享得游戏机会  &gt;</div>
 				</div>
 				<div id="close_over" class="close_btn"></div>
 			</div>
@@ -255,7 +265,6 @@ function ajaxShare(obj){
     window.wxShareFn = function(oParam){
         $.fn.wxShare(oParam);
     }
-
 })(jQuery);
 	
 //GA
@@ -283,17 +292,13 @@ var telInput = $('#login-tel'),   //手机号输入框
 
 //document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';    //16800120011
 // kKtwZA2vYwxbJBA5P-eiivWuFrHLWLBF-ECli2a-5WA
-var httpHead = 'https://testing-market.Yongche.org'; //线下接口
+var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
 //var httpHead = 'https://market.yongche.com'; //线上接口
 
 //活动规则页\我的奖励页\引导页\登录页---  “关闭按钮”
 $(".close_btn").click(function(){
 	$('.mask').fadeOut(300);
-	console.log($(this));
-	console.log($('#close_login'));
-	console.log($(this)==$('#close_login'));
-	
-	if($(this)==$('#close_login')){ //TODO
+	if($(this)==$('#close_login')){ 
 		telInput.val('');
 	    msgInput.val('');
 	    captchaInput.val('');
@@ -304,7 +309,7 @@ $(".close_btn").click(function(){
 //“再玩一次”
 $("#playagin").click(function(){
 	if(gameNum<=0){
-		toastMsg('分享可得游戏次数');
+		toastMsg('游戏机会用完了，快去分享得机会吧');
 		return 
 	}
 	$('#over').hide();
@@ -348,7 +353,7 @@ if(!inApp){//端wai分享
 	});
 }
 
-function getCommon(isagin){
+function getCommon(isagin,resolve, reject){
 	$.ajax({
         type:'get',
         url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
@@ -392,6 +397,10 @@ function getCommon(isagin){
             }else{//现在不在活动期间 || 用户信息为空
             	isLogin = true;
             	isRightTime=false;
+            }
+            if(resolve){
+            	resolve("ajaxPromise");
+            	return
             }
             if(!isagin){game.state.start('created');}
         },
@@ -543,14 +552,16 @@ function helphimFn() { //助力
                 isLogin = false;
             }else if(data.code==504||data.code==500){
             	isLogin = true ;
+            	isRightTime=false;
             	toastMsg(data.msg);
             }else{
             	isLogin = true ;
+            	isRightTime=true;
             	gameNum = data.result.gameNum;
 	            game.state.start('created');
 	            getMyPrizelist();
-	            toastMsg(data.msg);
-	            //微信二次分享 //TODO
+	            if(data.code==200){ toastMsg(data.msg);}
+	            //微信二次分享 
 	           	wxShareFn({
 	           		shareImg : 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
 					shareTitle : '快来参加易到金币大作战',
@@ -661,7 +672,7 @@ function showOver(score){
 }
 function updateoverData(data){
 	$('.winer').children('.discount').remove();
-	$('#totalscore').text(data.goldNum); //游戏总分
+	$('#totalscore').text(data.goldNum*100); //游戏总分
 	$('#defeat').text(data.defeat); //击败多少人
 	$('#gameNum').text(data.gameNum);//游戏次数
 	if(data.gameNum<=0){
@@ -673,11 +684,11 @@ function updateoverData(data){
 	}else{
 		$('.loser').hide();
 		var levelclass = '';
-		if(data.awardId===4874){
+		if(data.awardId==4874){
 			levelclass = 'discount95';
-		}else if(data.awardId===5138 ){
+		}else if(data.awardId==5138 ){
 			levelclass = 'discount90';
-		}else if(data.awardId===5136){
+		}else if(data.awardId==5136){
 			levelclass = 'discount85';
 		}
 		var str = '<div class="discount '+ levelclass +' "></div>';
@@ -699,7 +710,7 @@ function updateMyPrizelist(prizelist){
 			levelclass = 'prize95';
 		}else if(item.awardId==5138){
 			levelclass = 'prize90';
-		}else if(item.awardId===5136){
+		}else if(item.awardId==5136){
 			levelclass = 'prize85';
 		}
 		str += '<li class="prizeitem '+ levelclass +'"></li>';
@@ -720,8 +731,8 @@ function toastMsg(msg){
 //生成障碍和金币的方法合二为一
 var width = window.innerWidth;  
 var height = window.innerHeight; 
-var httpimg = 'https://www.yongche.com/media/get_image.php?media_id='; 
-//var httpimg = 'https://i1-testing.Yongche.org/media/';
+//var httpimg = 'https://www.yongche.com/media/get_image.php?media_id='; 
+var httpimg = 'https://i1-testing.Yongche.org/media/';
 var httpaudio = '//i0.yongche.name/';
 var spicJson = {"frames":[{"filename":"coinbg","frame":{"x":2,"y":246,"w":225,"h":82},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":225,"h":82},"sourceSize":{"w":225,"h":82}},{"filename":"crash","frame":{"x":310,"y":514,"w":186,"h":153},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":186,"h":153},"sourceSize":{"w":186,"h":153}},{"filename":"garbagecan","frame":{"x":342,"y":404,"w":148,"h":108},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":6,"y":29,"w":148,"h":108},"sourceSize":{"w":162,"h":162}},{"filename":"myprizebtn","frame":{"x":210,"y":382,"w":130,"h":95},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":130,"h":95},"sourceSize":{"w":130,"h":95}},{"filename":"one","frame":{"x":210,"y":579,"w":84,"h":290},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":62,"y":4,"w":84,"h":290},"sourceSize":{"w":208,"h":298}},{"filename":"playcount","frame":{"x":210,"y":479,"w":98,"h":98},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":98,"h":98},"sourceSize":{"w":98,"h":98}},{"filename":"plus100","frame":{"x":2,"y":871,"w":45,"h":13},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":13},"sourceSize":{"w":45,"h":13}},{"filename":"roadblock","frame":{"x":229,"y":250,"w":104,"h":130},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":29,"y":15,"w":104,"h":130},"sourceSize":{"w":162,"h":162}},{"filename":"rulesbtn","frame":{"x":229,"y":162,"w":117,"h":86},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":117,"h":86},"sourceSize":{"w":117,"h":86}},{"filename":"sharebtn","frame":{"x":2,"y":82,"w":346,"h":78},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":346,"h":78},"sourceSize":{"w":346,"h":78}},{"filename":"startbtn","frame":{"x":2,"y":2,"w":346,"h":78},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":346,"h":78},"sourceSize":{"w":346,"h":78}},{"filename":"stone","frame":{"x":350,"y":2,"w":160,"h":100},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":1,"y":32,"w":160,"h":100},"sourceSize":{"w":162,"h":162}},{"filename":"three","frame":{"x":350,"y":104,"w":158,"h":298},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":24,"y":0,"w":158,"h":298},"sourceSize":{"w":208,"h":298}},{"filename":"timerbg","frame":{"x":2,"y":162,"w":225,"h":82},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":225,"h":82},"sourceSize":{"w":225,"h":82}},{"filename":"two","frame":{"x":2,"y":330,"w":206,"h":298},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":0,"w":206,"h":298},"sourceSize":{"w":208,"h":298}}],"meta":{"app":"http://www.texturepacker.com","version":"1.0","image":"spic.png","format":"RGBA8888","size":{"w":512,"h":1024},"scale":"1","smartupdate":"$TexturePacker:SmartUpdate:e9fd54ef0410952a79f755f7ac852be3$"}}
 
@@ -753,8 +764,25 @@ var states = {
 	        loadingbg.anchor.setTo(0.5, 0.5);
 	        loadingbar.anchor.setTo(0, -1.05);
 	        game.load.setPreloadSprite(loadingbar);
-	        // 加载游戏资源
-	        game.load.image('homepagebg', httpimg+'g2/M01/1C/04/rBEBP1pxgyeIE05HAAXMI327Te4AAK7DwCSJ8AABcw7461.png');//首页-背景
+	        
+	        /**********************************************************/
+	        /**********************************************************/
+	        // 1.加载资源
+	        var resourcePromise = new Promise(this.loadResource);
+	        // 2.ajax请求数据
+	        var ajaxPromise = new Promise(function(resolve, reject) {
+	        	getCommon(null,resolve, reject);
+			});
+            Promise.all([resourcePromise, ajaxPromise]).then(function(values) {
+            	// 可以判断values返回值，进而是否跳转到created场景
+			  	game.state.start('created');
+			});
+			/**********************************************************/
+			/**********************************************************/
+	    },
+	    this.loadResource = function(resolve, reject){
+	    	// 加载游戏资源
+	        game.load.image('homepagebg', httpimg+'g2/M01/1C/04/rBEBP1pxgyeIE05HAAXMI327Te4AAK7DwCSJ8AABcw7461?t=1.png');//首页-背景
 	        game.load.image('playbg', httpimg+'g2/M02/1C/0A/rBEBP1p1bO6INpQfAAyHmwBz6oQAAK9VwGfhwwADIez518.png');//游戏页-背景
 	        game.load.atlas("spic", httpimg+"g2/M02/1C/0B/rBEBP1p1kY6ICQlTAAHlhv6pJOQAAK9dwHKeuoAAeWe249.png", null,spicJson);//精灵图
 	        game.load.spritesheet('dude', httpimg+'g2/M04/1C/0A/rBEBP1p1XeaINgTsAAQ_1WywasIAAK9SgIGR0QABD_t853.png',  187, 299); //游戏页-游戏主角
@@ -769,7 +797,7 @@ var states = {
             game.load.onLoadComplete.add(onLoad);
             // 加载完毕回调方法
             function onLoad() {
-            	getCommon(); 
+            	resolve("resourcePromise");
             }
 	    }
     },
@@ -786,15 +814,13 @@ var states = {
 	        bg.height = game.world.height;
 	        // 添加"活动规则"按钮
 	        ruleButton = game.add.button(game.world.width -60-9 , 20,'spic',  showRules, this, 'rulesbtn','rulesbtn', 'rulesbtn');
-	        ruleButton.width /=2;
-	        ruleButton.height/=2;
+	        ruleButton.scale.set(0.5);
 	        function showRules(){
 	        	$('#rule').fadeIn(100);
 	        }
 	        // 添加"我的奖品"按钮
 	        prizeButton = game.add.button(16, 16,'spic', showPrizes, this, 'myprizebtn', 'myprizebtn', 'myprizebtn');
-	        prizeButton.width/=2;
-	        prizeButton.height/=2;
+	        prizeButton.scale.set(0.5);
 	        function showPrizes(){
 	        	if(!isLogin){//未登录--我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
 	        		if(inApp){  
@@ -815,8 +841,7 @@ var states = {
 	       	
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
-	        startButton.width/=2;
-	        startButton.height/=2;
+	        startButton.scale.set(0.5);
 	        startButton.anchor.setTo(0.5, 1);
 	        function onStart(){
 	        	if(!isLogin){//未登录
@@ -833,15 +858,14 @@ var states = {
 	        		return
 	        	}
 	        	if(gameNum<=0){
-	        		toastMsg('分享可获得游戏机会');
+	        		toastMsg('游戏机会用完了，快去分享得机会吧');
 	        		return
 	        	}
 	        	startGame(); 
 	        }
 	        // 添加"分享 "按钮
 	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'spic', onShare, this, 'sharebtn', 'sharebtn', 'sharebtn');
-	        shareButton.width/=2;
-	        shareButton.height/=2;
+	        shareButton.scale.set(0.5);
 	        shareButton.anchor.setTo(0.5, 1);
 	        function onShare(){
 	        	if(!isLogin){//未登录
@@ -914,8 +938,7 @@ var states = {
 	        this.bg.tileScale.y = game.world.height / this.bgImg.height;
 	    	//添加主角
 	        this.car = this.game.add.sprite(game.world.centerX, game.world.height - 100, 'dude');
-	        this.car.width = 99;
-          	this.car.height= 157.5;
+	        this.car.scale.set(0.5);
 	        this.car.anchor.setTo(0.5, 0.5);
 	        game.physics.arcade.enable(this.car);
           	this.car.body.setSize(123,210,32,13);   
@@ -930,25 +953,15 @@ var states = {
 	        this.obstacles.enableBody = true;
 	       	// 添加时间背景
 	        var timerbg = game.add.image(19, 16,'spic', 'timerbg');
-	        timerbg.width /=2;
-	        timerbg.height /=2;
+	        timerbg.scale.set(0.5);
 	        // 添加时间
 			this.remainTime = 60;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
-	        this.remainTimeText = this.game.add.text(62, 25, "01：00", style);
-			// 添加次数背景
-	        var countbg = game.add.image(game.world.centerX, 42, 'spic','playcount');
-	        countbg.width /=2;
-	        countbg.height /=2;
-	        countbg.anchor.setTo(0.5, 0.5);
-	        // 添加次数
-	        var style = { font: "22px Arial", fill: "#ffffff" };
-	        this.remainCountText = this.game.add.text(game.world.centerX, 42, gameNum, style);
-	        this.remainCountText.anchor.setTo(0.5, 0.5);
+	        this.remainTimeText = this.game.add.text(62, 25, "01:00", style);
+			
 			// 添加分数背景
 	        var coinbg = game.add.image(game.world.width-19-112, 16, 'spic','coinbg');
-	        coinbg.width /=2;
-	        coinbg.height /=2;
+	        coinbg.scale.set(0.5);
 	        // 添加分数和金币数
 			this.score = 0;
 	        var style = { font: "20px Arial", fill: "#ffffff" };
@@ -1124,12 +1137,13 @@ var states = {
 	    this.reduceTime = function(){
 	    	this.remainTime -= 0.5;
 	    	var timeStr = parseInt(this.remainTime)<10 ? '0'+parseInt(this.remainTime) : parseInt(this.remainTime);
-	        this.remainTimeText.text = "00: "+timeStr;
+	        this.remainTimeText.text = "00:"+timeStr;
 	        //随着时间进行，速度越来越快
 	        var v = move_velocity + (60-this.remainTime)*20;
 	        this.bg.autoScroll(0, v/(game.world.height / this.bgImg.height));
-	        	this.obstacles.setAll('body.velocity.y',v,true,true);
-	        
+	        this.obstacles.forEachAlive(function(item){
+	    		item.body.velocity.y = v;
+	    	});
 	        // 结束场景
 	        if(this.remainTime <= 0){ 
 	        	this.allStopMove();
@@ -1145,7 +1159,9 @@ var states = {
 	    	// 移除定时器
         	this.game.time.events.remove(this.reduceTimer);
         	//让星星和障碍停止运动
-	    	this.obstacles.setAll('body.velocity.y',0,true,true);
+	    	this.obstacles.forEach(function(item){
+	    		item.body.velocity.y = 0;
+	    	})
 	    	this.isAllStop = true;
 	    	//取消滑动监听，主角不可移动
 	    	this.game.input.deleteMoveCallback(this.moveCallback,this);
