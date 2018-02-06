@@ -16,17 +16,7 @@ ul,li{list-style: none;}
 input{ outline: none; border:none;-webkit-appearance: none;}
 .wrapper{width: 100%;height: 100%;}
 .mask{position: fixed; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; line-height: 0.67rem; font-size: 30px; background:rgba(0,0,0,0.6); display: none;}
-.mask .container{
-	margin: 1.70rem auto 0;
-	width: 7.76rem;
-	height: 12.0rem;
-	background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg}>) ;
-	border: 0.08rem solid #fcd315;
-	border-radius: 0.2rem;
-	position: relative;
-	color: #eca205;
-	font-size: 0.346667rem;
-}
+.mask .container{margin: 1.70rem auto 0;width: 7.76rem;height: 12.0rem;background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IVu3qAAA4m4S8h3AAAK3pwDtm3AAADiz299.jpg}>);border: 0.08rem solid #fcd315;border-radius: 0.2rem;position: relative;color: #eca205;font-size: 0.346667rem;}
 .mask .container .mask-title{ width:3.933333rem; height: 1.133333rem; font-size: 0.64rem; line-height: 1.0rem; text-align: center; border-radius: 0.24rem; margin: -0.533333rem auto 0; background: #fdd65f; border: 0.08rem solid #fcd315; border-radius: 0.2rem; color: #FFFFFF; }
 .mask .close_btn{ margin: 0.2rem auto; width:37px; height: 37px; background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IdibaAAAK4o2vF1QAAK3pwDnPOsAAAr6941.png}>) no-repeat; background-size: 100%;}
 .scrollwrapper{height: 11.0rem;overflow: scroll;}
@@ -47,21 +37,9 @@ input{ outline: none; border:none;-webkit-appearance: none;}
 .leadPage-mask{background: url(<{asset:media/g2/M02/1B/3C/rBEBJVpsgt6IRTWKAABMifFwiTgAAK3pwDtJqEAAEyh459.png}>); background-size: 100%;}
 #close_leadPage{position: absolute; right: 0.8rem;top: 0.7rem;}
 
-#over .over-contain .top-contain{
-	margin-bottom: 0.69rem;
-	height: 5.0rem;
-	padding: 0.1px;
-}
-#over .over-contain .winer{
-	display: none;
-}
-#over .over-contain .loser{
-	font-size: 0.6rem;
-    text-align: center;
-    line-height: 1.3rem;
-    padding: 1.3rem 0 0 0;
-	display: none;
-}
+#over .over-contain .top-contain{margin-bottom: 0.69rem;height: 5.0rem;padding: 0.1px;}
+#over .over-contain .winer{display: none;}
+#over .over-contain .loser{font-size: 0.6rem; text-align: center; line-height: 1.3rem; padding: 1.3rem 0 0 0;display: none;}
 #over .over-contain .gongxi{ margin: 0.33333rem auto 0; width:6.693333rem; height: 2.36rem; background: url(<{asset:media/g2/M02/1B/3C/rBEBP1psgt2IRvRVAACt4ep_JkcAAK3pwDt4esAAK35479.jpg}>); background-size: 100%; }
 #over .over-contain .discount{ margin: 0.53rem auto 0; width:6.666667rem; height:2.306667rem; padding:0.5rem 0 0 3.2rem; }
 #over .over-contain  .discount95{ background: url(<{asset:media/g2/M02/1C/02/rBEBP1pwO-2IL5IQAAAS2l_y62AAAK6DwP91GAAABLy197.png}>) no-repeat; background-size: 100% 100%; }
@@ -111,12 +89,8 @@ input{ outline: none; border:none;-webkit-appearance: none;}
 				<div class="container prize-contain">
 					<div class="mask-title">我的奖品</div>
 					<div class="scrollwrapper">
-						<ul class="prizelist">
-						</ul>
-						<div class="noprize">
-						尚未获得奖品，<br/>
-						赶快开始游戏吧
-						</div>
+						<ul class="prizelist"></ul>
+						<div class="noprize">尚未获得奖品，<br/>赶快开始游戏吧</div>
 					</div>
 				</div>
 				<div id="close_prize" class="close_btn"></div>
@@ -129,7 +103,7 @@ input{ outline: none; border:none;-webkit-appearance: none;}
 							<div class="gongxi"></div>
 						</div>
 						<div class="loser"><!--真遗憾-->
-							<div class="loser1">真遗憾，</div>
+							<div class="loser1">真遗憾</div>
 							<div class="loser2">离奖励就差一点了</div>
 						</div>
 					</div>
@@ -291,10 +265,8 @@ var telInput = $('#login-tel'),   //手机号输入框
 	msgcode,
 	captcha;
 
-//document.cookie='_app_token_v3=XTDOwAJVYQ4fTB9z8QRo1jcuPrfkBBwPhlzs8j_79RU';    //16800120011
-// kKtwZA2vYwxbJBA5P-eiivWuFrHLWLBF-ECli2a-5WA
-var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
-//var httpHead = 'https://market.yongche.com'; //线上接口
+//var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
+var httpHead = 'https://market.yongche.com'; //线上接口
 
 //活动规则页\我的奖励页\引导页\登录页---  “关闭按钮”
 $(".close_btn").click(function(){
@@ -305,7 +277,6 @@ $(".close_btn").click(function(){
 	    captchaInput.val('');
 	}
 })
-
 
 //“再玩一次”
 $("#playagin").click(function(){
@@ -341,10 +312,6 @@ function shareFn() {
 	}
 } 
 
-window.onresize = function(){
- //alert('change')
-}
-
 if(!inApp){//端wai分享
 	wxShareFn({
 		shareImg: 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
@@ -375,7 +342,7 @@ function getCommon(isagin){
                 	if(!isagin){
                 		//端内分享配置
 		                ajaxShare({
-		                    url:'https://www.yongche.com/cms/page/glj.html?shareToken='+data.result.shareToken,
+		                    url:'https://www.yongche.com/cms/page/collectCoins.html?shareToken='+data.result.shareToken,
 		                    shareimg:'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
 		                    title:'快来参加易到金币大作战',
 		                    description:'参与游戏赢用车券啦'
@@ -387,7 +354,7 @@ function getCommon(isagin){
 				    } else{
 				        wxShareFn({
 			           		shareImg: 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
-				            shareUrl:'https://www.yongche.com/cms/page/glj.html?shareToken='+ data.result.shareToken,
+				            shareUrl:'https://www.yongche.com/cms/page/collectCoins.html?shareToken='+ data.result.shareToken,
 							shareTitle: '快来参加易到金币大作战',
 							shareContent: '参与游戏赢用车券啦'
 			           	});
@@ -525,7 +492,6 @@ loginBtn.click(function() {
             	isLogin = false ;
                 toastMsg(data.msg);
             }
-            
         },
         error:function(err){
             console.log(data.msg)
@@ -563,7 +529,7 @@ function helphimFn() { //助力
 	           		shareImg : 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
 					shareTitle : '快来参加易到金币大作战',
 					shareContent : '参与游戏赢用车券啦',
-		            shareUrl : 'https://www.yongche.com/cms/page/glj.html?shareToken='+ data.result.shareToken
+		            shareUrl : 'https://www.yongche.com/cms/page/collectCoins.html?shareToken='+ data.result.shareToken
 	           	});
             }
         	game.state.start('created');
@@ -681,11 +647,11 @@ function updateoverData(data){
 	}else{
 		$('.loser').hide();
 		var levelclass = '';
-		if(data.awardId==4874){
+		if(data.awardId==4904){
 			levelclass = 'discount95';
-		}else if(data.awardId==5138 ){
+		}else if(data.awardId==4906 ){
 			levelclass = 'discount90';
-		}else if(data.awardId==5136){
+		}else if(data.awardId==4908){
 			levelclass = 'discount85';
 		}
 		var str = '<div class="discount '+ levelclass +' "></div>';
@@ -703,11 +669,11 @@ function updateMyPrizelist(prizelist){
 	$('.noprize').hide();
 	$('.prizelist').children('.prizeitem').remove();
 	prizelist.forEach(function(item){
-		if(item.awardId==4874){
+		if(item.awardId==4904){
 			levelclass = 'prize95';
-		}else if(item.awardId==5138){
+		}else if(item.awardId==4906){
 			levelclass = 'prize90';
-		}else if(item.awardId==5136){
+		}else if(item.awardId==4908){
 			levelclass = 'prize85';
 		}
 		str += '<li class="prizeitem '+ levelclass +'"></li>';
