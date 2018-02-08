@@ -109,7 +109,7 @@ input{ outline: none; border:none;-webkit-appearance: none;}
 					</div>
 					<div class="line totalscore">本次获得<span id="totalscore"></span>分</div>
 					<div class="line defeat">击败<span id="defeat"></span>%用户</div>
-					<div id="playagin" class="playagin ">再玩一次（剩余<span id="gameNum"></span>次）</div>
+					<div id="playagin" class="playagin ">再玩一次</div>
 					<div id="sharetofriend" class="sharetofriend">分享得游戏机会  &gt;</div>
 				</div>
 				<div id="close_over" class="close_btn"></div>
@@ -117,594 +117,43 @@ input{ outline: none; border:none;-webkit-appearance: none;}
 			<div id="leadPage" class="mask leadPage-mask">
 				<div id="close_leadPage" class="close_btn"></div>
 			</div>
-			<div id="sharearrow" class="mask">
-				<div class="arrowbg"></div>
-			</div>
-			<div id="loginMask" class="mask login-mask">
-				<div class=" login-contain">
-		            <div class="login-title">手机号登录</div>
-		            <input id="login-tel" type="tel" class="login-input" placeholder="请输入手机号" maxlength="11">
-		            
-		            <div class="login-captchacode-wrapper"> <!--图形验证码-->
-		                <input id="login-captchacode" class="login-input login-input-short" type="text" placeholder="请输入验证码" maxlength="4">
-		                <span class="login-code login-captchacode"><img  id="login-getcaptchacode" width="100%" height="100%" src="https://market.yongche.com/activity/Webuser/getCaptcha"></span>
-		            </div>
-		            <div>  <!--短信验证码-->
-		                <input id="login-msgcode" class="login-input login-input-short" type="tel" placeholder="请输入验证码" maxlength="6">
-		                <input id="login-getmsgcode" type="button" class="login-code login-getmsgcode" value="获取验证码">
-		            </div>
-		            <div id="login-btn" class="login-btn">登   录</div>
-		        </div>
-		        <div id="close_login" class="close_btn"></div>
-	        </div>
+			
+			
 			<div class="toast"></div>
 		</div>
 		
 <script src="https://i3.Yongche.name/s/js/201801/myphaser2.6.min.js?1478153218"></script>
 <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
-<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script type="text/javascript"> //<!--分享相关及GA-->
-//端内分享相
-var Tools;
-function ajaxShare(obj){
-    // 分享变量设置
-    var _protocolLink = "yongche://share?";
-    var _protocolLinkFriend = "yongche://shareToFriend?";
-    var _protocolLinkTimeline = "yongche://shareToTimeline?";
-    // 分享地址
-    var shareRead_link = encodeURIComponent(obj.url);
-    // 分享的图片
-    var shareRead_pics = encodeURIComponent(obj.shareimg);
-    // 分享的标题
-    var shareRead_title = encodeURIComponent(obj.title);
-    // 分享的内容
-    var shareRead_content = encodeURIComponent(obj.description);
-    // 分享的需要生成二维码地址
-    var shareRead_codeUrl = encodeURIComponent("://m.yongche.com");
-    var shareRead_sourceType = 42; //1-截图分享 42-图文分享
-    var shareRead_callback = "share_callback";
 
-    Tools = {
-        shareThisPage:function(){
-            var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&callback="+shareRead_callback+"&codeUrl="+shareRead_codeUrl;
-            var _tmpOpenLink = _protocolLink + _str;
-            window.location.href = _tmpOpenLink;
-        },
-        shareThisPageToFriend:function(){
-            var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&callback="+shareRead_callback+"&codeUrl="+shareRead_codeUrl;
-            var _tmpOpenLink = _protocolLinkFriend + _str;
-            window.location.href = _tmpOpenLink;
-        },
-        shareThisPageToTimeline:function(){
-            var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&callback="+shareRead_callback+"&codeUrl="+shareRead_codeUrl;
-            var _tmpOpenLink = _protocolLinkTimeline + _str;
-            window.location.href = _tmppenLOink;
-        }
-    };
-    var _str = "link="+shareRead_link+"&pics="+shareRead_pics+"&title="+shareRead_title+"&content="+shareRead_content+"&sourceType="+shareRead_sourceType+"&from=iframe&callback="+shareRead_callback;
-    var _tmpOpenLink = _protocolLink + _str;
-    //console.log(_tmpOpenLink);
-}
-	
-//微信二次分享	       
-(function ($) {
-    $.fn.wxShare = function (oParam) {
-        var shareImg = oParam.shareImg;
-        var shareTitle = oParam.shareTitle;
-        var shareContent = oParam.shareContent;
-        var shareUrl = oParam.shareUrl;
-        $.ajax({
-            url:"//weixin.yongche.com/wechat/jssdk/config?url="+encodeURIComponent(window.location.href),
-            method:'get',
-            dataType:'jsonp'
-        }).done(function(data){
-            console.log(data);
-            if(data.code==200){
-                wx_share(data.result);
-            }
-        }).fail(function(error){
-            //console.log(error)
-        });
-        function wx_share(jsData) {
-            wx.config({
-                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                appId: jsData.appId, // 必填，公众号的唯一标识
-                timestamp: jsData.timestamp, // 必填，生成签名的时间戳
-                nonceStr: jsData.nonceStr, // 必填，生成签名的随机串
-                signature: jsData.signature,// 必填，签名，见附录1
-                jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ','onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-            });
-            wx.ready(function(){
-                var shareData =
-                    {
-                        link:shareUrl,
-                        imgUrl:shareImg,
-                        title:shareTitle,
-                        desc:shareContent,
-                        type: '', // 分享类型,music、video或link，不填默认为link
-                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                        success: function () {
-                            // 用户确认分享后执行的回调函数
-                        },
-                        cancel: function () {
-                            // 用户取消分享后执行的回调函数
-                        }
-                    };
-                wx.onMenuShareAppMessage(shareData);
-                wx.onMenuShareTimeline(shareData);
-                wx.onMenuShareQQ(shareData);
-            });
-        }
-    }
-
-    window.wxShareFn = function(oParam){
-        $.fn.wxShare(oParam);
-    }
-})(jQuery);
-	
-//GA
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-18761483-4', 'auto');  ga('send', 'pageview');
-  
-</script>
 <script type="text/javascript"> //<!--//DOM及接口请求-->
-var gameNum = '- -', //游戏次数 -初始化值， 
-	gameToken = '', //游戏token -初始值， 
-	isLogin = false, //是否登录
-	isRightTime = false, //是否在活动期间
-	inApp = navigator.userAgent.indexOf("YongChe")<=0 ? false : true;
-var shareToken1 = GetQueryString('shareToken');
-var telInput = $('#login-tel'),   //手机号输入框
-	msgInput = $('#login-msgcode'),   //短信验证码输入框
-	captchaInput = $('#login-captchacode'),  //图片验证码输入框
-	getmsgcodeBtn = $('#login-getmsgcode'),  //获取短线验证码按钮
-	getcaptchaBtn = $('#login-getcaptchacode'),  //获取图片验证码
-	loginBtn = 	$('#login-btn'),  //登录按钮
-	need_imgcode = 0,
-	cellphone,
-	msgcode,
-	captcha,
-	prizecode95 = '4904',
-	prizecode90 = '4906',
-	prizecode85 = '4908';
-
-//var httpHead = 'https://testing2-market.Yongche.org'; //线下接口
-var httpHead = 'https://market.yongche.com'; //线上接口
-var wxShareUrl = 'https://www.yongche.com/cms/page/collectCoins.html?shareToken=',
-	wxShareImg = 'http://i3.yongche.Name/media/g2/M03/1C/07/rBEBJVpy8iOIZZJkAACTrvpjzssAAK79AKaJ5sAAJPG404.png',
-	wxShareTitle = '快来参加易到金币大作战',
-	wxShareContent = '参与游戏赢用车券啦';
-
 //活动规则页\我的奖励页\引导页\登录页---  “关闭按钮”
 $(".close_btn").click(function(){
 	$('.mask').fadeOut(300);
-	if($(this)==$('#close_login')){ 
-		telInput.val('');
-	    msgInput.val('');
-	    captchaInput.val('');
-	}
 })
-
 //“再玩一次”
 $("#playagin").click(function(){
-	if(gameNum<=0){
-		toastMsg('游戏机会用完了，快去分享得机会吧');
-		return 
-	}
 	$('#over').hide();
-	startGame();
+	game.state.start('play');
 })
-
 //结束页关闭返回首页
 $('#close_over').click(function(){
 	$('.mask').fadeOut(300);
-	getCommon();
+	game.state.start('created');
 })
-
-//端外分享箭头指引
-$('#sharearrow').click(function(){
-	$(this).hide();
-})
-//“分享给朋友”
-$('#sharetofriend').click(shareFn);
-function shareFn() {
-	if(inApp){//端内分享
-		ga('send', 'event', 'share_button', 'click', 'shareClickChristmas');
-	    Tools.shareThisPage();
-	}else{
-		$('#sharearrow').show();
-	}
-} 
-
-if(!inApp){//端wai分享
-	wxShareFn({
-		shareImg: wxShareImg,
-	    shareUrl: window.location.href,
-		shareTitle: wxShareTitle,
-		shareContent: wxShareContent
-	});
-}
-
-function getCommon(isagin){
-	$.ajax({
-        type:'get',
-        url: httpHead + '/Miscellaneous/Activityusergame/getCommon',
-        dataType:'jsonp',
-        jsonp:'callback',
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success:function(data) {
-            //alert('getCommon'+data.code);
-        	if(data.code==200){
-        		isLogin = true;
-        		isRightTime=true;
-				gameNum = data.result.gameNum;
-                if(!isagin){getMyPrizelist();}
-                if(inApp){//端内
-                	if(!isagin){
-                		//端内分享配置
-		                ajaxShare({
-		                    url:wxShareUrl+data.result.shareToken,
-		                    shareimg:wxShareImg,
-		                    title:wxShareTitle,
-		                    description:wxShareContent
-		                })
-                	}
-                }else{//端外
-                	if(shareToken1){//给他人助力
-			       		helphimFn();
-				    } else{
-				        wxShareFn({
-			           		shareImg: wxShareImg,
-				            shareUrl:wxShareUrl+ data.result.shareToken,
-							shareTitle: wxShareTitle,
-							shareContent: wxShareContent
-			           	});
-				    }
-                }
-            }else if(data.code==403){//未登录
-            	isLogin = false;
-            }else{//现在不在活动期间 || 用户信息为空
-            	isLogin = true;
-            	isRightTime=false;
-            }
-            if(!isagin){game.state.start('created');}
-        },
-        error:function(err){
-           toastMsg(err.msg)
-        }
-	});
-}
-function getMyPrizelist(){
-	$.ajax({
-        type:'get',
-        url: httpHead + '/Miscellaneous/Activityusergame/getAwardList',
-        dataType:'jsonp',
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success:function(data) {
-            if(data.code==200){
-            	isLogin = true;
-                updateMyPrizelist(data.result);//更新我的奖品列表  
-            }else {//未登录
-                isLogin = false;
-            }
-        },
-        error:function(err){
-            console.log(err.msg)
-        }
-	});
-}
-
-function startGame(){//开始游戏
-	$.ajax({
-        type:'get',
-        url: httpHead + '/Miscellaneous/Activityusergame/startGame',
-        dataType:'jsonp',
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success:function(data) {
-            if(data.code==200){
-            	isLogin = true;
-				gameToken = data.result.gameToken;
-				gameNum-=1;
-				game.state.start('play');
-            }else if(data.code==403) {//未登录
-            	isLogin = false;
-                toastMsg(data.msg);
-            }else {
-            	isLogin = true;
-            	toastMsg(data.msg);
-            }
-        },
-        error:function(err){
-            console.log(err.msg)
-        }
-	});
-}
-
-function endGame(gameToken,goldNum){//游戏结束
-	$.ajax({
-        type:'get',
-        url: httpHead + '/Miscellaneous/Activityusergame/endGame?gameToken='+gameToken+'&goldNum='+goldNum,
-        dataType:'jsonp',
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success:function(data) {
-            if(data.code==200){
-            	isLogin = true;
-            	gameNum = data.result.gameNum;
-				updateoverData(data.result)
-            }else if(data.code==403) {//未登录
-                toastMsg(data.msg);
-                isLogin = false;
-            }else {
-            	toastMsg(data.msg);
-            	isLogin = true;
-            }
-        },
-        error:function(err){
-            console.log(err.msg)
-        }
-	});
-}
-
-//点击登录按钮
-loginBtn.click(function() {
-    cellphone = telInput.val(),
-	msgcode = msgInput.val(),
-	captcha = captchaInput.val();
-    if(!checkMobile(cellphone)){
-        toastMsg('请输入正确手机号');
-        return false;
-    }
-    if(need_imgcode==1 && !captcha){
-        toastMsg('请输入图形验证码');
-        return false;
-    }
-    if(!msgcode){
-        toastMsg('请输入短信验证码');
-        return false;
-    }
-    $.ajax({
-        url: httpHead + '/activity/Webuser/Login?cellphone='+cellphone+'&code='+msgcode+'&captcha='+captcha,
-        type:'get',
-        dataType:'jsonp',
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success:function(data) {
-            //alert('Login'+data.code);
-            if(data.code==200){//登录成功
-				$('#loginMask').hide();
-				isLogin = true;
-                if(shareToken1){
-			        helphimFn();
-			    } else{
-			        getCommon();
-			    }
-            }else{
-            	isLogin = false ;
-                toastMsg(data.msg);
-            }
-        },
-        error:function(err){
-            console.log(data.msg)
-        }
-    })
-});
-
-function helphimFn() { //助力
-    $.ajax({
-        url: httpHead + '/Miscellaneous/Activityusergame/helpUser?shareToken=' +shareToken1,
-        type:'get',
-        dataType:'jsonp',
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success:function(data) {
-        	//alert('help'+data.code);
-        	if(data.code==403) {//未登录
-                toastMsg(data.msg);
-                isLogin = false;
-            }else if(data.code==504||data.code==500){
-            	isLogin = true ;
-            	isRightTime=false;
-            	toastMsg(data.msg);
-            }else{
-            	isLogin = true ;
-            	isRightTime=true;
-            	gameNum = data.result.gameNum;
-	            game.state.start('created');
-	            getMyPrizelist();
-	            if(data.code==200){ toastMsg(data.msg);}
-	            //微信二次分享 
-	           	wxShareFn({
-	           		shareImg : wxShareImg,
-					shareTitle : wxShareTitle,
-					shareContent : wxShareContent,
-		            shareUrl : wxShareUrl+ data.result.shareToken
-	           	});
-            }
-        	game.state.start('created');
-        },
-        error:function(err){
-            console.log(err.msg);
-        }
-    });
-}
-        
-getmsgcodeBtn.click(function () {//获取短信验证码
-    cellphone = telInput.val();
-    captcha = captchaInput.val();
-    var isverify = checkMobile(cellphone);//检测手机号是否合法
-    if(!isverify){
-        toastMsg('请输入正确的手机号');
-        return false;
-    }
-    console.log(need_imgcode);
-    if(need_imgcode == 1){//需要图形验证码
-        console.log(captcha);
-        if(!captcha){
-            toastMsg('请输入图形验证码');
-            return false;
-        }
-        getMsgCode(cellphone,captcha);
-    }else{
-    	getMsgCode(cellphone,captcha);
-    }
-})
-
-function getMsgCode(cellphone,captcha) {//获取短信验证码接口
-    $.ajax({
-        type:'get',
-        url:httpHead+'/activity/Webuser/getCode?cellphone='+cellphone+'&captcha='+captcha,
-        dataType:'jsonp',
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
-        success:function(data) {
-            //alert('getMsgCode'+data.code);
-            if(data.code==401){//请输入图片验证码
-                need_imgcode = 1;
-                $(".login-captchacode-wrapper").show();
-            } else if(data.code == 200){
-                var count = 59;
-                var countdown = setInterval(CountDown, 1000);
-                function CountDown() {
-                    getmsgcodeBtn.attr("disabled", true);
-                    getmsgcodeBtn.css("background","#999");
-                    getmsgcodeBtn.val(count + "s");
-                    if (count == 0) {
-                        getmsgcodeBtn.val("获取验证码").removeAttr("disabled");
-                        getmsgcodeBtn.css("background","#E92C2A");
-                        clearInterval(countdown);
-                    }
-                    count--;
-                }
-            } else if(data.code == 429) {
-                if(need_imgcode==1){
-                    getcaptchaFn();
-                }
-                toastMsg('请求次数过多,请稍后重试')
-            } else if(data.code == 400){
-                toastMsg('图形验证码错误');
-                if(data.isUpdate == 1){
-                    getcaptchaFn();
-                }
-            } else if(data.code == 449) {
-                toastMsg('请求太频繁');
-                if(need_imgcode==1){
-                    getcaptchaFn();
-                }
-            }
-        },
-        error:function(err){
-            console.log(err.msg)
-        }
-    })
-}
-
-getcaptchaBtn.click(getcaptchaFn);
-function getcaptchaFn() {//获取图形验证码
-    getcaptchaBtn.attr('src',httpHead+'/activity/Webuser/getCaptcha?t='+new Date().getTime());
-}
-
-function GetQueryString(name) {
-    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if(r!=null)return  unescape(r[2]); return null;
-}
-
-function checkMobile(number){//检查手机号
-	var res = /^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9]|6[8])\d{8}$/.test(number);
-	return res ? true :false;
-}
-
-//over页面展示
-function showOver(score){
-	$('#over').show();
-	endGame(gameToken,score);//把金币数数传给后台
-}
-function updateoverData(data){
-	$('.winer').children('.discount').remove();
-	$('#totalscore').text(data.goldNum*100); //游戏总分
-	$('#defeat').text(data.defeat); //击败多少人
-	$('#gameNum').text(data.gameNum);//游戏次数
-	if(data.gameNum<=0){
-		$('.playagin').addClass('noagin');
-	}
-	if(data.awardId==''){//优惠券等级
-		$('.winer').hide()
-		$('.loser').show();
-	}else{
-		$('.loser').hide();
-		var levelclass = '';
-		if(data.awardId==prizecode95){
-			levelclass = 'discount95';
-		}else if(data.awardId==prizecode90 ){
-			levelclass = 'discount90';
-		}else if(data.awardId==prizecode85){
-			levelclass = 'discount85';
-		}
-		var str = '<div class="discount '+ levelclass +' "></div>';
-		$('.winer').append($(str)).show();
-	}
-}
-
-function updateMyPrizelist(prizelist){
-	var str = '', levelclass = '';
-	if(prizelist.length<=0){
-		$('.prizelist').hide();
-		$('.noprize').show();
-		return;
-	}
-	$('.noprize').hide();
-	$('.prizelist').children('.prizeitem').remove();
-	prizelist.forEach(function(item){
-		if(item.awardId==prizecode95){
-			levelclass = 'prize95';
-		}else if(item.awardId==prizecode90){
-			levelclass = 'prize90';
-		}else if(item.awardId==prizecode85){
-			levelclass = 'prize85';
-		}
-		str += '<li class="prizeitem '+ levelclass +'"></li>';
-	})
-	$('.prizelist').append($(str)).show();
-}
-
-function toastMsg(msg){
-	$('.toast').fadeIn(100).text(msg);
-	setTimeout(function(){
-		$('.toast').fadeOut(100)
-	},2000)
-}
-
 </script>	
 <script type="text/javascript"> //<!--//游戏逻辑-->	
 //点击屏幕任意位置，可拖动主角
 //生成障碍和金币的方法合二为一
 var width = window.innerWidth;  
 var height = window.innerHeight; 
-var httpimg = 'https://www.yongche.com/media/get_image.php?media_id='; 
+//var httpimg = 'https://www.yongche.com/media/get_image.php?media_id='; 
 //var httpimg = 'https://i1-testing.Yongche.org/media/';
+var httpimg = 'https://i0.Yongche.name/media/';
 var httpaudio = '//i0.yongche.name/';
 var spicJson = {"frames":[{"filename":"coinbg","frame":{"x":2,"y":246,"w":225,"h":82},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":225,"h":82},"sourceSize":{"w":225,"h":82}},{"filename":"crash","frame":{"x":310,"y":514,"w":186,"h":153},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":186,"h":153},"sourceSize":{"w":186,"h":153}},{"filename":"garbagecan","frame":{"x":342,"y":404,"w":148,"h":108},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":6,"y":29,"w":148,"h":108},"sourceSize":{"w":162,"h":162}},{"filename":"myprizebtn","frame":{"x":210,"y":382,"w":130,"h":95},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":130,"h":95},"sourceSize":{"w":130,"h":95}},{"filename":"one","frame":{"x":210,"y":579,"w":84,"h":290},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":62,"y":4,"w":84,"h":290},"sourceSize":{"w":208,"h":298}},{"filename":"playcount","frame":{"x":210,"y":479,"w":98,"h":98},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":98,"h":98},"sourceSize":{"w":98,"h":98}},{"filename":"plus100","frame":{"x":2,"y":871,"w":45,"h":13},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":13},"sourceSize":{"w":45,"h":13}},{"filename":"roadblock","frame":{"x":229,"y":250,"w":104,"h":130},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":29,"y":15,"w":104,"h":130},"sourceSize":{"w":162,"h":162}},{"filename":"rulesbtn","frame":{"x":229,"y":162,"w":117,"h":86},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":117,"h":86},"sourceSize":{"w":117,"h":86}},{"filename":"sharebtn","frame":{"x":2,"y":82,"w":346,"h":78},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":346,"h":78},"sourceSize":{"w":346,"h":78}},{"filename":"startbtn","frame":{"x":2,"y":2,"w":346,"h":78},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":346,"h":78},"sourceSize":{"w":346,"h":78}},{"filename":"stone","frame":{"x":350,"y":2,"w":160,"h":100},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":1,"y":32,"w":160,"h":100},"sourceSize":{"w":162,"h":162}},{"filename":"three","frame":{"x":350,"y":104,"w":158,"h":298},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":24,"y":0,"w":158,"h":298},"sourceSize":{"w":208,"h":298}},{"filename":"timerbg","frame":{"x":2,"y":162,"w":225,"h":82},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":225,"h":82},"sourceSize":{"w":225,"h":82}},{"filename":"two","frame":{"x":2,"y":330,"w":206,"h":298},"rotated":false,"trimmed":true,"spriteSourceSize":{"x":0,"y":0,"w":206,"h":298},"sourceSize":{"w":208,"h":298}}],"meta":{"app":"http://www.texturepacker.com","version":"1.0","image":"spic.png","format":"RGBA8888","size":{"w":512,"h":1024},"scale":"1","smartupdate":"$TexturePacker:SmartUpdate:e9fd54ef0410952a79f755f7ac852be3$"}}
 
 // 创建游戏实例
-var game = new Phaser.Game(width, height, Phaser.CANVAS, 'game',true);
+var game = new Phaser.Game(width, height, Phaser.AUTO, 'game',true);
 game.resolution = window.devicePixelRatio;
 // 定义场景
 var states = {
@@ -712,6 +161,7 @@ var states = {
 	boot: function(){
 		this.preload = function(){
 			// 加载游戏资源
+			game.load.crossOrigin = 'https://cms.yongche.com'; // 设置跨域
 			game.load.image('loadingbg', httpimg+'g2/M02/1B/3C/rBEBP1psgt2IQiGTAAAoFpSO9-sAAK3pwDtc0IAACgu105.png');
 	        game.load.image('loadingbar', httpimg+'g2/M02/1A/29/rBEBP1psgt2IFDjJAAADk5OHafEAAKXpgP__FUAAAOr234.png');
 		},
@@ -732,13 +182,13 @@ var states = {
 	        loadingbar.anchor.setTo(0, -1.05);
 	        game.load.setPreloadSprite(loadingbar);
 	        // 加载游戏资源
+	        game.load.crossOrigin = 'https://cms.yongche.com'; // 设置跨域
 	        game.load.image('homepagebg', httpimg+'g2/M01/1C/04/rBEBP1pxgyeIE05HAAXMI327Te4AAK7DwCSJ8AABcw7461.png');//首页-背景
 	        game.load.image('playbg', httpimg+'g2/M02/1C/0A/rBEBP1p1bO6INpQfAAyHmwBz6oQAAK9VwGfhwwADIez518.png');//游戏页-背景
 	        game.load.atlas("spic", httpimg+"g2/M02/1C/0B/rBEBP1p1kY6ICQlTAAHlhv6pJOQAAK9dwHKeuoAAeWe249.png", null,spicJson);//精灵图
 	        game.load.spritesheet('dude', httpimg+'g2/M04/1C/0A/rBEBP1p1XeaINgTsAAQ_1WywasIAAK9SgIGR0QABD_t853.png',  187, 299); //游戏页-游戏主角
 	        game.load.spritesheet('coin', httpimg+'g2/M02/1B/3C/rBEBP1psgt2IIJy2AAA9w4g5HbIAAK3pwDnR-UAAD3b307.png', 81, 81); //游戏页-金币
 	        game.load.spritesheet('mute-play', httpimg+'g2/M02/1B/3C/rBEBJVpsgt6IVvREAAANsPV9iJMAAK3pwDt1CMAAA3I754.png', 32, 23); //游戏页-静音及播放
-            game.load.crossOrigin = 'anonymous'; // 设置跨域
             game.load.audio('bgMusic', httpaudio+'s/download/201801/bgMusic1.mp3?1478153218');  //游戏页-背景音乐
 	        game.load.audio('scoreMusic', httpaudio+'s/download/201801/addscore.mp3?1478153218');  //游戏页-加分音乐
             game.load.audio('bombMusic', httpaudio+'s/download/201801/bombom.mp3?1478153218');  //游戏页-爆炸音乐
@@ -747,7 +197,7 @@ var states = {
             game.load.onLoadComplete.add(onLoad);
             // 加载完毕回调方法
             function onLoad() {
-            	getCommon(); 
+            	game.state.start('created');
             }
 	    }
     },
@@ -772,62 +222,23 @@ var states = {
 	        prizeButton = game.add.button(16, 16,'spic', showPrizes, this, 'myprizebtn', 'myprizebtn', 'myprizebtn');
 	        prizeButton.scale.set(0.5);
 	        function showPrizes(){
-	        	if(!isLogin){//未登录--我的奖品、开始游戏 、分享，提示登录；游戏次数为'--'
-	        		if(inApp){  
-                		var link = 'yongche://login?done=' + encodeURIComponent(window.location.href);
-                    	window.location.href = link;
-	                }else{
-	                	$('#loginMask').show();
-	                }
-	        		return 
-	        	}
+	        	
 	        	$('#prize').fadeIn(100);
 	        }
-	        if(isLogin){//未登录
-        		// 添加"我有几次游戏机会"
-	            var gamecountText = game.add.text(game.world.centerX, game.world.height-140, '我有'+ gameNum +'次游戏机会', { fontSize: '18px', fill: '#FFFFFF' });
-	            gamecountText.anchor.setTo(0.5, 1);
-        	}
 	       	
 	        // 添加"开始游戏"按钮
 	        startButton = game.add.button(game.world.centerX, game.world.height-90, 'spic', onStart, this,'startbtn','startbtn','startbtn');
 	        startButton.scale.set(0.5);
 	        startButton.anchor.setTo(0.5, 1);
 	        function onStart(){
-	        	if(!isLogin){//未登录
-	        		if(inApp){
-                		var link = 'yongche://login?done=' + encodeURIComponent(window.location.href);
-                    	window.location.href = link;
-	                }else{
-	                	$('#loginMask').show();
-	                }
-	        		return 
-	        	}
-	        	if(!isRightTime){//现在不在活动期间 || 用户信息为空
-	        		toastMsg('现在不在活动期间 或 用户信息为空');
-	        		return
-	        	}
-	        	if(gameNum<=0){
-	        		toastMsg('游戏机会用完了，快去分享得机会吧');
-	        		return
-	        	}
-	        	startGame(); 
+	        	game.state.start('play');
 	        }
 	        // 添加"分享 "按钮
 	        shareButton = game.add.button(game.world.centerX, game.world.height-35, 'spic', onShare, this, 'sharebtn', 'sharebtn', 'sharebtn');
 	        shareButton.scale.set(0.5);
 	        shareButton.anchor.setTo(0.5, 1);
 	        function onShare(){
-	        	if(!isLogin){//未登录
-	        		if(inApp){
-                		var link = 'yongche://login?done=' + encodeURIComponent(window.location.href);
-                    	window.location.href = link;
-	                }else{
-	                	$('#loginMask').show();
-	                }
-	        		return 
-	        	}
-	            shareFn();
+	        	
 	        }
 	        
 	        // 添加静音按钮  播放
@@ -1037,13 +448,13 @@ var states = {
 	    this.add_move_sprite = function(){
 	    	var starNum = Math.floor(Math.random()*10);
 	    	//console.log(starNum)
-	    	if(starNum <= 3){
+	    	if(starNum <= 5){
 	    		this.addmystones('coin',1);
-	    	}else if(starNum <= 5){
+	    	}else if(starNum <= 7){
 	    		this.addmystones('coin',2);
-	    	}else if(starNum <= 6){
-	    		this.addmystones('stone',1);
 	    	}else if(starNum <= 8){
+	    		this.addmystones('stone',1);
+	    	}else if(starNum <= 9){
 	    		this.addmystones('roadblock',1);
 	    	}else{
 	    		this.addmystones('garbagecan',1);
@@ -1101,7 +512,8 @@ var states = {
 	    		this.bg.autoScroll(0, 0);
 		    	var that = this;
 	        	game.time.events.add(1000, function(){
-	        		showOver(parseInt(that.score/100));//展示“游戏结束”，并把分数发送给后台 
+	        		$('#over').show();
+	        		
 	        	}, this);
 	        }
 	    },
@@ -1155,7 +567,7 @@ var states = {
 		            goal.kill();
 		            if(obstacle.type==='coin') return
 		            game.time.events.add(1000, function(){
-		        		showOver(parseInt(that.score/100));//展示“游戏结束”，并把分数发送给后台 
+		        		$('#over').show();
 		        	}, this);
 		        });
 		    });
